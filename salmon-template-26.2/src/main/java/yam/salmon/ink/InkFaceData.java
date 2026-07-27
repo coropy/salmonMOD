@@ -12,6 +12,20 @@ public final class InkFaceData {
     public static final int GRID_SIZE = 8;
     public static final int CELL_COUNT = 64;
 
+    /**
+     * セルと円の交差判定方式。
+     */
+    public enum IntersectionMode {
+        /** セル中心点が円内にあるか判定（v3互換） */
+        CELL_CENTER,
+        /** セル矩形と円の交差判定（推奨 / Phase 4 既定） */
+        CELL_RECTANGLE_INTERSECTION
+    }
+
+    /** デフォルトの交差判定方式 */
+    public static final IntersectionMode DEFAULT_INTERSECTION_MODE =
+            IntersectionMode.CELL_RECTANGLE_INTERSECTION;
+
     private final byte[] cells;
 
     /** 空の面データを作成（全セルNONE） */
@@ -64,31 +78,57 @@ public final class InkFaceData {
     }
 
     /**
-     * 円形塗装を行う。
-     * 中心 (centerU, centerV) を UV座標 (0.0..1.0) で指定し、半径 radius 内のセルを塗る。
+     * 円形塗装を行う。デフォルトの交差判定方式を使用する。
      *
-     * @param centerU 中心 U (0.0..1.0)
-     * @param centerV 中心 V (0.0..1.0)
-     * @param radius 半径（UV座標系 / 0.24 で直径約4セル）
-     * @param team チーム値
+     * <p>centerU, centerV は面ローカルUV座標で指定する。
+     * 0.0〜1.0の範囲外も許容し、隣接ブロックへの塗装分配を可能にする。</p>
+     *
+     * @param centerU 中心 U（面ローカル / 範囲外可）
+     * @param centerV 中心 V（面ローカル / 範囲外可）
+     * @param radius  半径（UV座標系 / 0.25 で直径約4セル）
+     * @param team    チーム値
      * @return 変更されたセル数
      */
     public int paintCircle(double centerU, double centerV, double radius, byte team) {
+        return paintCircle(centerU, centerV, radius, team, DEFAULT_INTERSECTION_MODE);
+    }
+
+    /**
+     * 円形塗装を行う（交差判定方式を指定）。
+     *
+     * <p>centerU, centerV は面ローカルUV座標で指定する。
+     * 0.0〜1.0の範囲外も許容し、隣接ブロックへの塗装分配を可能にする。</p>
+     *
+     * @param centerU 中心 U（面ローカル / 範囲外可）
+     * @param centerV 中心 V（面ローカル / 範囲外可）
+     * @param radius  半径（UV座標系 / 0.25 で直径約4セル）
+     * @param team    チーム値
+     * @param mode    交差判定方式
+     * @return 変更されたセル数
+     */
+    public int paintCircle(double centerU, double centerV, double radius, byte team,
+                            IntersectionMode mode) {
         byte normalized = InkTeam.normalize(team);
         int changed = 0;
 
-        // 各セルの中心座標を計算し、円内かどうか判定
         double cellSize = 1.0 / GRID_SIZE;
+
         for (int v = 0; v < GRID_SIZE; v++) {
             for (int u = 0; u < GRID_SIZE; u++) {
-                double cellCenterU = (u + 0.5) * cellSize;
-                double cellCenterV = (v + 0.5) * cellSize;
+                boolean intersects;
 
-                double du = cellCenterU - centerU;
-                double dv = cellCenterV - centerV;
-                double dist = Math.sqrt(du * du + dv * dv);
+                if (mode == IntersectionMode.CELL_RECTANGLE_INTERSECTION) {
+                    intersects = cellIntersectsCircle(u, v, centerU, centerV, radius, cellSize);
+                } else {
+                    // CELL_CENTER: セル中心点と円中心の距離
+                    double cellCenterU = (u + 0.5) * cellSize;
+                    double cellCenterV = (v + 0.5) * cellSize;
+                    double du = cellCenterU - centerU;
+                    double dv = cellCenterV - centerV;
+                    intersects = du * du + dv * dv <= radius * radius;
+                }
 
-                if (dist <= radius) {
+                if (intersects) {
                     int idx = index(u, v);
                     if (cells[idx] != normalized) {
                         cells[idx] = normalized;
@@ -99,6 +139,40 @@ public final class InkFaceData {
         }
 
         return changed;
+    }
+
+    /**
+     * セル矩形が円と交差するか判定する。
+     *
+     * <p>円中心からセル矩形までの最近点距離を計算し、半径と比較する。
+     * clamp(center, cellMin, cellMax) で矩形内の最近点を求め、
+     * 円中心との距離の2乗が radius^2 以下なら交差。</p>
+     */
+    private static boolean cellIntersectsCircle(int cellU, int cellV,
+                                                 double centerU, double centerV,
+                                                 double radius, double cellSize) {
+        double cellMinU = cellU * cellSize;
+        double cellMaxU = (cellU + 1) * cellSize;
+        double cellMinV = cellV * cellSize;
+        double cellMaxV = (cellV + 1) * cellSize;
+
+        // 円中心から矩形への最近点
+        double nearestU = clamp(centerU, cellMinU, cellMaxU);
+        double nearestV = clamp(centerV, cellMinV, cellMaxV);
+
+        double du = centerU - nearestU;
+        double dv = centerV - nearestV;
+
+        return du * du + dv * dv <= radius * radius;
+    }
+
+    /**
+     * value を [min, max] の範囲に clamp する。
+     */
+    static double clamp(double value, double min, double max) {
+        if (value < min) return min;
+        if (value > max) return max;
+        return value;
     }
 
     /**

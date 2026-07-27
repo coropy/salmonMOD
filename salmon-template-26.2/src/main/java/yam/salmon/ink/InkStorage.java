@@ -157,6 +157,14 @@ public class InkStorage {
     }
 
     /**
+     * 内部データマップの直接参照を返す（InkPaintDistributor 用）。
+     * 呼び出し元はスレッドセーフに注意すること（メインスレッドからのみアクセス）。
+     */
+    public Map<UUID, Map<InkSurfaceKey, InkFaceData>> getRawArenaMap() {
+        return arenaInks;
+    }
+
+    /**
      * 内部データが変更されたかを返す（SavedData dirty判定用）。
      */
     public boolean hasData() {

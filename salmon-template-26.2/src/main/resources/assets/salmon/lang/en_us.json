@@ -1,4 +1,5 @@
 {
   "block.salmon.ink_area_marker": "Ink Area Marker",
-  "block.salmon.inkable_block": "Inkable Block"
+  "block.salmon.inkable_block": "Inkable Block",
+  "item.salmon.ink_shooter": "Ink Shooter"
 }

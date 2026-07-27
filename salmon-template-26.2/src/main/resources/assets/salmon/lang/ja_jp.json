@@ -1,4 +1,5 @@
 {
   "block.salmon.ink_area_marker": "インクエリアマーカー",
-  "block.salmon.inkable_block": "塗装可能ブロック"
+  "block.salmon.inkable_block": "塗装可能ブロック",
+  "item.salmon.ink_shooter": "インクシューター"
 }

@@ -12,7 +12,9 @@ import yam.salmon.arena.InkArenaManager;
 import yam.salmon.ink.InkFaceData;
 import yam.salmon.ink.InkStorage;
 import yam.salmon.ink.InkSurfaceKey;
+import yam.salmon.ink.MultiSurfacePaintResult;
 
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -116,6 +118,50 @@ public class InkSyncManager {
 
         Salmon.LOGGER.info("Ink face update sent: arena #{} block={} face={} changedCells={} revision={} recipients={}",
                 arena.getArenaNumber(), blockPos, face, changedCells, revision, count);
+    }
+
+    /**
+     * 複数面のインク更新を同ディメンション全プレイヤーにブロードキャストする。
+     * 1回の塗装操作で複数面が更新された場合、すべて同じリビジョンを使用する。
+     *
+     * @param level           サーバーレベル
+     * @param arena           対象アリーナ
+     * @param updatedSurfaces 更新された面のリスト
+     */
+    public void broadcastMultiFaceUpdate(ServerLevel level, InkArena arena,
+                                          List<MultiSurfacePaintResult.UpdatedInkSurface> updatedSurfaces) {
+        if (updatedSurfaces.isEmpty()) {
+            return;
+        }
+
+        // 1つの塗装操作で1回だけリビジョンを増やす
+        long revision = incrementRevision(arena.getArenaId());
+        Identifier dimensionId = level.dimension().identifier();
+
+        int payloadCount = 0;
+        for (var surface : updatedSurfaces) {
+            if (surface.changedCells() <= 0) continue;
+
+            InkFaceUpdatePayload payload = new InkFaceUpdatePayload(
+                    arena.getArenaId(),
+                    arena.getArenaNumber(),
+                    dimensionId,
+                    surface.blockPos(),
+                    surface.face().getSerializedName(),
+                    surface.cells(),
+                    revision
+            );
+
+            int count = 0;
+            for (ServerPlayer p : level.players()) {
+                ServerPlayNetworking.send(p, payload);
+                count++;
+            }
+            payloadCount++;
+        }
+
+        Salmon.LOGGER.info("Multi-surface ink update sent: arena #{} surfaces={} revision={}",
+                arena.getArenaNumber(), payloadCount, revision);
     }
 
     // ===================================================================

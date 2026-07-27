@@ -25,6 +25,9 @@ import yam.salmon.network.InkSyncManager;
  * インクで塗装可能なブロック。
  * BlockEntity は持たず、塗装データは InkStorage で管理する。
  *
+ * <p>Phase 4: 複数ブロックにまたがる塗装に対応。
+ * クリック面の同一平面上で円AABB内の隣接ブロックにも塗装を分配する。</p>
+ *
  * <p>管理者が素手で右クリックすると塗装を行う。
  * 通常右クリック=Team A、Shift+右クリック=Team B。</p>
  */
@@ -67,12 +70,7 @@ public class InkableBlock extends Block {
         var direction = hitResult.getDirection();
         Vec3 hitLoc = hitResult.getLocation();
 
-        // ローカル座標計算
-        double localX = clampToRange(hitLoc.x - pos.getX(), 0.0, 1.0);
-        double localY = clampToRange(hitLoc.y - pos.getY(), 0.0, 1.0);
-        double localZ = clampToRange(hitLoc.z - pos.getZ(), 0.0, 1.0);
-
-        // Phase 1 の判定を再利用
+        // Phase 1 の判定を再利用（クリックブロックの塗装可能判定）
         PaintabilityResult result = InkPaintability.checkPaintable(serverLevel, pos, direction);
 
         if (!result.paintable()) {
@@ -93,35 +91,38 @@ public class InkableBlock extends Block {
 
         InkArena arena = result.arena().orElseThrow();
 
-        // UV → セル座標 変換
-        InkFaceCoordinates coords = InkFaceCoordinates.fromHit(direction, localX, localY, localZ);
-
         // ShiftでTeam B、通常でTeam A
         byte team = player.isShiftKeyDown() ? InkTeam.TEAM_B : InkTeam.TEAM_A;
 
-        // 塗装実行
+        // Phase 4+5: 共通塗装サービスを使用
         InkStorage inkStorage = InkArenaManager.getInstance().getInkStorage();
-        PaintResult paintResult = inkStorage.paint(serverLevel, arena, pos, direction,
-                coords, InkStorage.DEFAULT_PAINT_RADIUS, team);
+        MultiSurfacePaintResult paintResult = InkPaintingService.paint(
+                serverLevel, arena, inkStorage,
+                pos, direction, hitLoc,
+                InkPaintDistributor.DEFAULT_PAINT_RADIUS_BLOCKS, team);
 
         if (paintResult.success()) {
+            // 管理者向けメッセージ
             serverPlayer.sendSystemMessage(
-                    Component.literal("塗装しました: Arena #" + paintResult.arenaNumber()
-                            + " / " + InkTeam.toName(paintResult.team())
-                            + " / Block=(" + pos.getX() + "," + pos.getY() + "," + pos.getZ()
-                            + ") / Face=" + direction
-                            + " / Cell=(" + coords.cellU() + "," + coords.cellV()
-                            + ") / Changed=" + paintResult.changedCells())
+                    Component.literal("塗装しました: Arena #" + arena.getArenaNumber()
+                            + " / " + InkTeam.toName(team)
+                            + " / Changed surfaces=" + paintResult.changedSurfaceCount()
+                            + " / Changed cells=" + paintResult.changedCellCount()
+                            + " / Radius=" + String.format("%.3f", InkPaintDistributor.DEFAULT_PAINT_RADIUS_BLOCKS))
             );
-            // SavedData を dirty にして保存
-            InkArenaManager.getInstance().saveInkDataNow(serverLevel);
 
-            // 変更があった面データをクライアントへ同期
-            inkStorage.getFace(arena, pos, direction).ifPresent(updatedFaceData -> {
-                InkSyncManager.getInstance().broadcastFaceUpdate(
-                        serverLevel, arena, pos, direction,
-                        updatedFaceData, paintResult.changedCells());
-            });
+            // 詳細デバッグ（全座標表示）: 常にログへ出力、プレイヤーには簡易表示
+            if (paintResult.updatedSurfaces().size() <= 10) {
+                for (var surface : paintResult.updatedSurfaces()) {
+                    serverPlayer.sendSystemMessage(
+                            Component.literal("  (" + surface.blockPos().getX()
+                                    + "," + surface.blockPos().getY()
+                                    + "," + surface.blockPos().getZ()
+                                    + ")/" + surface.face()
+                                    + " changed=" + surface.changedCells())
+                    );
+                }
+            }
         } else if (paintResult.failureReason() == PaintFailureReason.NO_CHANGE) {
             serverPlayer.sendSystemMessage(
                     Component.literal("変更なし: すでに同じチームのインクです")
@@ -143,11 +144,7 @@ public class InkableBlock extends Block {
         return InteractionResult.CONSUME;
     }
 
-    /** 値を [0.0, 1.0] にクランプして小数点3桁で文字列化 */
-    private static String formatClamped(double value) {
-        return String.format("%.3f", clampToRange(value, 0.0, 1.0));
-    }
-
+    /** 値を [0.0, 1.0] にクランプ */
     private static double clampToRange(double value, double min, double max) {
         if (value < min) return min;
         if (value > max) return max;

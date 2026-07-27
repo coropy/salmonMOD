@@ -17,10 +17,13 @@ import yam.salmon.block.InkAreaMarkerBlockEntity;
 import yam.salmon.block.InkAreaMarkerBlock;
 import yam.salmon.block.ModBlocks;
 import yam.salmon.command.SalmonCommands;
+import yam.salmon.item.InkShooterTickHandler;
+import yam.salmon.item.ModItems;
 import yam.salmon.network.ArenaDebugPayload;
 import yam.salmon.network.ArenaDebugSync;
 import yam.salmon.network.InkArenaClearPayload;
 import yam.salmon.network.InkFaceUpdatePayload;
+import yam.salmon.network.InkShotVisualPayload;
 import yam.salmon.network.InkSyncBeginPayload;
 import yam.salmon.network.InkSyncEndPayload;
 import yam.salmon.network.InkSyncManager;
@@ -36,7 +39,9 @@ public class Salmon implements ModInitializer {
         LOGGER.info("Initializing Salmon MOD");
 
         ModBlocks.register();
+        ModItems.register();
         InkAreaMarkerBlockEntity.register();
+        InkShooterTickHandler.register();
 
         // ネットワークペイロードタイプ登録（S2C: サーバー→クライアント）
         PayloadTypeRegistry.clientboundPlay().register(ArenaDebugPayload.TYPE, ArenaDebugPayload.STREAM_CODEC);
@@ -44,6 +49,7 @@ public class Salmon implements ModInitializer {
         PayloadTypeRegistry.clientboundPlay().register(InkSyncBeginPayload.TYPE, InkSyncBeginPayload.STREAM_CODEC);
         PayloadTypeRegistry.clientboundPlay().register(InkSyncEndPayload.TYPE, InkSyncEndPayload.STREAM_CODEC);
         PayloadTypeRegistry.clientboundPlay().register(InkArenaClearPayload.TYPE, InkArenaClearPayload.STREAM_CODEC);
+        PayloadTypeRegistry.clientboundPlay().register(InkShotVisualPayload.TYPE, InkShotVisualPayload.STREAM_CODEC);
 
         // コマンド登録
         CommandRegistrationCallback.EVENT.register(SalmonCommands::register);
@@ -68,6 +74,8 @@ public class Salmon implements ModInitializer {
             PlayerMarkerSelectionManager.getInstance().clearSelection(playerId);
             // デバッグ表示も自動OFF
             InkArenaManager.getInstance().onPlayerDisconnect(playerId);
+            // シューターのクールダウン情報をクリーンアップ
+            yam.salmon.item.InkShooterItem.cleanup(handler.getPlayer());
         });
 
         // マーカーブロック破壊制限: マーカーを持っている時のみ破壊可能
