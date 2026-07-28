@@ -23,7 +23,7 @@ AIはコードを検索・修正する際、以下の配置ルールと役割を
 ### 2.1. サーバー側 (`src/main/java/yam/salmon/`)
 
 #### `Salmon.java`
-ModInitializer。ブロック/BlockEntityの登録、イベントリスナー（切断/破壊/次元移動時のデバッグ再同期等）の定義。`id(String)` で `Identifier` を生成。ネットワークPayload登録。プレイヤー参加/リスポーン時のインク完全同期。
+ModInitializer。ブロック/BlockEntityの登録、イベントリスナー（切断/破壊/次元移動時のデバッグ再同期等）の定義。`id(String)` で `Identifier` を生成。ネットワークPayload登録。`ServerPlayConnectionEvents.JOIN` で初回参加時のインク完全同期、`ServerPlayerEvents.AFTER_RESPAWN` でリスポーン/次元移動時の再同期。
 
 #### `block/` — ブロック関連
 | クラス | 役割 |
@@ -38,27 +38,30 @@ ModInitializer。ブロック/BlockEntityの登録、イベントリスナー（
 | クラス | 役割 |
 |---|---|
 | `InkArena.java` | アリーナのデータモデル（範囲計算・包含判定・重複判定）。`arenaNumber` フィールドを持ち、Codec でシリアライズ（optional、デフォルト0で後方互換）。 |
-| `InkArenaManager.java` | ワールドごとのアリーナ永続化管理 (`SavedData`)。作成・削除（boolean戻り値で冪等性保証）・検索・存在確認 (`arenaExists`)・番号割当 (`allocateArenaNumber`)・番号検索 (`getArenaByNumber`)・V1→V2 データ移行 (`migrateFromV1`)。`InkStorage` のインクデータロード・保存も担当（dataVersion=3）。`saveInkDataNow()` で即時保存。アリーナ削除時にインクデータも自動削除。デバッグ表示のプレイヤー単位ON/OFF管理も担当。 |
+| `InkArenaManager.java` | ワールドごとのアリーナ永続化管理 (`SavedData`)。作成・削除（boolean戻り値で冪等性保証）・検索・存在確認 (`arenaExists`)・番号割当 (`allocateArenaNumber`)・番号検索 (`getArenaByNumber`)・V1→V2 データ移行 (`migrateFromV1`)。`InkStorage` のインクデータロード・保存も担当（dataVersion=4）。`saveInkDataNow()` で即時保存。アリーナ削除時にインクデータも自動削除。デバッグ表示のプレイヤー単位ON/OFF管理も担当。dataVersion=3 の古いPatch座標系データは安全に破棄。 |
 | `ArenaPermission.java` | クリエイティブ+OP権限判定ロジック（`canConfigure`）を一元管理。 |
 
 #### `ink/` — インク塗装システム
 | クラス | 役割 |
 |---|---|
-| `InkPaintability.java` | 塗装可能判定のユーティリティクラス（Phase 1）。`checkPaintable()` でタグ→アリーナ→面露出の3段階判定。`isPaintableBlock()`, `isSurfaceExposed()` は Phase 4 の静かな検証用に公開。 |
+| `InkPaintability.java` | 塗装可能判定のユーティリティクラス（Phase 7）。`checkPaintable(level, pos, face, arena)` でタグ→アリーナ→面露出の3段階判定。`isPaintableBlock()` は階段・ハーフブロックを `VoxelShape` ベースで許可。水没ブロックも許可（液体そのものは不可）。`isSurfaceExposed()` はMC 26.2の `getOcclusionShape()` 使用。 |
 | `PaintabilityResult.java` | 塗装可能判定結果レコード（Phase 1）。 |
 | `PaintabilityFailureReason.java` | 塗装不能理由の列挙型（Phase 1）。 |
 | `InkTeam.java` | インクチーム定数クラス。`NONE=0`, `TEAM_A=1`, `TEAM_B=2`。`toChar()`, `toName()`, `isValidTeam()`, `normalize()` を提供。 |
-| `InkSurfaceKey.java` | 塗装面を一意に識別するレコード。`BlockPos` と `Direction` の組み合わせ。 |
-| `InkFaceData.java` | ブロック1面の8×8インクグリッドデータ。`GRID_SIZE=8`, `CELL_COUNT=64`。`getCell()`, `setCell()`, `paintCircle()`, `isEmpty()`, `clear()`, `copyCells()`, `toString()` を提供。Phase 4: `paintCircle()` は centerU/V の範囲外を許容し、`CELL_RECTANGLE_INTERSECTION` モードを追加。 |
+| `InkSurfacePatchId.java` | ブロック内部の矩形表面パッチID（Phase 7）。1ブロック=16units固定分解能。`normal`, `plane`, `minU`, `minV`, `maxU`, `maxV`。`fullFace(Direction)` でフル面パッチ生成。`writeToBuffer()`/`readFromBuffer()` でネットワークシリアライズ。 |
+| `InkSurfacePatch.java` | 矩形表面パッチ（Phase 7）。`InkSurfacePatchId` + `BlockPos`。`toWorldPoint()`, `fromWorld()`, `projectOntoPatch()`, `getWorldBounds()` を提供。`fullFace(pos, face)` でフル面パッチ生成。 |
+| `InkSurfacePatchExtractor.java` | VoxelShapeから外部露出パッチを抽出（Phase 7）。`extract(state, level, pos)` でパッチ一覧取得。内部面除去・同一平面矩形統合・BlockState単位キャッシュ。`isFullCube()` でダブルハーフブロックもフルキューブ扱い。 |
+| `InkSurfaceKey.java` | 塗装面識別レコード（Phase 7）。`BlockPos` + `InkSurfacePatchId`。`fullFace(pos, face)` 互換ファクトリ、`getNormal()` ショートカット。 |
+| `InkFaceData.java` | 1パッチ面の8×8インクグリッドデータ。`GRID_SIZE=8`, `CELL_COUNT=64`。`getCell()`, `setCell()`, `paintCircle()`, `isEmpty()`, `clear()`, `copyCells()`, `toString()` を提供。 |
 | `InkFaceCoordinates.java` | ブロック面へのヒット座標から UV座標・セル座標への変換ユーティリティ。`fromHit(face, localX, localY, localZ)` で6面対応のUV変換。u==1.0, v==1.0 境界の clamp 処理済み。 |
-| `InkPlaneCoordinates.java` | ワールド座標から連続的な平面座標（planeU, planeV）への変換（Phase 4）。6面ごとの定義 + `toLocalUV()` で各候補ブロック面のローカルUVへ変換。`getCandidateBlockRange()`, `blockPosFromRange()`, `getFixedCoord()` を提供。 |
-| `FaceBasis.java` | ブロック面のローカル座標系定義（Phase 5）。6面の法線・U軸・V軸をレコードで保持。`toWorldPoint()`（UV→3D）、`fromWorld()`（3D→UV）、`projectOntoFace()`（3D→面投影UV）、`sphereIntersectsFace()`（球と面矩形の交差判定）、`distanceToPlane()`/`signedDistanceToPlane()` を提供。`InkFaceCoordinates` と整合する一貫した座標変換。 |
-| `InkPaintDistributor.java` | 塗装分配エンジン（Phase 5）。3D球AABB内の全候補BlockPos×6面を走査し、`FaceBasis.sphereIntersectsFace()` で球と面の交差判定 → 露出判定 → 面上投影 → 円塗装 の流れで分配。`MAX_PAINT_RADIUS_BLOCKS=8.0`, `MAX_CANDIDATE_SURFACES_PER_OPERATION=4096`。`DEFAULT_PAINT_RADIUS_BLOCKS=0.25`。Phase 4の同一平面限定から3D統一方式に完全移行済み。 |
+| `InkPlaneCoordinates.java` | ワールド座標から連続的な平面座標（planeU, planeV）への変換（Phase 4）。6面ごとの定義 + `toLocalUV()` で各候補ブロック面のローカルUVへ変換。 |
+| `FaceBasis.java` | ブロック面のローカル座標系定義（Phase 7）。6面の法線・U軸・V軸をレコードで保持。`toWorldPoint()`, `fromWorld()`, `projectOntoFace()`, `sphereIntersectsFace()`, `distanceToPlane()`/`signedDistanceToPlane()` に加え、Patch用の `toWorldPointRaw()`, `getBoundsFromUV()`, `getPlaneAxis()`, `sphereIntersectsPatchRect()`, `projectOntoFaceAtCoord()`, `distanceToPatchPlane()` を追加。 |
+| `InkPaintDistributor.java` | 塗装分配エンジン（Phase 5+7）。3D球AABB内の全候補BlockPos×6面を走査し、`FaceBasis.sphereIntersectsFace()` で球と面の交差判定 → 露出判定 → 面上投影 → 円塗装 の流れで分配。フルブロック限定。`MAX_PAINT_RADIUS_BLOCKS=8.0`。Phase 7: `InkSurfaceKey` は `fullFace()` 互換生成。 |
 | `MultiSurfacePaintResult.java` | 複数面塗装結果レコード（Phase 4）。`success`, `changedSurfaceCount`, `changedCellCount`, `updatedSurfaces` を保持。`UpdatedInkSurface` 内包レコード。 |
-| `InkCellGeometry.java` | ブロック面の8×8グリッドセルのワールド座標AABBを計算するユーティリティ（Phase 3）。`getCellBounds(blockPos, face, cellU, cellV)` で6面対応。`InkFaceCoordinates` と同じUV定義を使用し描画との一貫性を保証。`SURFACE_OFFSET=0.002`、`INK_THICKNESS=0.008`。 |
-| `PaintResult.java` | 塗装操作結果レコード（1面用 / Phase 2互換）。`success`, `changedCells`, `arenaNumber`, `blockPos`, `face`, `coordinates`, `team`, `failureReason` を保持。 |
-| `PaintFailureReason.java` | 塗装操作失敗理由の列挙型。`NO_PERMISSION`, `NOT_PAINTABLE_BLOCK`, `OUTSIDE_ARENA`, `FACE_OCCLUDED`, `INVALID_TEAM`, `NO_CHANGE`。 |
-| `InkStorage.java` | アリーナごとのインクデータ管理ストレージ。疎な保存方式（実際に塗られた面だけ `Map<InkSurfaceKey, InkFaceData>` で保持）。`paint()`（1面塗装互換）、`getFace()`/`getFaceOrEmpty()`、`clearArena()`、`removeArena()`、`getRawArenaMap()`（Phase 4分配用）、`exportData()`/`importData()`（永続化用）、`STORAGE_CODEC`（保存用 Codec）、`SavedSurface`/`SavedArenaInk`（保存用中間データ）を提供。 |
+| `InkCellGeometry.java` | ブロック面の8×8グリッドセルのワールド座標AABBを計算するユーティリティ（Phase 3）。`getCellBounds(blockPos, face, cellU, cellV)` で6面対応。`SURFACE_OFFSET=0.002`、`INK_THICKNESS=0.008`。 |
+| `PaintResult.java` | 塗装操作結果レコード（1面用 / Phase 2互換）。 |
+| `PaintFailureReason.java` | 塗装操作失敗理由の列挙型。 |
+| `InkStorage.java` | アリーナごとのインクデータ管理ストレージ（Phase 7）。疎な保存方式（`Map<UUID, Map<InkSurfaceKey, InkFaceData>>`）。`paint()`（1面塗装互換）、`getFace()`（PatchId/Direction両対応）、`clearArena()`、`removeArena()`、`getRawArenaMap()`。`importData()` はマージ方式。保存形式 dataVersion=4: `SavedSurface` に新5フィールドで PatchId 永続化。旧 dataVersion=3 データは fullFace にフォールバック。 |
 | `InkPaintingService.java` | インク塗装の単一エントリポイント（Phase 6+）。`InkPaintDistributor` に委譲し、永続化保存と `InkSyncManager` による複数面同期を統一的に実行。 |
 | `InkSourceResolver.java` | インクのオーナーUUID解決（Phase 6+）。現状はプレイヤー自身のUUIDを返す。将来的なチーム/色ベース所有権のプレースホルダ。 |
 
@@ -296,14 +299,7 @@ ModInitializer。ブロック/BlockEntityの登録、イベントリスナー（
 2. **進捗の簡潔出力**: ファイル修正やコマンド実行の前後には、3行以内で「[進捗]」「[理由]」「[次項]」を出力し、作業内容を報告すること。
 3. **置換失敗時の対応**: `replace_in_file` が失敗した場合は、何度も繰り返さず `write_to_file` でファイル全体を書き換えて対処すること。
 4. **【最重要】AGENTS.md（セクション2〜6）の自動自己更新**: タスクが完了した際、またはファイル構造・機能に変更が生じた場合は、完了報告をする前に**必ずこの `AGENTS.md` 全体を見直し、セクション2〜6をすべて最新情報に書き換えて上書き保存**すること。
-5. **Windows環境でのGradleコマンド実行ルール**:
-   - `.\gradlew.bat` や `./gradle.bat` 単体、および `cd` との相対パス連結によるコマンド実行は、パス解決エラーを引き起こすため**使用禁止**。
-   - Gradleタスクを実行する際は、必ず**絶対パス指定の `cmd.exe` ラッパー形式**で1行で実行すること:
-     ```cmd
-     cmd.exe /c "cd /d C:\dev\salmonMOD\salmon-template-26.2 && \gradlew.bat <タスク名>"
-     ```
-   - パスやオプション記号の内部に不要なスペース（例: `. \gradlew`, `-- no-build-cache` など）を絶対に入れないこと。
-6. **Minecraft 26.2 API 固有の注意事項**:
+5. **Minecraft 26.2 API 固有の注意事項**:
    - **genSources**: `./gradlew genSources` で 26.2 のソースコードを生成済み。APIの型やメソッドを確認する際は、過去の知識ではなくローカルに生成されたソースコード（参照定義）を優先して確認しながら修正すること。
    - **API解析用のJAR**:
      - **共通ロジック**: `%USERPROFILE%\.gradle\caches\fabric-loom\minecraftMaven\net\minecraft\minecraft-common-deobf\26.2\minecraft-common-deobf-26.2.jar`
