@@ -75,12 +75,18 @@ ModInitializer。ブロック/BlockEntityの登録、イベントリスナー（
 #### `weapon/` — ブキシステム
 | クラス | 役割 |
 |---|---|
-| `InkShooterService.java` | コア発射ロジック（Phase 6+）。設定可能な射程・拡散・重力・速度でブロック/エンティティレイキャストを実行。ブロックヒット時は `InkPaintingService` で塗装、エンティティヒット時は `InkCombatService` でダメージ適用。 |
+| `InkShooterService.java` | コア発射ロジック（Phase 6+）。設定可能な射程・拡散・重力・速度でブロック/エンティティレイキャストを実行。ブロックヒット時は `InkPaintingService` で塗装、エンティティヒット時は `InkCombatService` でダメージ適用。トレイル塗装の統合・アキュムレータ一括コミットを含む。 |
 | `InkShooterConfig.java` | シューターのパラメータ設定（射程、拡散角、重力、速度、ダメージ等）。 |
 | `InkShotResult.java` | 1発の結果レコード。ヒット種別（ブロック/エンティティ/なし）、ヒット位置、対象エンティティ、塗装結果を保持。 |
 | `InkShotEffects.java` | 発射時の効果（パーティクル、サウンド等）を管理。 |
 | `InkShooterVisualConfig.java` | クライアント側ビジュアル用設定（色、サイズ、弧の高さ等）。 |
 | `InkVisualColorResolver.java` | プレイヤー/チームに応じたインク色の解決。 |
+| `InkWeaponConfig.java` | 武器ごとの全パラメータ設定レコード（Phase 6+）。`InkTrailPaintConfig` を内包。 |
+| `InkWeaponRegistry.java` | 武器設定のレジストリ管理。 |
+| `InkTrajectoryResult.java` | 軌道シミュレーション結果レコード。substep線分（`trailSegments`）とトレイル塗装結果（`trailPaintResult`）を含む。 |
+| `InkTrajectorySimulator.java` | 放物線軌道シミュレーター。substep線分を収集し `TrailSegment` リストを出力。 |
+| `InkTrailPaintConfig.java` | トレイル塗装設定レコード。`sampleSpacing`, `downwardRange`, `paintRadius`, `horizontalJitter`, `paintChance` 等（Phase 8）。3種のプリセット（STANDARD/SHORT_RANGE/LONG_RANGE）+ DISABLED。 |
+| `InkTrailPaintService.java` | トレイル塗装サービス。軌道substep線分から距離ベースで滴サンプル位置を決定し、下方向レイキャスト→塗装分配→アキュムレータ蓄積（Phase 8）。 |
 
 #### `combat/` — 戦闘システム
 | クラス | 役割 |

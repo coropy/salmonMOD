@@ -19,6 +19,7 @@ import yam.salmon.block.ModBlocks;
 import yam.salmon.command.SalmonCommands;
 import yam.salmon.item.InkShooterTickHandler;
 import yam.salmon.item.ModItems;
+import yam.salmon.weapon.InkWeaponRegistry;
 import yam.salmon.network.ArenaDebugPayload;
 import yam.salmon.network.ArenaDebugSync;
 import yam.salmon.network.InkArenaClearPayload;
@@ -42,6 +43,9 @@ public class Salmon implements ModInitializer {
         ModItems.register();
         InkAreaMarkerBlockEntity.register();
         InkShooterTickHandler.register();
+
+        // 武器設定レジストリ初期化
+        InkWeaponRegistry.registerDefaults();
 
         // ネットワークペイロードタイプ登録（S2C: サーバー→クライアント）
         PayloadTypeRegistry.clientboundPlay().register(ArenaDebugPayload.TYPE, ArenaDebugPayload.STREAM_CODEC);

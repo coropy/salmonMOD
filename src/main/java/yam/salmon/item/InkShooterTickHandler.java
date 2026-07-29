@@ -2,7 +2,8 @@ package yam.salmon.item;
 
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.server.level.ServerPlayer;
-import yam.salmon.weapon.InkShooterConfig;
+import yam.salmon.weapon.InkWeaponConfig;
+import yam.salmon.weapon.InkWeaponRegistry;
 
 /**
  * インクシューターのサーバーtickハンドラー。
@@ -23,11 +24,12 @@ public final class InkShooterTickHandler {
      */
     public static void register() {
         ServerTickEvents.END_SERVER_TICK.register(server -> {
+            long serverTick = server.getTickCount();
             for (ServerPlayer player : server.getPlayerList().getPlayers()) {
                 if (InkShooterItem.isUsingShooter(player)) {
                     InkShooterItem item = (InkShooterItem) player.getUseItem().getItem();
-                    InkShooterConfig config = item.getConfig();
-                    InkShooterItem.fire(player, config);
+                    InkWeaponConfig config = item.getConfig();
+                    InkShooterItem.fire(player, config, serverTick);
                 }
             }
         });

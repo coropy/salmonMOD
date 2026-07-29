@@ -77,10 +77,7 @@ public class SalmonClient implements ClientModInitializer {
         // --- 視覚弾道Payload受信 ---
         ClientPlayNetworking.registerGlobalReceiver(InkShotVisualPayload.TYPE, (payload, context) -> {
             context.client().execute(() -> {
-                ClientInkShotManager.getInstance().addFromPayload(
-                        payload.start(), payload.end(),
-                        payload.travelTicks(),
-                        payload.colorRgb(), payload.size(), payload.hitType());
+                ClientInkShotManager.getInstance().addFromPayload(payload);
             });
         });
 
@@ -110,6 +107,12 @@ public class SalmonClient implements ClientModInitializer {
             var shots = ClientInkShotManager.getInstance().getActiveShots();
             if (!shots.isEmpty()) {
                 InkShotRenderer.getInstance().render(shots, context, 1.0f);
+            }
+
+            // トレイル滴描画
+            var drops = ClientInkShotManager.getInstance().getActiveDrops();
+            if (!drops.isEmpty()) {
+                InkShotRenderer.getInstance().renderDrops(drops, context, 1.0f);
             }
 
             // 診断ログ

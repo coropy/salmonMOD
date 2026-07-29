@@ -29,6 +29,7 @@ import org.joml.Vector3f;
 import org.joml.Vector4f;
 
 import yam.salmon.Salmon;
+import yam.salmon.client.shot.ClientInkTrailDrop;
 
 /**
  * クライアント側の視覚弾道レンダラー。
@@ -193,6 +194,59 @@ public final class InkShotRenderer {
             renderPass.setIndexBuffer(info.indexBuffer(), info.indexType());
             renderPass.drawIndexed(info.indexCount(), 1, info.firstIndex(), info.baseVertex(), 0);
         }
+    }
+
+    /**
+     * トレイル滴の描画。
+     */
+    public void renderDrops(List<ClientInkTrailDrop> drops, LevelRenderContext context, float partialTick) {
+        if (drops.isEmpty()) return;
+
+        Vec3 camera = context.levelState().cameraRenderState.pos;
+        PoseStack matrices = context.poseStack();
+
+        RenderPipeline pipeline = SHOT_PIPELINE;
+        VertexFormat formatBinding = pipeline.getVertexFormatBinding(0);
+        if (formatBinding == null) return;
+
+        PrimitiveTopology primitive = pipeline.getPrimitiveTopology();
+
+        StagedVertexBuffer.Draw draw = STAGED_BUFFER.appendDraw(
+                formatBinding, primitive,
+                primitive == PrimitiveTopology.QUADS
+                        ? RenderSystem.getProjectionType().vertexSorting() : null);
+
+        matrices.pushPose();
+        matrices.translate(-camera.x, -camera.y, -camera.z);
+
+        Matrix4fc pose = matrices.last().pose();
+        VertexConsumer builder = STAGED_BUFFER.getVertexBuilder(draw);
+
+        for (ClientInkTrailDrop drop : drops) {
+            Vec3 worldPos = drop.getRenderPosition(partialTick);
+            float s = drop.size();
+            int rgb = drop.colorRgb();
+            float r = ((rgb >> 16) & 0xFF) / 255f;
+            float g = ((rgb >> 8) & 0xFF) / 255f;
+            float b = (rgb & 0xFF) / 255f;
+            float a = 0.7f;
+
+            renderFilledBox(pose, builder,
+                    (float)(worldPos.x - s), (float)(worldPos.y - s), (float)(worldPos.z - s),
+                    (float)(worldPos.x + s), (float)(worldPos.y + s), (float)(worldPos.z + s),
+                    r, g, b, a);
+        }
+
+        matrices.popPose();
+
+        STAGED_BUFFER.upload();
+
+        StagedVertexBuffer.ExecuteInfo info = STAGED_BUFFER.getExecuteInfo(draw);
+        if (info != null && info.indexCount() > 0) {
+            drawShot(info, pipeline);
+        }
+
+        STAGED_BUFFER.endFrame();
     }
 
     /**

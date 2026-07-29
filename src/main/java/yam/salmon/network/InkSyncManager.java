@@ -236,6 +236,27 @@ public class InkSyncManager {
     // ===================================================================
 
     /**
+     * アキュムレータに集約された変更を一括でコミットする。
+     * 1回の射撃操作で主弾＋トレイル滴をまとめる場合に使用する。
+     *
+     * <p>保存と同期を1回だけ実行し、revisionも1回だけ増加させる。</p>
+     *
+     * @param level     サーバーレベル
+     * @param arena     対象アリーナ
+     * @param accumulator 集約された変更
+     */
+    public void commitAccumulator(
+            ServerLevel level,
+            InkArena arena,
+            yam.salmon.ink.InkPaintAccumulator accumulator) {
+        if (accumulator.isEmpty()) return;
+
+        // 保存と同期
+        yam.salmon.arena.InkArenaManager.getInstance().saveInkDataNow(level);
+        broadcastMultiFaceUpdate(level, arena, accumulator.getUpdatedSurfaces());
+    }
+
+    /**
      * 指定プレイヤーに現在ディメンションの全インクデータを完全同期する。
      * リビジョンは永続化されたアリーナ単位の値を送信する。
      */

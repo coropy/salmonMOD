@@ -22,9 +22,14 @@ import yam.salmon.weapon.InkShooterService;
 import yam.salmon.weapon.InkShooterVisualConfig;
 import yam.salmon.weapon.InkShotEffects;
 import yam.salmon.weapon.InkShotResult;
+import yam.salmon.weapon.InkTrajectoryResult;
 import yam.salmon.weapon.InkVisualColorResolver;
+import yam.salmon.weapon.InkTrailPaintConfig;
+import yam.salmon.weapon.InkWeaponConfig;
+import yam.salmon.weapon.InkWeaponRegistry;
 
 import java.util.Map;
+import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -34,17 +39,17 @@ import java.util.concurrent.ConcurrentHashMap;
 public class InkShooterItem extends Item {
     private static final Logger LOGGER = LoggerFactory.getLogger(Salmon.MOD_ID + ".item");
 
-    private final InkShooterConfig config;
+    private final InkWeaponConfig config;
     static final Map<UUID, Long> nextFireTick = new ConcurrentHashMap<>();
 
     /** 視覚弾道Payloadの送信範囲（ブロック） */
     private static final double VISUAL_PAYLOAD_RANGE = 64.0;
 
     public InkShooterItem() {
-        this(InkShooterConfig.DEFAULT);
+        this(InkWeaponConfig.INK_SHOOTER);
     }
 
-    public InkShooterItem(InkShooterConfig config) {
+    public InkShooterItem(InkWeaponConfig config) {
         super(new Properties()
                 .setId(ResourceKey.create(Registries.ITEM, Salmon.id("ink_shooter")))
                 .stacksTo(1)
@@ -52,7 +57,7 @@ public class InkShooterItem extends Item {
         this.config = config;
     }
 
-    public InkShooterConfig getConfig() {
+    public InkWeaponConfig getConfig() {
         return config;
     }
 
@@ -95,7 +100,7 @@ public class InkShooterItem extends Item {
         player.startUsingItem(hand);
         long serverTick = player.level().getServer().getTickCount();
         if (canFire(player, serverTick, config.fireIntervalTicks())) {
-            fire(player, config);
+            fire(player, config, serverTick);
         }
     }
 
@@ -125,15 +130,15 @@ public class InkShooterItem extends Item {
     // 射撃実行
     // ===================================================================
 
-    public static void fire(ServerPlayer player, InkShooterConfig config) {
+    public static void fire(ServerPlayer player, InkWeaponConfig config, long serverTick) {
         ServerLevel level = player.level();
-        long serverTick = level.getServer().getTickCount();
 
         if (!canFire(player, serverTick, config.fireIntervalTicks())) {
             return;
         }
 
-        InkShotResult.Result result = InkShooterService.fire(player, config);
+        long shotSeed = player.level().getRandom().nextLong();
+        InkTrajectoryResult result = InkShooterService.fire(player, config, shotSeed);
 
         // 発射音（サーバー側即時）
         InkShotEffects.spawnFireEffect(level, player.getEyePosition(), player);
@@ -143,45 +148,77 @@ public class InkShooterItem extends Item {
 
         markFired(player, serverTick, config.fireIntervalTicks());
 
-        LOGGER.debug("Shooter fired: player={} result={} tick={}",
-                player.getUUID(), result.type(), serverTick);
+        LOGGER.debug("Shooter fired: player={} hitType={} tick={}",
+                player.getUUID(), result.hitType(), serverTick);
     }
 
     // ===================================================================
     // 視覚弾道Payload送信
     // ===================================================================
 
-    private static void sendVisualPayload(ServerPlayer player, InkShotResult.Result result,
-                                           InkShooterConfig config) {
+    private static void sendVisualPayload(ServerPlayer player, InkTrajectoryResult result,
+                                           InkWeaponConfig config) {
         ServerLevel level = player.level();
         InkShooterVisualConfig vis = InkShooterVisualConfig.DEFAULT;
 
         Vec3 eyePos = player.getEyePosition();
         Vec3 lookDir = player.getLookAngle();
-        Vec3 visualStart = eyePos.add(lookDir.scale(vis.launchForwardOffset()));
-        Vec3 visualEnd = result.endPosition();
 
-        double distance = visualStart.distanceTo(visualEnd);
-        int travelTicks = Math.max(vis.minTravelTicks(),
-                Math.min(vis.maxTravelTicks(),
-                        (int) Math.ceil(distance / vis.speedBlocksPerTick())));
+        // 視覚開始位置: 手元から（軌道の最初の点を基準に補正）
+        Vec3 visualStart = eyePos.add(lookDir.scale(vis.launchForwardOffset()));
+
+        // 軌道点を視覚開始位置からの相対でリスト化
+        List<Vec3> trajPoints = result.points();
+        java.util.List<Vec3> visualPoints = new java.util.ArrayList<>();
+
+        // 最初の点を視覚開始位置に置き換え
+        visualPoints.add(visualStart);
+
+        // 残りの軌道点を間引いて追加（最大制御点に収める）
+        int maxPoints = InkShotVisualPayload.MAX_CONTROL_POINTS - 1;
+        int remainingTrajPoints = trajPoints.size() - 1;
+        if (remainingTrajPoints > 0) {
+            int step = Math.max(1, remainingTrajPoints / maxPoints);
+            for (int i = 1; i < trajPoints.size(); i += step) {
+                visualPoints.add(trajPoints.get(i));
+            }
+            // 最終点が含まれていない場合は追加
+            Vec3 last = trajPoints.get(trajPoints.size() - 1);
+            if (!visualPoints.get(visualPoints.size() - 1).equals(last)) {
+                visualPoints.add(last);
+            }
+        }
+
+        // 飛行tick数 = 実際にシミュレーションしたtick数（maxFlightTicksを上限）
+        int flightTicks = result.simulatedSegments() / Math.max(1, config.trajectorySubstepsPerTick());
 
         int colorRgb = InkVisualColorResolver.resolveShotColor(player);
 
-        byte hitType = switch (result.type()) {
+        byte hitType = switch (result.hitType()) {
             case MISS -> InkShotVisualPayload.HIT_MISS;
             case BLOCK_HIT -> InkShotVisualPayload.HIT_BLOCK;
             case ENTITY_HIT -> InkShotVisualPayload.HIT_ENTITY;
         };
 
+        // トレイル滴ビジュアルをPayload用に変換
+        List<InkShotVisualPayload.InkTrailDropVisual> trailDrops = new java.util.ArrayList<>();
+        if (result.trailPaintResult() != null) {
+            for (var drop : result.trailPaintResult().visuals()) {
+                if (trailDrops.size() >= InkShotVisualPayload.MAX_TRAIL_DROPS) break;
+                trailDrops.add(new InkShotVisualPayload.InkTrailDropVisual(
+                        drop.start(), drop.end(), drop.travelTicks(),
+                        InkTrailPaintConfig.VISUAL_DROP_SIZE));
+            }
+        }
+
         InkShotVisualPayload payload = new InkShotVisualPayload(
                 player.getId(),
-                visualStart.x, visualStart.y, visualStart.z,
-                visualEnd.x, visualEnd.y, visualEnd.z,
-                travelTicks,
+                visualPoints,
+                flightTicks,
                 colorRgb,
-                vis.projectileSize(),
-                hitType
+                config.visualProjectileSize(),
+                hitType,
+                trailDrops
         );
 
         for (ServerPlayer recipient : level.players()) {
