@@ -25,8 +25,10 @@ import java.util.Optional;
 /**
  * トレイル塗装サービス: 主弾の軌道から小さなインク滴を下方向へ落とす。
  *
- * <p>軌道substep線分からワールド距離ベースでサンプル位置を決定し、
+ * <p>軌道substep線分からランダムなワールド距離間隔でサンプル位置を決定し、
  * 下方向レイキャストで床や段差に命中したら既存のSurface Patch塗装を呼び出す。</p>
+ *
+ * <p>滴ごとに着弾位置からArenaを解決し、複数Arenaに対応する。</p>
  */
 public final class InkTrailPaintService {
     private static final Logger LOGGER = LoggerFactory.getLogger(Salmon.MOD_ID + ".weapon");
@@ -61,13 +63,16 @@ public final class InkTrailPaintService {
     /**
      * 軌道サブステップ線分からトレイル滴をサンプリングし、塗装と視覚情報を生成する。
      *
+     * <p>滴ごとに自身の着弾BlockPosからArenaを解決する。
+     * 複数Arenaへ滴が落ちる場合もtransaction内で正しく集約される。</p>
+     *
      * @param level     サーバーレベル
      * @param shooter   発射者
      * @param config    武器設定
      * @param segments  軌道substep線分リスト
      * @param totalTravelled 軌道の総移動距離
      * @param shotSeed  発射ごとのシード（位置多様化用）
-     * @param accumulator 塗装変更の集約先
+     * @param transaction 射撃トランザクション（蓄積先）
      * @return トレイル塗装の統計結果
      */
     public static TrailPaintResult paintTrail(
@@ -77,7 +82,7 @@ public final class InkTrailPaintService {
             List<TrailSegment> segments,
             double totalTravelled,
             long shotSeed,
-            InkPaintAccumulator accumulator) {
+            InkShotPaintTransaction transaction) {
 
         InkTrailPaintConfig trail = config.trailPaintConfig();
         if (!trail.enabled() || trail.maxTrailDropsPerShot() <= 0 || segments.isEmpty()) {
@@ -89,9 +94,10 @@ public final class InkTrailPaintService {
         // チーム判定
         byte team = shooter.isShiftKeyDown() ? InkTeam.TEAM_B : InkTeam.TEAM_A;
 
-        // 最初のサンプル距離を shotSeed から多様化（連射時の補完効果）
-        double phaseOffset = (shotSeed & 0x7FFFFFFF) * trail.sampleSpacing() / ((double) Integer.MAX_VALUE);
-        double nextSampleDistance = trail.minimumDistanceFromMuzzle() + phaseOffset;
+        // 最初のサンプル距離をランダム化
+        double firstDropDistance = trail.minimumDistanceFromMuzzle()
+                + random.nextDouble() * trail.maxTrailDropSpacing();
+        double nextSampleDistance = firstDropDistance;
 
         // 主弾命中時の最終距離（命中位置までの距離）
         double impactDistance = totalTravelled;
@@ -104,9 +110,7 @@ public final class InkTrailPaintService {
         int successfulDrops = 0;
         List<TrailDropVisual> visuals = new ArrayList<>();
 
-        int segmentIndex = 0;
         for (TrailSegment seg : segments) {
-            segmentIndex++;
             if (successfulDrops >= trail.maxTrailDropsPerShot()) break;
 
             double segStartDist = seg.segmentStartDistance();
@@ -118,7 +122,7 @@ public final class InkTrailPaintService {
                 if (successfulDrops >= trail.maxTrailDropsPerShot()) break;
                 candidates++;
 
-                // 着弾点直前は停止
+                // 着弾点直前は停止（Entityヒットでも、通過済み軌道まで）
                 if (nextSampleDistance >= stopBeforeImpact) break;
 
                 // 線形補間で厳密なサンプル位置を求める
@@ -129,7 +133,8 @@ public final class InkTrailPaintService {
                 // paintChance に基づく確率判定
                 if (random.nextDouble() > trail.paintChance()) {
                     chanceRejected++;
-                    nextSampleDistance += trail.sampleSpacing();
+                    // ランダム間隔で次へ
+                    nextSampleDistance += trail.randomSpacing(random);
                     continue;
                 }
 
@@ -146,7 +151,7 @@ public final class InkTrailPaintService {
                 double jitterFwd = (random.nextGaussian() * trail.horizontalJitter() * 0.5);
                 Vec3 jitteredPos = samplePos.add(right.scale(jitterRight)).add(forward.scale(jitterFwd));
 
-                // 下方向レイキャスト
+                // 下方向レイキャスト（常にワールド下方向）
                 Vec3 rayStart = jitteredPos.add(0, trail.verticalStartOffset(), 0);
                 Vec3 rayEnd = rayStart.add(0, -trail.downwardRange(), 0);
 
@@ -159,7 +164,7 @@ public final class InkTrailPaintService {
 
                 if (hit == null || hit.getType() == HitResult.Type.MISS) {
                     rayMisses++;
-                    nextSampleDistance += trail.sampleSpacing();
+                    nextSampleDistance += trail.randomSpacing(random);
                     continue;
                 }
 
@@ -167,12 +172,12 @@ public final class InkTrailPaintService {
                 Direction hitFace = hit.getDirection();
                 Vec3 hitLoc = hit.getLocation();
 
-                // アリーナチェック
+                // 滴自身の着弾BlockPosからArenaを解決
                 Optional<InkArena> arenaOpt = InkArenaManager.getInstance()
                         .findArenaContaining(level, hitPos);
                 if (arenaOpt.isEmpty()) {
                     unpaintableHits++;
-                    nextSampleDistance += trail.sampleSpacing();
+                    nextSampleDistance += trail.randomSpacing(random);
                     continue;
                 }
 
@@ -182,19 +187,20 @@ public final class InkTrailPaintService {
                 // 塗装可能判定
                 if (!InkPaintability.isPaintableBlock(level, hitPos, targetState)) {
                     unpaintableHits++;
-                    nextSampleDistance += trail.sampleSpacing();
+                    nextSampleDistance += trail.randomSpacing(random);
                     continue;
                 }
 
                 // 面露出判定
                 if (!InkPaintability.isSurfaceExposed(level, hitPos, hitFace)) {
                     unpaintableHits++;
-                    nextSampleDistance += trail.sampleSpacing();
+                    nextSampleDistance += trail.randomSpacing(random);
                     continue;
                 }
 
-                // 塗装実行（アキュムレータに追加、即時同期しない）
+                // 塗装実行（アリーナ別トランザクションに追加、即時同期しない）
                 InkStorage inkStorage = InkArenaManager.getInstance().getInkStorage();
+                InkPaintAccumulator accumulator = transaction.forArena(arena);
                 MultiSurfacePaintResult paintResult = InkPaintingService.paintInto(
                         level, arena, inkStorage,
                         hitPos, hitFace, hitLoc,
@@ -209,7 +215,8 @@ public final class InkTrailPaintService {
                     visuals.add(new TrailDropVisual(samplePos, hitLoc, dropTravelTicks));
                 }
 
-                nextSampleDistance += trail.sampleSpacing();
+                // ランダム間隔で次へ
+                nextSampleDistance += trail.randomSpacing(random);
             }
         }
 

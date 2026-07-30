@@ -14,8 +14,6 @@ import yam.salmon.arena.InkArena;
 import yam.salmon.arena.InkArenaManager;
 import yam.salmon.combat.InkCombatService;
 import yam.salmon.ink.*;
-import yam.salmon.network.InkSyncManager;
-import yam.salmon.weapon.InkTrajectoryResult.HitType;
 
 import java.util.Optional;
 
@@ -37,6 +35,9 @@ public final class InkShooterService {
     /**
      * 1発の射撃を放物線軌道で実行する（統合版: トレイル塗装を含む）。
      *
+     * <p>Entityヒット・MISS・主弾終点がアリーナ外でも、
+     * 軌道途中でアリーナ内へ落ちたトレイル滴は塗装される。</p>
+     *
      * @param player   発射者
      * @param config   武器設定
      * @param shotSeed 発射ごとのシード（連射時の滴位置多様化用）
@@ -51,38 +52,41 @@ public final class InkShooterService {
                 config.weaponId(), result.hitType(), result.travelledDistance(),
                 result.simulatedSegments(), result.points().size(), result.trailSegments().size());
 
-        InkPaintAccumulator accumulator = new InkPaintAccumulator();
+        // アリーナ別トランザクション（主弾+滴の全変更を集約）
+        InkShotPaintTransaction transaction = new InkShotPaintTransaction();
 
-        // 主弾処理
+        // 主弾処理（BlockHit時のみ塗装）
         switch (result.hitType()) {
-            case BLOCK_HIT -> handleBlockHit(player, level, result, config, accumulator);
+            case BLOCK_HIT -> handleBlockHit(player, level, result, config, transaction);
             case ENTITY_HIT -> handleEntityHit(player, level, result, config);
             case MISS -> handleMiss(level, result);
         }
 
-        // トレイル塗装（軌道substep線分から滴サンプリング）
+        // トレイル塗装（全ヒット種別で実行、滴ごとに独自のArenaを解決）
         InkTrailPaintService.TrailPaintResult trailResult = InkTrailPaintService.paintTrail(
                 level, player, config, result.trailSegments(),
-                result.travelledDistance(), shotSeed, accumulator);
+                result.travelledDistance(), shotSeed, transaction);
 
-        // 一括コミット: 主弾 + トレイル滴 → revision 1回 + 同期1回
-        if (!accumulator.isEmpty() && result.hitType() != HitType.MISS) {
-            Optional<InkArena> arenaOpt = findHitArena(level, result);
-            if (arenaOpt.isPresent()) {
-                InkSyncManager.getInstance().commitAccumulator(level, arenaOpt.get(), accumulator);
-            }
-        } else if (!accumulator.isEmpty()) {
-            // MISS+滴のみの場合: hitBlockPosがないのでtrail paint内で使われたarenaを探す必要あり
-            // 簡易実装: 最初の1滴のヒットポジションからアリーナを検索
-            // trailSegmentsから滴着弾のarenaを推測（paintTrail内で判定済み）
+        // 一括コミット: 主弾 + トレイル滴 → アリーナごとにrevision 1回 + 同期1回
+        if (transaction.hasAnyChanges()) {
+            transaction.commitAll(level);
         }
 
-        if (trailResult.successfulDrops() > 0) {
-            LOGGER.info("Trail paint: player={} weapon={} drops={} surfaces={} cells={}",
-                    player.getUUID(), config.weaponId(),
+        boolean mainPainted = result.hitType() == InkTrajectoryResult.HitType.BLOCK_HIT
+                && transaction.totalChangedCells() > 0;
+        boolean trailsChanged = trailResult.successfulDrops() > 0;
+
+        if (trailsChanged || mainPainted) {
+            LOGGER.info("Shot paint result:\n  mainImpact={}\n  mainPainted={}\n  trailCandidates={}\n  trailSuccessful={}\n  changedSurfaces={}\n  changedCells={}\n  affectedArenas={}",
+                    result.hitType(),
+                    mainPainted,
+                    trailResult.candidates(),
                     trailResult.successfulDrops(),
-                    accumulator.changedSurfaceCount(),
-                    accumulator.changedCellCount());
+                    transaction.totalChangedSurfaces(),
+                    transaction.totalChangedCells(),
+                    transaction.affectedArenaIds());
+        } else if (result.hitType() == InkTrajectoryResult.HitType.BLOCK_HIT) {
+            LOGGER.info("Shot paint result: mainImpact=BLOCK mainPainted=false trailSuccessful=0 (no paint change)");
         }
 
         // trailPaintResultを結果に埋め込んで返す
@@ -95,16 +99,9 @@ public final class InkShooterService {
                 result.trailSegments(), trailResult);
     }
 
-    private static Optional<InkArena> findHitArena(ServerLevel level, InkTrajectoryResult result) {
-        if (result.blockHitPos() != null) {
-            return InkArenaManager.getInstance().findArenaContaining(level, result.blockHitPos());
-        }
-        return Optional.empty();
-    }
-
     private static void handleBlockHit(ServerPlayer player, ServerLevel level,
                                         InkTrajectoryResult result, InkWeaponConfig config,
-                                        InkPaintAccumulator accumulator) {
+                                        InkShotPaintTransaction transaction) {
         BlockPos hitPos = result.blockHitPos();
         Direction hitFace = result.blockHitFace();
         Vec3 hitLocation = result.blockHitExactLocation();
@@ -128,7 +125,8 @@ public final class InkShooterService {
                 byte team = player.isShiftKeyDown() ? InkTeam.TEAM_B : InkTeam.TEAM_A;
                 InkStorage inkStorage = InkArenaManager.getInstance().getInkStorage();
 
-                // アキュムレータに追加（即時同期しない）
+                // アリーナ別トランザクションに追加
+                InkPaintAccumulator accumulator = transaction.forArena(arena);
                 MultiSurfacePaintResult paintResult = InkPaintingService.paintInto(
                         level, arena, inkStorage,
                         hitPos, hitFace, hitLocation,

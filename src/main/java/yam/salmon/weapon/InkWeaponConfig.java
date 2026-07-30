@@ -59,21 +59,21 @@ public record InkWeaponConfig(
         /** トレイル塗装設定（弾道下へのインク滴） */
         InkTrailPaintConfig trailPaintConfig
 ) {
-    /** デフォルトのインクシューター設定 */
+    /** デフォルトのインクシューター設定（短射程・高重力・低頻度大粒トレイル） */
     public static final InkWeaponConfig INK_SHOOTER = new InkWeaponConfig(
             Salmon.id("ink_shooter"),
             3,      // fireIntervalTicks
-            3.5,    // initialSpeed
-            0.04,   // gravityPerTick
-            16,     // maxFlightTicks
-            28.0,   // maxRange
+            1.85,   // initialSpeed (blocks/tick)
+            0.11,   // gravityPerTick
+            9,      // maxFlightTicks
+            13.0,   // maxRange (blocks)
             1.5,    // horizontalSpreadDegrees
             1.0,    // verticalSpreadDegrees
             2.0f,   // damage
-            0.25,   // paintRadius
+            0.25,   // paintRadius (main impact)
             6,      // trajectorySubstepsPerTick
             0.07,   // collisionRadius
-            0.14f,  // visualProjectileSize
+            0.10f,  // visualProjectileSize
             true,   // paintOnBlockHit
             true,   // damageEntities
             InkTrailPaintConfig.STANDARD

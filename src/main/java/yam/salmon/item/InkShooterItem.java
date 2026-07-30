@@ -24,7 +24,6 @@ import yam.salmon.weapon.InkShotEffects;
 import yam.salmon.weapon.InkShotResult;
 import yam.salmon.weapon.InkTrajectoryResult;
 import yam.salmon.weapon.InkVisualColorResolver;
-import yam.salmon.weapon.InkTrailPaintConfig;
 import yam.salmon.weapon.InkWeaponConfig;
 import yam.salmon.weapon.InkWeaponRegistry;
 
@@ -207,7 +206,7 @@ public class InkShooterItem extends Item {
                 if (trailDrops.size() >= InkShotVisualPayload.MAX_TRAIL_DROPS) break;
                 trailDrops.add(new InkShotVisualPayload.InkTrailDropVisual(
                         drop.start(), drop.end(), drop.travelTicks(),
-                        InkTrailPaintConfig.VISUAL_DROP_SIZE));
+                        config.trailPaintConfig().visualDropSize()));
             }
         }
 

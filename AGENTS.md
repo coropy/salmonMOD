@@ -85,8 +85,9 @@ ModInitializer。ブロック/BlockEntityの登録、イベントリスナー（
 | `InkWeaponRegistry.java` | 武器設定のレジストリ管理。 |
 | `InkTrajectoryResult.java` | 軌道シミュレーション結果レコード。substep線分（`trailSegments`）とトレイル塗装結果（`trailPaintResult`）を含む。 |
 | `InkTrajectorySimulator.java` | 放物線軌道シミュレーター。substep線分を収集し `TrailSegment` リストを出力。 |
-| `InkTrailPaintConfig.java` | トレイル塗装設定レコード。`sampleSpacing`, `downwardRange`, `paintRadius`, `horizontalJitter`, `paintChance` 等（Phase 8）。3種のプリセット（STANDARD/SHORT_RANGE/LONG_RANGE）+ DISABLED。 |
-| `InkTrailPaintService.java` | トレイル塗装サービス。軌道substep線分から距離ベースで滴サンプル位置を決定し、下方向レイキャスト→塗装分配→アキュムレータ蓄積（Phase 8）。 |
+| `InkTrailPaintConfig.java` | トレイル塗装設定レコード。ランダム間隔（`minTrailDropSpacing`/`maxTrailDropSpacing`）、`downwardRange`、`paintRadius`、`horizontalJitter`、`paintChance`、`visualDropSize` 等（Phase 8）。3種のプリセット（STANDARD/SHORT_RANGE/LONG_RANGE）+ DISABLED。`randomSpacing(RandomSource)` でランダム間隔生成。 |
+| `InkTrailPaintService.java` | トレイル塗装サービス。軌道substep線分からランダムワールド距離間隔で滴サンプル位置を決定し、滴ごとに自身の着弾BlockPosからArenaを解決、`InkShotPaintTransaction` へ蓄積（Phase 8）。Entityヒット/MISS/主弾アリーナ外でも滴は独立して塗装される。角度依存の抑制なし。常にワールド下方向にレイキャスト。 |
+| `InkShotPaintTransaction.java` | 1射撃の塗装変更をアリーナごとに集約するトランザクション（Phase 8）。`forArena()` でアリーナ別アキュムレータ取得、`commitAll()` で一括保存・同期。主弾と滴が異なるアリーナへ落ちる場合を安全に扱う。 |
 
 #### `combat/` — 戦闘システム
 | クラス | 役割 |
