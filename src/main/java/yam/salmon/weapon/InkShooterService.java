@@ -97,7 +97,8 @@ public final class InkShooterService {
                 result.hitType(), result.blockHitPos(), result.blockHitFace(),
                 result.blockHitExactLocation(), result.entityId(),
                 result.entityHitPosition(), result.damaged(),
-                result.trailSegments(), trailResult, result.finishReason());
+                result.trailSegments(), trailResult, result.finishReason(),
+                result.age());
     }
 
     private static void handleBlockHit(ServerPlayer player, ServerLevel level,

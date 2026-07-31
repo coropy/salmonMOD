@@ -188,9 +188,8 @@ public class InkShooterItem extends Item {
             }
         }
 
-        // 飛行tick数 = 実際にシミュレーションしたtick数（maxFlightTicksを上限、最低1tick保証）
-        int flightTicks = Math.max(1,
-                result.simulatedSegments() / Math.max(1, config.trajectorySubstepsPerTick()));
+        // 飛行tick数 = 実際にシミュレーションが走ったtick数（サーバー実測値）
+        int flightTicks = Math.max(1, result.age() + 1);
 
         int colorRgb = InkVisualColorResolver.resolveShotColor(player);
 

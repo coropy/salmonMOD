@@ -25,12 +25,19 @@ import java.util.Optional;
  * トレイル塗装サービス: 主弾の軌道から小さなインク滴を下方向へ落とす。
  *
  * <p>軌道substep線分からランダムなワールド距離間隔でサンプル位置を決定し、
- * 下方向レイキャストで床や段差に命中したら既存のSurface Patch塗装を呼び出す。</p>
+ * 下方向へ完全な物理シミュレーション（衝突またはワールド外まで）を行い、
+ * 床や段差に命中したら既存のSurface Patch塗装を呼び出す。</p>
  *
  * <p>滴ごとに着弾位置からArenaを解決し、複数Arenaに対応する。</p>
  */
 public final class InkTrailPaintService {
     private static final Logger LOGGER = LoggerFactory.getLogger(Salmon.MOD_ID + ".weapon");
+
+    /** トレイル滴落下シミュレーションの絶対安全上限tick */
+    private static final int HARD_DROP_SAFETY_TICKS = 600;
+
+    /** ワールド下限マージン */
+    private static final double OUT_OF_WORLD_MARGIN = 10.0;
 
     private InkTrailPaintService() {}
 
@@ -40,7 +47,7 @@ public final class InkTrailPaintService {
     public record TrailSegment(Vec3 start, Vec3 end, double segmentStartDistance) {}
 
     /**
-     * ドロップの視覚情報。
+     * ドロップの視覚情報（サーバーで実測した着弾tick数を含む）。
      */
     public record TrailDropVisual(Vec3 start, Vec3 end, int travelTicks) {}
 
@@ -53,10 +60,11 @@ public final class InkTrailPaintService {
             int rayMisses,
             int unpaintableHits,
             int successfulDrops,
+            int outOfWorldDrops,
             List<TrailDropVisual> visuals
     ) {
         public static final TrailPaintResult EMPTY =
-                new TrailPaintResult(0, 0, 0, 0, 0, List.of());
+                new TrailPaintResult(0, 0, 0, 0, 0, 0, List.of());
     }
 
     /**
@@ -64,6 +72,10 @@ public final class InkTrailPaintService {
      *
      * <p>滴ごとに自身の着弾BlockPosからArenaを解決する。
      * 複数Arenaへ滴が落ちる場合もtransaction内で正しく集約される。</p>
+     *
+     * <p>各滴は独立した物理シミュレーションで落下させ、
+     * 固体ブロック衝突・ワールド外・安全上限到達のいずれかまで計算する。
+     * 実際の落下tick数を視覚Payloadに含める。</p>
      *
      * @param level     サーバーレベル
      * @param shooter   発射者
@@ -107,7 +119,11 @@ public final class InkTrailPaintService {
         int rayMisses = 0;
         int unpaintableHits = 0;
         int successfulDrops = 0;
+        int outOfWorldDrops = 0;
         List<TrailDropVisual> visuals = new ArrayList<>();
+
+        // 滴落下用の重力（武器重力と同じ）
+        double dropGravity = config.gravityPerTick();
 
         for (TrailSegment seg : segments) {
             if (successfulDrops >= trail.maxTrailDropsPerShot()) break;
@@ -132,7 +148,6 @@ public final class InkTrailPaintService {
                 // paintChance に基づく確率判定
                 if (random.nextDouble() > trail.paintChance()) {
                     chanceRejected++;
-                    // ランダム間隔で次へ
                     nextSampleDistance += trail.randomSpacing(random);
                     continue;
                 }
@@ -150,22 +165,29 @@ public final class InkTrailPaintService {
                 double jitterFwd = (random.nextGaussian() * trail.horizontalJitter() * 0.5);
                 Vec3 jitteredPos = samplePos.add(right.scale(jitterRight)).add(forward.scale(jitterFwd));
 
-                // 下方向レイキャスト（常にワールド下方向）
-                Vec3 rayStart = jitteredPos.add(0, trail.verticalStartOffset(), 0);
-                Vec3 rayEnd = rayStart.add(0, -trail.downwardRange(), 0);
+                // 滴の開始位置
+                Vec3 dropStart = jitteredPos.add(0, trail.verticalStartOffset(), 0);
 
-                BlockHitResult hit = InkCollisionRaycast.clipSolidBlocks(
-                        level, rayStart, rayEnd, shooter);
+                // --- 滴の完全な物理シミュレーション ---
+                DropSimulationResult dropResult = simulateDrop(
+                        level, shooter, dropStart, dropGravity);
 
-                if (hit == null || hit.getType() == HitResult.Type.MISS) {
+                if (dropResult.finishReason().equals("OUT_OF_WORLD")) {
+                    outOfWorldDrops++;
+                    nextSampleDistance += trail.randomSpacing(random);
+                    continue;
+                }
+
+                if (!dropResult.isBlockHit()) {
                     rayMisses++;
                     nextSampleDistance += trail.randomSpacing(random);
                     continue;
                 }
 
-                BlockPos hitPos = hit.getBlockPos();
-                Direction hitFace = hit.getDirection();
-                Vec3 hitLoc = hit.getLocation();
+                // ブロックヒットした場合: 着弾処理
+                BlockPos hitPos = dropResult.hitBlockPos();
+                Direction hitFace = dropResult.hitFace();
+                Vec3 hitLoc = dropResult.hitLocation();
 
                 // 滴自身の着弾BlockPosからArenaを解決
                 Optional<InkArena> arenaOpt = InkArenaManager.getInstance()
@@ -204,10 +226,9 @@ public final class InkTrailPaintService {
 
                 if (paintResult.success()) {
                     successfulDrops++;
-                    // 視覚滴情報: start=samplePos, end=hitLoc
-                    int dropTravelTicks = Math.max(2,
-                            (int) Math.ceil(trail.downwardRange() * 2.0));
-                    visuals.add(new TrailDropVisual(samplePos, hitLoc, dropTravelTicks));
+                    // 実際の落下tick数をPayloadに含める
+                    int dropTravelTicks = Math.max(1, dropResult.travelTicks());
+                    visuals.add(new TrailDropVisual(dropStart, hitLoc, dropTravelTicks));
                 }
 
                 // ランダム間隔で次へ
@@ -217,13 +238,119 @@ public final class InkTrailPaintService {
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Trail paint: weapon={} len={:.1f} candidates={} chanceRejected={} "
-                            + "rayMisses={} unpaintable={} drops={} visuals={}",
+                            + "rayMisses={} unpaintable={} drops={} outOfWorld={} visuals={}",
                     config.weaponId(), totalTravelled,
                     candidates, chanceRejected, rayMisses, unpaintableHits,
-                    successfulDrops, visuals.size());
+                    successfulDrops, outOfWorldDrops, visuals.size());
         }
 
         return new TrailPaintResult(candidates, chanceRejected, rayMisses,
-                unpaintableHits, successfulDrops, visuals);
+                unpaintableHits, successfulDrops, outOfWorldDrops, visuals);
+    }
+
+    // ===================================================================
+    // 滴の物理シミュレーション
+    // ===================================================================
+
+    /**
+     * 滴の落下を完全にシミュレーションする。
+     *
+     * <p>終了条件:
+     * <ol>
+     *   <li>固体ブロック衝突</li>
+     *   <li>ワールド下限より下へ落下</li>
+     *   <li>NaN/Infinity 発生</li>
+     *   <li>安全上限tick到達</li>
+     * </ol>
+     *
+     * @return シミュレーション結果（着弾位置・面・飛行tick数・終了理由）
+     */
+    private static DropSimulationResult simulateDrop(
+            ServerLevel level,
+            ServerPlayer shooter,
+            Vec3 startPosition,
+            double gravity) {
+
+        Vec3 position = startPosition;
+        Vec3 velocity = new Vec3(0.0, 0.0, 0.0); // 滴は初速0で落下開始
+
+        int tick = 0;
+        for (; tick < HARD_DROP_SAFETY_TICKS; tick++) {
+            Vec3 previousPosition = position;
+            Vec3 nextPosition = position.add(velocity);
+
+            // --- 終了条件: ワールド下限 ---
+            if (nextPosition.y < -300.0 - OUT_OF_WORLD_MARGIN) {
+                return DropSimulationResult.outOfWorld(tick + 1, nextPosition);
+            }
+
+            // --- 終了条件: 異常物理 ---
+            if (!isFinite(nextPosition) || !isFinite(velocity)) {
+                return DropSimulationResult.invalidPhysics(tick + 1, nextPosition);
+            }
+
+            // 衝突判定
+            BlockHitResult blockHit = InkCollisionRaycast.clipSolidBlocks(
+                    level, previousPosition, nextPosition, shooter);
+
+            if (blockHit != null && blockHit.getType() == HitResult.Type.BLOCK) {
+                return DropSimulationResult.blockHit(
+                        tick + 1,
+                        blockHit.getLocation(),
+                        blockHit.getBlockPos(),
+                        blockHit.getDirection());
+            }
+
+            position = nextPosition;
+            velocity = velocity.add(0.0, -gravity, 0.0);
+        }
+
+        // 安全上限到達
+        LOGGER.warn("Trail drop SAFETY_TIMEOUT: startY={:.1f} endY={:.1f}",
+                startPosition.y, position.y);
+        return DropSimulationResult.safetyTimeout(tick, position);
+    }
+
+    private static boolean isFinite(Vec3 v) {
+        return Double.isFinite(v.x) && Double.isFinite(v.y) && Double.isFinite(v.z);
+    }
+
+    // ===================================================================
+    // 滴シミュレーション結果
+    // ===================================================================
+
+    /**
+     * 1滴分の落下シミュレーション結果。
+     */
+    private record DropSimulationResult(
+            int travelTicks,
+            Vec3 hitLocation,
+            BlockPos hitBlockPos,
+            Direction hitFace,
+            String finishReason
+    ) {
+        static DropSimulationResult blockHit(int ticks, Vec3 hitLoc,
+                                              BlockPos hitPos, Direction face) {
+            return new DropSimulationResult(ticks, hitLoc, hitPos, face, "BLOCK_HIT");
+        }
+
+        static DropSimulationResult outOfWorld(int ticks, Vec3 finalPos) {
+            return new DropSimulationResult(ticks, finalPos, BlockPos.ZERO,
+                    Direction.DOWN, "OUT_OF_WORLD");
+        }
+
+        static DropSimulationResult invalidPhysics(int ticks, Vec3 finalPos) {
+            return new DropSimulationResult(ticks, finalPos, BlockPos.ZERO,
+                    Direction.DOWN, "INVALID_PHYSICS");
+        }
+
+        static DropSimulationResult safetyTimeout(int ticks, Vec3 finalPos) {
+            return new DropSimulationResult(ticks, finalPos, BlockPos.ZERO,
+                    Direction.DOWN, "SAFETY_TIMEOUT");
+        }
+
+        boolean isBlockHit() {
+            return "BLOCK_HIT".equals(finishReason);
+        }
     }
 }

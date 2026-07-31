@@ -26,8 +26,16 @@ import java.util.Optional;
  * substep単位でブロックおよびEntityとの衝突を判定しながら
  * 放物線軌道をシミュレーションする。</p>
  *
- * <p>{@code maxRange} は視覚軌道点の打ち切り距離としてのみ使用し、
- * シミュレーション本体（衝突検出）は {@code maxFlightTicks} まで継続する。</p>
+ * <p>終了条件は以下のみ:
+ * <ul>
+ *   <li>固体ブロックに衝突</li>
+ *   <li>有効なEntityに衝突</li>
+ *   <li>ワールド下限より下へ移動</li>
+ *   <li>NaN/Infinity 発生</li>
+ *   <li>{@code config.hardSafetyMaxTicks()} 到達（最終安全装置）</li>
+ * </ul>
+ *
+ * {@code maxRange} や累積飛行距離による強制終了は行わない。</p>
  */
 public final class InkTrajectorySimulator {
     private static final Logger LOGGER = LoggerFactory.getLogger(Salmon.MOD_ID + ".weapon");
@@ -38,11 +46,30 @@ public final class InkTrajectorySimulator {
     /** 円形拡散を使用するか */
     private static final boolean CIRCULAR_SPREAD = true;
 
-    /** 無限飛行防止用の絶対安全上限tick（configのmaxFlightTicksを上書きしないフォールバック） */
-    private static final int HARD_SAFETY_MAX_TICKS = 600;
+    /** ワールド下限より下への落下を許容するマージン */
+    private static final double OUT_OF_WORLD_MARGIN = 10.0;
+
+    /**
+     * 絶対ワールド下限。全ディメンションでこれより下はワールド外とみなす。
+     * 通常のOverworldはminY=-64 だが、ディメンションによって異なる可能性がある。
+     * 安全のため十分に低い値を使用する。
+     */
+    private static final double ABSOLUTE_MIN_Y = -300.0;
 
     private InkTrajectorySimulator() {}
 
+    /**
+     * 放物線軌道をシミュレーションする。
+     *
+     * <p>終了条件:
+     * <ol>
+     *   <li>固体ブロック衝突 → BLOCK_HIT</li>
+     *   <li>Entity衝突 → ENTITY_HIT</li>
+     *   <li>position.y < worldMinY - OUT_OF_WORLD_MARGIN → OUT_OF_WORLD</li>
+     *   <li>NaN/Infinity → INVALID_PHYSICS</li>
+     *   <li>age >= hardSafetyMaxTicks → SAFETY_TIMEOUT（警告ログ付き）</li>
+     * </ol>
+     */
     public static InkTrajectoryResult simulate(
             ServerLevel level,
             ServerPlayer shooter,
@@ -58,7 +85,7 @@ public final class InkTrajectorySimulator {
         Vec3 position = startPos;
 
         int substepsPerTick = config.trajectorySubstepsPerTick();
-        int maxFlightTicks = Math.min(config.maxFlightTicks(), HARD_SAFETY_MAX_TICKS);
+        int hardSafetyMaxTicks = config.hardSafetyMaxTicks();
         double gravityPerSubstep = config.gravityPerTick() / substepsPerTick;
 
         int pointInterval = Math.max(1, substepsPerTick);
@@ -72,14 +99,15 @@ public final class InkTrajectorySimulator {
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Trajectory start: lookDir=({:.3f},{:.3f},{:.3f}) startPos=({:.3f},{:.3f},{:.3f}) "
-                            + "initVel=({:.3f},{:.3f},{:.3f}) gravity={} maxTicks={}",
+                            + "initVel=({:.3f},{:.3f},{:.3f}) gravity={} hardSafetyMaxTicks={}",
                     lookDir.x, lookDir.y, lookDir.z,
                     startPos.x, startPos.y, startPos.z,
                     velocity.x, velocity.y, velocity.z,
-                    config.gravityPerTick(), maxFlightTicks);
+                    config.gravityPerTick(), hardSafetyMaxTicks);
         }
 
-        for (int tick = 0; tick < maxFlightTicks; tick++) {
+        int age = 0;
+        for (; age < hardSafetyMaxTicks; age++) {
             for (int sub = 0; sub < substepsPerTick; sub++) {
                 simulatedSegments++;
 
@@ -98,6 +126,21 @@ public final class InkTrajectorySimulator {
                             previousPosition, position, segmentStartDist));
                 }
 
+                // --- 終了条件1: ワールド下限 ---
+                if (position.y < ABSOLUTE_MIN_Y - OUT_OF_WORLD_MARGIN) {
+                    points.add(position);
+                    return makeOutOfWorld(points, position, simulatedSegments,
+                            trailSegments, age, "OUT_OF_WORLD");
+                }
+
+                // --- 終了条件2: 異常物理 ---
+                if (!isFinite(position) || !isFinite(velocity)) {
+                    points.add(position);
+                    return makeInvalidPhysics(points, position, simulatedSegments,
+                            trailSegments, age, "INVALID_PHYSICS");
+                }
+
+                // --- 衝突判定 ---
                 // 共通レイキャスト: COLLIDER基準（草・花を通過）
                 BlockHitResult blockHit = InkCollisionRaycast.clipSolidBlocks(
                         level, previousPosition, position, shooter);
@@ -125,14 +168,16 @@ public final class InkTrajectorySimulator {
                         ? previousPosition.distanceTo(blockHit.getLocation())
                         : Double.MAX_VALUE;
 
+                // Entityヒット（ブロックより近い場合）
                 if (entityHit != null && closestEntityDist < blockDist) {
                     points.add(entityHit.getLocation());
                     return makeEntityHit(points, entityHit.getLocation(),
                             travelledDistance, simulatedSegments,
                             entityHit.getEntity().getId(), entityHit.getLocation(),
-                            false, trailSegments, "ENTITY_HIT");
+                            false, trailSegments, age, "ENTITY_HIT");
                 }
 
+                // ブロックヒット
                 if (blockHit != null && blockHit.getType() == HitResult.Type.BLOCK) {
                     BlockPos hitBp = blockHit.getBlockPos();
                     Direction hitFace = blockHit.getDirection();
@@ -141,7 +186,8 @@ public final class InkTrajectorySimulator {
                     points.add(correctedHit);
                     return makeBlockHit(points, correctedHit,
                             travelledDistance, simulatedSegments,
-                            hitBp, hitFace, hitLocation, trailSegments, "BLOCK_HIT");
+                            hitBp, hitFace, hitLocation, trailSegments,
+                            age, "BLOCK_HIT");
                 }
 
                 // 視覚軌道点の収集（pointIntervalごと）
@@ -150,57 +196,104 @@ public final class InkTrajectorySimulator {
                 }
             }
 
+            // tickごとの重力更新
             velocity = velocity.add(0.0, -config.gravityPerTick(), 0.0);
         }
 
-        // 安全上限到達
+        // --- 安全上限到達（通常プレイでは発生しないはず） ---
+        LOGGER.warn("Trajectory SAFETY_TIMEOUT: weapon={} age={} pos=({:.1f},{:.1f},{:.1f}) "
+                        + "vel=({:.3f},{:.3f},{:.3f}) dist={:.1f} segments={}",
+                config.weaponId(), age,
+                position.x, position.y, position.z,
+                velocity.x, velocity.y, velocity.z,
+                travelledDistance, simulatedSegments);
+
         points.add(position);
-        return makeMiss(points, position, travelledDistance, simulatedSegments,
-                trailSegments, "SAFETY_TIMEOUT");
+        return makeResult(points, position, travelledDistance, simulatedSegments,
+                InkTrajectoryResult.HitType.MISS,
+                null, null, null, -1, null, false, trailSegments,
+                age, "SAFETY_TIMEOUT");
     }
 
-    private static InkTrajectoryResult makeMiss(List<Vec3> points, Vec3 endPos,
-                                                  double dist, int segments,
-                                                  List<InkTrailPaintService.TrailSegment> trail,
-                                                  String finishReason) {
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Trajectory finish: finishReason={} dist={:.2f} segments={} endPos=({:.1f},{:.1f},{:.1f})",
-                    finishReason, dist, segments,
-                    endPos.x, endPos.y, endPos.z);
-        }
-        return new InkTrajectoryResult(points, endPos, dist, segments,
-                InkTrajectoryResult.HitType.MISS,
-                null, null, null, -1, null, false, trail, null, finishReason);
-    }
+    // ===================================================================
+    // 終了条件ごとのファクトリ
+    // ===================================================================
 
     private static InkTrajectoryResult makeBlockHit(List<Vec3> points, Vec3 endPos,
                                                       double dist, int segments,
                                                       BlockPos bp, Direction face, Vec3 hitLoc,
                                                       List<InkTrailPaintService.TrailSegment> trail,
-                                                      String finishReason) {
+                                                      int age, String finishReason) {
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Trajectory finish: finishReason={} dist={:.2f} segments={} hitPos=({},{},{}) face={}",
-                    finishReason, dist, segments,
+            LOGGER.debug("Trajectory finish: finishReason={} age={} dist={:.2f} segments={} hitPos=({},{},{}) face={}",
+                    finishReason, age, dist, segments,
                     bp.getX(), bp.getY(), bp.getZ(), face);
         }
-        return new InkTrajectoryResult(points, endPos, dist, segments,
+        return makeResult(points, endPos, dist, segments,
                 InkTrajectoryResult.HitType.BLOCK_HIT,
-                bp, face, hitLoc, -1, null, false, trail, null, finishReason);
+                bp, face, hitLoc, -1, null, false, trail, age, finishReason);
     }
 
     private static InkTrajectoryResult makeEntityHit(List<Vec3> points, Vec3 endPos,
                                                        double dist, int segments,
                                                        int eid, Vec3 hitPos, boolean damaged,
                                                        List<InkTrailPaintService.TrailSegment> trail,
-                                                       String finishReason) {
+                                                       int age, String finishReason) {
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Trajectory finish: finishReason={} dist={:.2f} segments={} entityId={}",
-                    finishReason, dist, segments, eid);
+            LOGGER.debug("Trajectory finish: finishReason={} age={} dist={:.2f} segments={} entityId={}",
+                    finishReason, age, dist, segments, eid);
         }
-        return new InkTrajectoryResult(points, endPos, dist, segments,
+        return makeResult(points, endPos, dist, segments,
                 InkTrajectoryResult.HitType.ENTITY_HIT,
-                null, null, null, eid, hitPos, damaged, trail, null, finishReason);
+                null, null, null, eid, hitPos, damaged, trail, age, finishReason);
     }
+
+    private static InkTrajectoryResult makeOutOfWorld(List<Vec3> points, Vec3 endPos,
+                                                        int segments,
+                                                        List<InkTrailPaintService.TrailSegment> trail,
+                                                        int age, String finishReason) {
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("Trajectory finish: finishReason={} age={} endPos=({:.1f},{:.1f},{:.1f})",
+                    finishReason, age, endPos.x, endPos.y, endPos.z);
+        }
+        return makeResult(points, endPos, endPos.distanceTo(points.get(0)), segments,
+                InkTrajectoryResult.HitType.MISS,
+                null, null, null, -1, null, false, trail, age, finishReason);
+    }
+
+    private static InkTrajectoryResult makeInvalidPhysics(List<Vec3> points, Vec3 endPos,
+                                                            int segments,
+                                                            List<InkTrailPaintService.TrailSegment> trail,
+                                                            int age, String finishReason) {
+        LOGGER.warn("Trajectory INVALID_PHYSICS: age={} endPos=({:.1f},{:.1f},{:.1f})",
+                age, endPos.x, endPos.y, endPos.z);
+        return makeResult(points, endPos, endPos.distanceTo(points.get(0)), segments,
+                InkTrajectoryResult.HitType.MISS,
+                null, null, null, -1, null, false, trail, age, finishReason);
+    }
+
+    // ===================================================================
+    // 共通ファクトリ
+    // ===================================================================
+
+    private static InkTrajectoryResult makeResult(
+            List<Vec3> points, Vec3 endPos,
+            double dist, int segments,
+            InkTrajectoryResult.HitType hitType,
+            BlockPos blockHitPos, Direction blockHitFace, Vec3 blockHitExactLocation,
+            int entityId, Vec3 entityHitPosition, boolean damaged,
+            List<InkTrailPaintService.TrailSegment> trail,
+            int age, String finishReason) {
+        return new InkTrajectoryResult(points, endPos, dist, segments,
+                hitType,
+                blockHitPos, blockHitFace, blockHitExactLocation,
+                entityId, entityHitPosition, damaged, trail, null,
+                finishReason, age);
+    }
+
+    // ===================================================================
+    // 拡散
+    // ===================================================================
 
     public static Vec3 applySpread(Vec3 direction, InkWeaponConfig config, RandomSource random) {
         double hSpread = config.horizontalSpreadDegrees();
@@ -250,6 +343,10 @@ public final class InkTrajectorySimulator {
         }
     }
 
+    // ===================================================================
+    // ユーティリティ
+    // ===================================================================
+
     private static Vec3 correctHitPosition(Vec3 hitPos, Direction face) {
         double offset = 0.001;
         return new Vec3(
@@ -257,5 +354,9 @@ public final class InkTrajectorySimulator {
                 hitPos.y - face.getStepY() * offset,
                 hitPos.z - face.getStepZ() * offset
         );
+    }
+
+    private static boolean isFinite(Vec3 v) {
+        return Double.isFinite(v.x) && Double.isFinite(v.y) && Double.isFinite(v.z);
     }
 }

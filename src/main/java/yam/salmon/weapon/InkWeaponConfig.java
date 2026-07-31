@@ -23,10 +23,18 @@ public record InkWeaponConfig(
         /** 1tickあたりの重力加速度（下向き） */
         double gravityPerTick,
 
-        /** 安全上限tick数（無限飛行防止用。通常は衝突で終了）。1以上 */
-        int maxFlightTicks,
+        /**
+         * 安全上限tick数。バグによる無限飛行を防ぐための最終安全装置。
+         * 通常の射撃がこの値に到達しないよう、十分に大きい値に設定すること。
+         * 真上射撃・高所落下を含め、通常プレイでは常に衝突で終了するべき。
+         * 1以上。
+         */
+        int hardSafetyMaxTicks,
 
-        /** 参考射程（blocks）。武器設計上のパラメータ。飛行中の強制削除には使用しない */
+        /**
+         * 参考射程（blocks）。武器設計上のパラメータ。
+         * 飛行中の強制削除には使用しない。
+         */
         double maxRange,
 
         /** 水平方向の拡散角度（度数法）。0以上 */
@@ -59,13 +67,17 @@ public record InkWeaponConfig(
         /** トレイル塗装設定（弾道下へのインク滴） */
         InkTrailPaintConfig trailPaintConfig
 ) {
-    /** デフォルトのインクシューター設定（短射程・高重力・低頻度大粒トレイル） */
+    /**
+     * デフォルトのインクシューター設定（短射程・高重力・低頻度大粒トレイル）。
+     * hardSafetyMaxTicks=600: 初速1.85/重力0.11→頂点16.8tick、往復33.6tick。
+     * 高所から落下する場合も十分な余裕を持つ。
+     */
     public static final InkWeaponConfig INK_SHOOTER = new InkWeaponConfig(
             Salmon.id("ink_shooter"),
             3,      // fireIntervalTicks
             1.85,   // initialSpeed (blocks/tick)
             0.11,   // gravityPerTick
-            60,     // maxFlightTicks（安全上限。初速1.85/重力0.11→頂点16.8tick、往復33.6tick）
+            600,    // hardSafetyMaxTicks（安全上限。600tick≒30秒。通常の往復33.6tickに十分余裕）
             13.0,   // maxRange（参考射程、blocks）
             1.5,    // horizontalSpreadDegrees
             1.0,    // verticalSpreadDegrees
@@ -79,13 +91,16 @@ public record InkWeaponConfig(
             InkTrailPaintConfig.STANDARD
     );
 
-    /** 短射程・高拡散シューター（プリセット例） */
+    /**
+     * 短射程・高拡散シューター（プリセット例）。
+     * hardSafetyMaxTicks=800: 初速2.5/重力0.06→頂点41.7tick、往復83.3tick。
+     */
     public static final InkWeaponConfig SHORT_RANGE = new InkWeaponConfig(
             Salmon.id("ink_shooter_short"),
             2,      // fireIntervalTicks
             2.5,    // initialSpeed
             0.06,   // gravityPerTick
-            80,     // maxFlightTicks（安全上限。初速2.5/重力0.06→頂点41.7tick、往復83.3tick）
+            800,    // hardSafetyMaxTicks（安全上限。往復83.3tickに十分余裕）
             16.0,   // maxRange（参考射程、blocks）
             4.0,    // horizontalSpreadDegrees
             3.0,    // verticalSpreadDegrees
@@ -99,13 +114,16 @@ public record InkWeaponConfig(
             InkTrailPaintConfig.SHORT_RANGE
     );
 
-    /** 長射程・低拡散シューター（プリセット例） */
+    /**
+     * 長射程・低拡散シューター（プリセット例）。
+     * hardSafetyMaxTicks=1200: 初速4.5/重力0.02→頂点225tick、往復450tick。
+     */
     public static final InkWeaponConfig LONG_RANGE = new InkWeaponConfig(
             Salmon.id("ink_shooter_long"),
             5,      // fireIntervalTicks
             4.5,    // initialSpeed
             0.02,   // gravityPerTick
-            120,    // maxFlightTicks（安全上限。初速4.5/重力0.02→頂点225tick、往復450tick。256seg = 120*8=960不可。32tick制限付き）
+            1200,   // hardSafetyMaxTicks（安全上限。往復450tickに十分余裕）
             36.0,   // maxRange（参考射程、blocks）
             0.8,    // horizontalSpreadDegrees
             0.5,    // verticalSpreadDegrees
@@ -136,8 +154,8 @@ public record InkWeaponConfig(
         if (gravityPerTick < 0) {
             throw new IllegalArgumentException("gravityPerTick must be >= 0, got " + gravityPerTick);
         }
-        if (maxFlightTicks < 1) {
-            throw new IllegalArgumentException("maxFlightTicks must be >= 1, got " + maxFlightTicks);
+        if (hardSafetyMaxTicks < 1) {
+            throw new IllegalArgumentException("hardSafetyMaxTicks must be >= 1, got " + hardSafetyMaxTicks);
         }
         if (maxRange <= 0) {
             throw new IllegalArgumentException("maxRange must be > 0, got " + maxRange);
@@ -158,22 +176,23 @@ public record InkWeaponConfig(
             throw new IllegalArgumentException("collisionRadius must be >= 0, got " + collisionRadius);
         }
 
-        // パフォーマンス上限: 最大判定セグメント数 <= 1024（32tick*32substeps相当）
-        int maxSegments = maxFlightTicks * trajectorySubstepsPerTick;
-        if (maxSegments > 1024) {
+        // パフォーマンス上限: 最大判定セグメント数 <= 4096（600tick*6substeps=3600に余裕 / 1200tick*8substeps=9600は過大）
+        int maxSegments = hardSafetyMaxTicks * trajectorySubstepsPerTick;
+        if (maxSegments > 8192) {
             throw new IllegalArgumentException(
-                    "maxFlightTicks * trajectorySubstepsPerTick must be <= 1024, got " + maxSegments);
+                    "hardSafetyMaxTicks * trajectorySubstepsPerTick must be <= 8192, got " + maxSegments);
         }
     }
 
     /** 旧設定からの移行用ファクトリ */
+    @Deprecated
     public static InkWeaponConfig fromLegacy(InkShooterConfig legacy) {
         return new InkWeaponConfig(
                 Salmon.id("ink_shooter"),
                 legacy.fireIntervalTicks(),
                 legacy.range() / legacy.fireIntervalTicks() * 0.375, // 概算初速
                 0.0,    // gravityPerTick (旧設定は重力なし)
-                8,      // maxFlightTicks
+                600,    // hardSafetyMaxTicks
                 legacy.range(),
                 legacy.spreadDegrees(),
                 legacy.spreadDegrees(),
