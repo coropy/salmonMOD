@@ -39,15 +39,15 @@ public record InkTrailPaintConfig(
     /** 標準シューター用トレイル設定（低頻度・大粒・ランダム間隔） */
     public static final InkTrailPaintConfig STANDARD = new InkTrailPaintConfig(
             true,   // enabled
-            1.8,    // minTrailDropSpacing
-            3.0,    // maxTrailDropSpacing
+            3.0,    // minTrailDropSpacing
+            5.0,    // maxTrailDropSpacing
             2.5,    // downwardRange
-            0.27,   // paintRadius
+            0.5,   // paintRadius
             0.08,   // horizontalJitter
             0.05,   // verticalStartOffset
             0.75,   // minimumDistanceFromMuzzle
             0.35,   // minimumDistanceFromImpact
-            4,      // maxTrailDropsPerShot
+            2,      // maxTrailDropsPerShot
             0.9,    // paintChance
             0.14f   // visualDropSize
     );

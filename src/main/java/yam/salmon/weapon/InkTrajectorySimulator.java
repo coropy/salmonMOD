@@ -4,7 +4,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.phys.AABB;
@@ -23,9 +22,12 @@ import java.util.Optional;
 /**
  * 放物線軌道のシミュレーター。
  *
- * <p>初速・重力・射程・拡散のパラメータに基づき、
+ * <p>初速・重力・安全上限tickに基づき、
  * substep単位でブロックおよびEntityとの衝突を判定しながら
  * 放物線軌道をシミュレーションする。</p>
+ *
+ * <p>{@code maxRange} は視覚軌道点の打ち切り距離としてのみ使用し、
+ * シミュレーション本体（衝突検出）は {@code maxFlightTicks} まで継続する。</p>
  */
 public final class InkTrajectorySimulator {
     private static final Logger LOGGER = LoggerFactory.getLogger(Salmon.MOD_ID + ".weapon");
@@ -35,6 +37,9 @@ public final class InkTrajectorySimulator {
 
     /** 円形拡散を使用するか */
     private static final boolean CIRCULAR_SPREAD = true;
+
+    /** 無限飛行防止用の絶対安全上限tick（configのmaxFlightTicksを上書きしないフォールバック） */
+    private static final int HARD_SAFETY_MAX_TICKS = 600;
 
     private InkTrajectorySimulator() {}
 
@@ -53,8 +58,7 @@ public final class InkTrajectorySimulator {
         Vec3 position = startPos;
 
         int substepsPerTick = config.trajectorySubstepsPerTick();
-        int maxFlightTicks = config.maxFlightTicks();
-        double maxRange = config.maxRange();
+        int maxFlightTicks = Math.min(config.maxFlightTicks(), HARD_SAFETY_MAX_TICKS);
         double gravityPerSubstep = config.gravityPerTick() / substepsPerTick;
 
         int pointInterval = Math.max(1, substepsPerTick);
@@ -68,11 +72,11 @@ public final class InkTrajectorySimulator {
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Trajectory start: lookDir=({:.3f},{:.3f},{:.3f}) startPos=({:.3f},{:.3f},{:.3f}) "
-                            + "initVel=({:.3f},{:.3f},{:.3f}) gravity={} maxTicks={} maxRange={}",
+                            + "initVel=({:.3f},{:.3f},{:.3f}) gravity={} maxTicks={}",
                     lookDir.x, lookDir.y, lookDir.z,
                     startPos.x, startPos.y, startPos.z,
                     velocity.x, velocity.y, velocity.z,
-                    config.gravityPerTick(), maxFlightTicks, maxRange);
+                    config.gravityPerTick(), maxFlightTicks);
         }
 
         for (int tick = 0; tick < maxFlightTicks; tick++) {
@@ -92,20 +96,6 @@ public final class InkTrajectorySimulator {
                 if (segLen > 1e-9) {
                     trailSegments.add(new InkTrailPaintService.TrailSegment(
                             previousPosition, position, segmentStartDist));
-                }
-
-                double excessDistance = travelledDistance - maxRange;
-                if (excessDistance > 0) {
-                    double overstep = excessDistance / stepDist;
-                    if (overstep >= 1.0) {
-                        return makeMiss(points, position, travelledDistance,
-                                simulatedSegments, trailSegments);
-                    }
-                    Vec3 segmentDir = position.subtract(previousPosition);
-                    Vec3 rangeEnd = previousPosition.add(segmentDir.scale(1.0 - overstep));
-                    points.add(rangeEnd);
-                    return makeMiss(points, rangeEnd, maxRange,
-                            simulatedSegments, trailSegments);
                 }
 
                 // 共通レイキャスト: COLLIDER基準（草・花を通過）
@@ -140,7 +130,7 @@ public final class InkTrajectorySimulator {
                     return makeEntityHit(points, entityHit.getLocation(),
                             travelledDistance, simulatedSegments,
                             entityHit.getEntity().getId(), entityHit.getLocation(),
-                            false, trailSegments);
+                            false, trailSegments, "ENTITY_HIT");
                 }
 
                 if (blockHit != null && blockHit.getType() == HitResult.Type.BLOCK) {
@@ -151,9 +141,10 @@ public final class InkTrajectorySimulator {
                     points.add(correctedHit);
                     return makeBlockHit(points, correctedHit,
                             travelledDistance, simulatedSegments,
-                            hitBp, hitFace, hitLocation, trailSegments);
+                            hitBp, hitFace, hitLocation, trailSegments, "BLOCK_HIT");
                 }
 
+                // 視覚軌道点の収集（pointIntervalごと）
                 if (simulatedSegments % pointInterval == 0) {
                     points.add(position);
                 }
@@ -162,34 +153,53 @@ public final class InkTrajectorySimulator {
             velocity = velocity.add(0.0, -config.gravityPerTick(), 0.0);
         }
 
+        // 安全上限到達
         points.add(position);
-        return makeMiss(points, position, travelledDistance, simulatedSegments, trailSegments);
+        return makeMiss(points, position, travelledDistance, simulatedSegments,
+                trailSegments, "SAFETY_TIMEOUT");
     }
 
     private static InkTrajectoryResult makeMiss(List<Vec3> points, Vec3 endPos,
                                                   double dist, int segments,
-                                                  List<InkTrailPaintService.TrailSegment> trail) {
+                                                  List<InkTrailPaintService.TrailSegment> trail,
+                                                  String finishReason) {
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("Trajectory finish: finishReason={} dist={:.2f} segments={} endPos=({:.1f},{:.1f},{:.1f})",
+                    finishReason, dist, segments,
+                    endPos.x, endPos.y, endPos.z);
+        }
         return new InkTrajectoryResult(points, endPos, dist, segments,
                 InkTrajectoryResult.HitType.MISS,
-                null, null, null, -1, null, false, trail, null);
+                null, null, null, -1, null, false, trail, null, finishReason);
     }
 
     private static InkTrajectoryResult makeBlockHit(List<Vec3> points, Vec3 endPos,
                                                       double dist, int segments,
                                                       BlockPos bp, Direction face, Vec3 hitLoc,
-                                                      List<InkTrailPaintService.TrailSegment> trail) {
+                                                      List<InkTrailPaintService.TrailSegment> trail,
+                                                      String finishReason) {
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("Trajectory finish: finishReason={} dist={:.2f} segments={} hitPos=({},{},{}) face={}",
+                    finishReason, dist, segments,
+                    bp.getX(), bp.getY(), bp.getZ(), face);
+        }
         return new InkTrajectoryResult(points, endPos, dist, segments,
                 InkTrajectoryResult.HitType.BLOCK_HIT,
-                bp, face, hitLoc, -1, null, false, trail, null);
+                bp, face, hitLoc, -1, null, false, trail, null, finishReason);
     }
 
     private static InkTrajectoryResult makeEntityHit(List<Vec3> points, Vec3 endPos,
                                                        double dist, int segments,
                                                        int eid, Vec3 hitPos, boolean damaged,
-                                                       List<InkTrailPaintService.TrailSegment> trail) {
+                                                       List<InkTrailPaintService.TrailSegment> trail,
+                                                       String finishReason) {
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("Trajectory finish: finishReason={} dist={:.2f} segments={} entityId={}",
+                    finishReason, dist, segments, eid);
+        }
         return new InkTrajectoryResult(points, endPos, dist, segments,
                 InkTrajectoryResult.HitType.ENTITY_HIT,
-                null, null, null, eid, hitPos, damaged, trail, null);
+                null, null, null, eid, hitPos, damaged, trail, null, finishReason);
     }
 
     public static Vec3 applySpread(Vec3 direction, InkWeaponConfig config, RandomSource random) {
