@@ -2,73 +2,46 @@ package yam.salmon.client.shot;
 
 import net.minecraft.world.phys.Vec3;
 
-import java.util.List;
+import java.util.UUID;
 
 /**
- * クライアント側の視覚弾道1発分のデータ。
+ * クライアント側の視覚主弾。
  *
- * <p>サーバーから受信した軌道制御点を線形補間して表示する。
- * tickごとに軌道に沿って位置を更新し、到達後は消滅する。</p>
+ * <p>サーバーからSpawn Payloadを受信して生成され、毎tickクライアント側で
+ * サーバーと同じ物理計算を行って位置を更新する。
+ * Impact Payload受信までは表示を継続し、受信後は最低1フレーム表示してから消滅する。</p>
  */
 public final class ClientInkShot {
-    private final List<Vec3> trajectoryPoints;
-    private final int totalTicks;
+    private static final int CLIENT_HARD_SAFETY_TICKS = 1200;
+
+    private final UUID shotId;
     private final int colorRgb;
     private final float size;
-    private final byte hitType;
+    private final double gravity;
+
+    private Vec3 position;
+    private Vec3 previousPosition;
+    private Vec3 velocity;
 
     private int age;
-    private Vec3 previousPosition;
-    private Vec3 currentPosition;
-    private boolean alive = true;
+    private boolean impactReceived;
+    private Vec3 impactPosition;
+    private int impactGraceTicks;
+    private boolean alive;
 
-    /** 制御点間の各区間に対応するtick境界を事前計算 */
-    private final double[] segmentEndProgress; // [0..1] の各制御点に対応する進捗
-
-    public ClientInkShot(List<Vec3> trajectoryPoints, int totalTicks, int colorRgb,
-                          float size, byte hitType) {
-        this.trajectoryPoints = trajectoryPoints;
-        this.totalTicks = Math.max(1, totalTicks);
+    public ClientInkShot(UUID shotId, Vec3 startPosition, Vec3 initialVelocity,
+                          double gravity, int colorRgb, float size) {
+        this.shotId = shotId;
+        this.position = startPosition;
+        this.previousPosition = startPosition;
+        this.velocity = initialVelocity;
+        this.gravity = gravity;
         this.colorRgb = colorRgb;
         this.size = size;
-        this.hitType = hitType;
         this.age = 0;
-        this.currentPosition = trajectoryPoints.isEmpty() ? Vec3.ZERO : trajectoryPoints.get(0);
-        this.previousPosition = this.currentPosition;
-
-        // 制御点間の進捗を計算（等分割）
-        this.segmentEndProgress = computeProgressFromPoints(trajectoryPoints);
-    }
-
-    /**
-     * 軌道制御点の累積距離から各ポイントの進捗 [0..1] を計算する。
-     */
-    private static double[] computeProgressFromPoints(List<Vec3> points) {
-        int n = points.size();
-        if (n <= 1) return new double[]{1.0};
-
-        // 累積距離を計算
-        double[] cumulativeDist = new double[n];
-        cumulativeDist[0] = 0.0;
-        for (int i = 1; i < n; i++) {
-            cumulativeDist[i] = cumulativeDist[i - 1] + points.get(i - 1).distanceTo(points.get(i));
-        }
-
-        double totalDist = cumulativeDist[n - 1];
-        if (totalDist <= 0.0) {
-            // 距離がゼロなら等分割
-            double[] equal = new double[n];
-            for (int i = 0; i < n; i++) {
-                equal[i] = (double) (i + 1) / n;
-            }
-            return equal;
-        }
-
-        double[] progress = new double[n];
-        for (int i = 0; i < n; i++) {
-            progress[i] = cumulativeDist[i] / totalDist;
-        }
-        return progress;
+        this.impactReceived = false;
+        this.impactGraceTicks = 0;
+        this.alive = true;
     }
 
     /**
@@ -77,66 +50,56 @@ public final class ClientInkShot {
     public boolean tick() {
         if (!alive) return false;
 
-        previousPosition = currentPosition;
+        previousPosition = position;
+
+        if (impactReceived) {
+            impactGraceTicks--;
+            if (impactGraceTicks <= 0) {
+                alive = false;
+                return false;
+            }
+            // Impact受信後は静止表示
+            return true;
+        }
+
+        // サーバーと同じ物理更新
+        position = position.add(velocity);
+        velocity = velocity.add(0.0, -gravity, 0.0);
         age++;
 
-        if (age >= totalTicks) {
+        // クライアント安全上限（通信異常時の保険）
+        if (age >= CLIENT_HARD_SAFETY_TICKS) {
             alive = false;
             return false;
         }
-
-        double progress = (double) age / totalTicks;
-
-        // 軌道制御点に沿った位置を計算
-        currentPosition = interpolateAlongTrajectory(progress);
 
         return true;
     }
 
     /**
-     * 進捗 [0..1] に対応する軌道上の位置を線形補間で計算する。
+     * Impact Payloadを受信した時、最終位置を補正して終了シーケンスに入る。
      */
-    private Vec3 interpolateAlongTrajectory(double progress) {
-        int n = trajectoryPoints.size();
-        if (n == 0) return Vec3.ZERO;
-        if (n == 1) return trajectoryPoints.get(0);
-
-        // progress がセグメント境界を超えた場合の処理
-        progress = Math.max(0.0, Math.min(1.0, progress));
-
-        // どのセグメントかを特定
-        for (int i = 1; i < n; i++) {
-            if (progress <= segmentEndProgress[i]) {
-                double segStart = segmentEndProgress[i - 1];
-                double segEnd = segmentEndProgress[i];
-                double localProgress = (segEnd - segStart > 0.0)
-                        ? (progress - segStart) / (segEnd - segStart)
-                        : 0.0;
-                localProgress = Math.max(0.0, Math.min(1.0, localProgress));
-
-                Vec3 p0 = trajectoryPoints.get(i - 1);
-                Vec3 p1 = trajectoryPoints.get(i);
-                return p0.lerp(p1, localProgress);
-            }
-        }
-
-        // 最終制御点（通常ここには到達しない）
-        return trajectoryPoints.get(n - 1);
+    public void applyImpact(Vec3 serverImpactPosition) {
+        this.previousPosition = this.position;
+        this.position = serverImpactPosition;
+        this.impactPosition = serverImpactPosition;
+        this.impactReceived = true;
+        this.impactGraceTicks = 1; // 最低1フレーム表示
     }
 
     /**
      * partial tick を考慮した描画位置を返す。
      */
     public Vec3 getRenderPosition(float partialTick) {
-        return previousPosition.lerp(currentPosition, partialTick);
+        return previousPosition.lerp(position, partialTick);
     }
 
+    public UUID shotId() { return shotId; }
     public boolean isAlive() { return alive; }
     public int age() { return age; }
-    public int totalTicks() { return totalTicks; }
     public int colorRgb() { return colorRgb; }
     public float size() { return size; }
-    public byte hitType() { return hitType; }
-    public Vec3 start() { return trajectoryPoints.isEmpty() ? Vec3.ZERO : trajectoryPoints.get(0); }
-    public Vec3 end() { return trajectoryPoints.isEmpty() ? Vec3.ZERO : trajectoryPoints.get(trajectoryPoints.size() - 1); }
+    public Vec3 start() { return position; }
+    public Vec3 end() { return impactReceived ? impactPosition : position; }
+    public boolean isImpactReceived() { return impactReceived; }
 }

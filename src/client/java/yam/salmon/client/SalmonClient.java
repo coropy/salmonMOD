@@ -15,9 +15,13 @@ import yam.salmon.client.shot.InkShotRenderer;
 import yam.salmon.network.ArenaDebugPayload;
 import yam.salmon.network.InkArenaClearPayload;
 import yam.salmon.network.InkFaceUpdatePayload;
+import yam.salmon.network.InkShotImpactPayload;
+import yam.salmon.network.InkShotSpawnPayload;
 import yam.salmon.network.InkShotVisualPayload;
 import yam.salmon.network.InkSyncBeginPayload;
 import yam.salmon.network.InkSyncEndPayload;
+import yam.salmon.network.InkTrailDropImpactPayload;
+import yam.salmon.network.InkTrailDropSpawnPayload;
 
 public class SalmonClient implements ClientModInitializer {
 
@@ -74,10 +78,32 @@ public class SalmonClient implements ClientModInitializer {
             });
         });
 
-        // --- 視覚弾道Payload受信 ---
+        // --- 視覚弾道Payload受信（新旧両対応） ---
         ClientPlayNetworking.registerGlobalReceiver(InkShotVisualPayload.TYPE, (payload, context) -> {
+            // 旧形式も互換性のために残す（無視）
+        });
+
+        ClientPlayNetworking.registerGlobalReceiver(InkShotSpawnPayload.TYPE, (payload, context) -> {
             context.client().execute(() -> {
-                ClientInkShotManager.getInstance().addFromPayload(payload);
+                ClientInkShotManager.getInstance().addShotSpawn(payload);
+            });
+        });
+
+        ClientPlayNetworking.registerGlobalReceiver(InkShotImpactPayload.TYPE, (payload, context) -> {
+            context.client().execute(() -> {
+                ClientInkShotManager.getInstance().applyShotImpact(payload);
+            });
+        });
+
+        ClientPlayNetworking.registerGlobalReceiver(InkTrailDropSpawnPayload.TYPE, (payload, context) -> {
+            context.client().execute(() -> {
+                ClientInkShotManager.getInstance().addDropSpawn(payload);
+            });
+        });
+
+        ClientPlayNetworking.registerGlobalReceiver(InkTrailDropImpactPayload.TYPE, (payload, context) -> {
+            context.client().execute(() -> {
+                ClientInkShotManager.getInstance().applyDropImpact(payload);
             });
         });
 

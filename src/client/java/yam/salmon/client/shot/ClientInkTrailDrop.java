@@ -2,33 +2,48 @@ package yam.salmon.client.shot;
 
 import net.minecraft.world.phys.Vec3;
 
+import java.util.UUID;
+
 /**
  * クライアント側のトレイル滴ビジュアル。
  *
- * <p>開始位置から着弾位置まで加速落下する短命な視覚滴。
- * 主弾とは独立して描画される。</p>
+ * <p>サーバーからSpawn Payloadを受信して生成され、毎tickクライアント側で
+ * サーバーと同じ物理計算を行って位置を更新する。
+ * Impact Payload受信までは表示を継続し、受信後は最低1フレーム表示してから消滅する。</p>
  */
 public final class ClientInkTrailDrop {
-    private final Vec3 start;
-    private final Vec3 end;
-    private final int totalTicks;
-    private final int colorRgb;
+    private static final int CLIENT_HARD_DROP_SAFETY_TICKS = 300;
+
+    private final UUID dropId;
+    private final UUID parentShotId;
     private final float size;
+    private final double gravity;
+    private final int colorRgb;
+
+    private Vec3 position;
+    private Vec3 previousPosition;
+    private Vec3 velocity;
 
     private int age;
-    private Vec3 previousPosition;
-    private Vec3 currentPosition;
-    private boolean alive = true;
+    private boolean impactReceived;
+    private int impactGraceTicks;
+    private boolean alive;
 
-    public ClientInkTrailDrop(Vec3 start, Vec3 end, int totalTicks, int colorRgb, float size) {
-        this.start = start;
-        this.end = end;
-        this.totalTicks = Math.max(1, totalTicks);
-        this.colorRgb = colorRgb;
+    public ClientInkTrailDrop(UUID dropId, UUID parentShotId,
+                               Vec3 startPosition, Vec3 initialVelocity,
+                               double gravity, float size, int colorRgb) {
+        this.dropId = dropId;
+        this.parentShotId = parentShotId;
+        this.position = startPosition;
+        this.previousPosition = startPosition;
+        this.velocity = initialVelocity;
+        this.gravity = gravity;
         this.size = size;
+        this.colorRgb = colorRgb;
         this.age = 0;
-        this.currentPosition = start;
-        this.previousPosition = start;
+        this.impactReceived = false;
+        this.impactGraceTicks = 0;
+        this.alive = true;
     }
 
     /**
@@ -37,28 +52,49 @@ public final class ClientInkTrailDrop {
     public boolean tick() {
         if (!alive) return false;
 
-        previousPosition = currentPosition;
+        previousPosition = position;
+
+        if (impactReceived) {
+            impactGraceTicks--;
+            if (impactGraceTicks <= 0) {
+                alive = false;
+                return false;
+            }
+            return true;
+        }
+
+        // サーバーと同じ物理更新
+        position = position.add(velocity);
+        velocity = velocity.add(0.0, -gravity, 0.0);
         age++;
 
-        if (age >= totalTicks) {
+        if (age >= CLIENT_HARD_DROP_SAFETY_TICKS) {
             alive = false;
             return false;
         }
 
-        // 加速落下: progress^2 で easing
-        double progress = (double) age / totalTicks;
-        double eased = progress * progress;
-        currentPosition = start.lerp(end, eased);
-
         return true;
     }
 
-    public Vec3 getRenderPosition(float partialTick) {
-        return previousPosition.lerp(currentPosition, partialTick);
+    /**
+     * Impact Payloadを受信した時、最終位置を補正して終了シーケンスに入る。
+     */
+    public void applyImpact(Vec3 serverImpactPosition) {
+        this.previousPosition = this.position;
+        this.position = serverImpactPosition;
+        this.impactReceived = true;
+        this.impactGraceTicks = 1;
     }
 
+    public Vec3 getRenderPosition(float partialTick) {
+        return previousPosition.lerp(position, partialTick);
+    }
+
+    public UUID dropId() { return dropId; }
+    public UUID parentShotId() { return parentShotId; }
     public boolean isAlive() { return alive; }
-    public int colorRgb() { return colorRgb; }
     public float size() { return size; }
-    public Vec3 end() { return end; }
+    public int colorRgb() { return colorRgb; }
+    public Vec3 end() { return position; }
+    public boolean isImpactReceived() { return impactReceived; }
 }

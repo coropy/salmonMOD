@@ -75,7 +75,7 @@ ModInitializer。ブロック/BlockEntityの登録、イベントリスナー（
 #### `weapon/` — ブキシステム
 | クラス | 役割 |
 |---|---|
-| `InkShooterService.java` | コア発射ロジック（Phase 6+）。`InkTrajectorySimulator` で放物線軌道を計算し、ブロック/エンティティヒットを処理。トレイル塗装の統合・トランザクション一括コミットを含む。`finishReason` をログ出力。 |
+| `InkShooterService.java` | コア発射ロジック（Phase 6+、旧設計）。`InkTrajectorySimulator` で放物線軌道を計算し、ブロック/エンティティヒットを処理。**現在は非推奨。代わりに `InkProjectileLifecycleManager` を使用。** |
 | `InkShooterConfig.java` | シューターのパラメータ設定（射程、拡散角、重力、速度、ダメージ等）。非推奨。 |
 | `InkShotResult.java` | 1発の結果レコード。ヒット種別（ブロック/エンティティ/なし）、ヒット位置、対象エンティティ、塗装結果を保持。 |
 | `InkShotEffects.java` | 発射時の効果（パーティクル、サウンド等）を管理。 |
@@ -84,11 +84,15 @@ ModInitializer。ブロック/BlockEntityの登録、イベントリスナー（
 | `InkWeaponConfig.java` | 武器ごとの全パラメータ設定レコード（Phase 6+）。`maxFlightTicks` は安全上限（通常は衝突で終了）、`maxRange` は武器設計上の参考値（飛行中の強制削除に未使用）。`InkTrailPaintConfig` を内包。3種のプリセット（INK_SHOOTER/SHORT_RANGE/LONG_RANGE）。最大判定セグメント数は1024（32tick×32substeps相当）。 |
 | `InkWeaponRegistry.java` | 武器設定のレジストリ管理。 |
 | `InkTrajectoryResult.java` | 軌道シミュレーション結果レコード。substep線分（`trailSegments`）・トレイル塗装結果（`trailPaintResult`）・終了理由（`finishReason`: BLOCK_HIT/ENTITY_HIT/SAFETY_TIMEOUT）を含む。 |
-| `InkTrajectorySimulator.java` | 放物線軌道シミュレーター。substep単位でブロック/Entity衝突を判定。`maxRange` は視覚軌道打ち切りに使用せず、シミュレーションは `maxFlightTicks` まで継続。`HARD_SAFETY_MAX_TICKS=600` で絶対安全上限。終了時にデバッグログで `finishReason` を出力。 |
-| `InkTrailPaintConfig.java` | トレイル塗装設定レコード。ランダム間隔（`minTrailDropSpacing`/`maxTrailDropSpacing`）、`downwardRange`、`paintRadius`、`horizontalJitter`、`paintChance`、`visualDropSize` 等（Phase 8）。3種のプリセット（STANDARD/SHORT_RANGE/LONG_RANGE）+ DISABLED。`randomSpacing(RandomSource)` でランダム間隔生成。 |
-| `InkTrailPaintService.java` | トレイル塗装サービス。軌道substep線分からランダムワールド距離間隔で滴サンプル位置を決定し、滴ごとに自身の着弾BlockPosからArenaを解決、`InkShotPaintTransaction` へ蓄積（Phase 8）。Entityヒット/MISS/主弾アリーナ外でも滴は独立して塗装される。角度依存の抑制なし。常にワールド下方向にレイキャスト。 |
+| `InkTrajectorySimulator.java` | 放物線軌道シミュレーター。substep単位でブロック/Entity衝突を判定。純粋な物理計算のみ。塗装・ダメージ・Payload送信は行わない。拡散計算（`applySpread`）は静的ユーティリティとして外部からも利用可能。 |
+| `InkTrailPaintConfig.java` | トレイル塗装設定レコード。`paintChance`、`horizontalJitter`、`verticalStartOffset`、`maxTrailDropsPerShot`、`visualDropSize`等（Phase 8）。3種のプリセット（STANDARD/SHORT_RANGE/LONG_RANGE）+ DISABLED。 |
+| `InkTrailPaintService.java` | トレイル塗装サービス（旧設計）。軌道substep線分からランダムワールド距離間隔で滴サンプル位置を決定し、滴ごとに自身の着弾BlockPosからArenaを解決、`InkShotPaintTransaction` へ蓄積（Phase 8）。**現在は非推奨。滴の生成・塗装は `InkProjectileLifecycleManager` が担当。** |
 | `InkCollisionRaycast.java` | ブロックレイキャスト共通ヘルパー。`ClipContext.Block.COLLIDER` を使用し、草・花などの空の衝突形状を持つブロックを自動的に通過。主弾・トレイル滴の両方で使用。 |
-| `InkShotPaintTransaction.java` | 1射撃の塗装変更をアリーナごとに集約するトランザクション（Phase 8）。`forArena()` でアリーナ別アキュムレータ取得、`commitAll()` で一括保存・同期。主弾と滴が異なるアリーナへ落ちる場合を安全に扱う。 |
+| `InkShotPaintTransaction.java` | 1射撃の塗装変更をアリーナごとに集約するトランザクション。`forArena()` でアリーナ別アキュムレータ取得、`commitAll()` で一括保存・同期。主弾と滴が異なるアリーナへ落ちる場合を安全に扱う。 |
+| `InkProjectileLifecycleManager.java` | **サーバー側プロジェクタイルライフサイクルマネージャー（Phase 9）**。主弾とトレイル滴を毎tick更新し、実際の衝突tickでのみ塗装・Entityダメージ・Payload送信を実行。`ServerTickEvents.END_SERVER_TICK` で駆動。発射処理は `spawnShot()` を呼ぶだけ。 |
+| `ActiveInkShot.java` | サーバー側主弾状態（Phase 9）。位置・速度・重力・経過tick・生成滴数・終了理由を保持。塗装やダメージは衝突tickまで実行されない。発射時に武器設定のスナップショットを保存。 |
+| `ActiveTrailDrop.java` | サーバー側トレイル滴状態（Phase 9）。主弾の飛行中に生成され、独立して落下。親弾の終了に依存しない。 |
+| `ProjectileFinishReason.java` | プロジェクタイル終了理由の列挙型（BLOCK_HIT / ENTITY_HIT / SAFETY_TIMEOUT / OUT_OF_WORLD / INVALID_PHYSICS）。 |
 
 #### `combat/` — 戦闘システム
 | クラス | 役割 |
@@ -110,7 +114,11 @@ ModInitializer。ブロック/BlockEntityの登録、イベントリスナー（
 | `InkSyncEndPayload.java` | インク完全同期終了ペイロード（Phase 3）。sessionId, faceCount。 |
 | `InkArenaClearPayload.java` | アリーナインク全消去ペイロード（Phase 3）。arenaUuid, arenaNumber, dimensionId, revision。 |
 | `InkSyncManager.java` | インクデータ同期マネージャー（Phase 3+4）。アリーナ単位のlongリビジョン管理。`broadcastFaceUpdate()`（1面差分）、`broadcastMultiFaceUpdate()`（複数面一括 / Phase 4）、`broadcastArenaClear()`（クリアブロードキャスト）、`broadcastArenaRemoved()`（アリーナ削除ブロードキャスト）、`sendFullSync()`（個人向け完全同期）。複数面更新時は1回の操作で1回だけリビジョンを増加。 |
-| `InkShotVisualPayload.java` | インク弾ビジュアル同期ペイロード（Phase 6+）。発射元・着弾点・色・サイズ・弧の高さ・飛行時間・ヒット種別をクライアントに伝達。 |
+| `InkShotVisualPayload.java` | インク弾ビジュアル同期ペイロード（旧形式、Phase 6+）。発射時に全弾道点・全トレイル滴を一括送信。**現在は非推奨。代わりに Spawn/Impact 分離Payloadを使用。** |
+| `InkShotSpawnPayload.java` | 主弾Spawn Payload（Phase 9）。shotId, shooterId, 開始位置, 初速, 重力, spawnGameTime, 色, サイズを送信。 |
+| `InkShotImpactPayload.java` | 主弾Impact Payload（Phase 9）。shotId, 着弾位置, 面, 終了理由, impactGameTimeを送信。 |
+| `InkTrailDropSpawnPayload.java` | トレイル滴Spawn Payload（Phase 9）。dropId, parentShotId, shooterId, 開始位置, 初速, 重力, spawnGameTime, サイズ, 色を送信。 |
+| `InkTrailDropImpactPayload.java` | トレイル滴Impact Payload（Phase 9）。dropId, 着弾位置, 面, 終了理由, impactGameTimeを送信。 |
 
 #### `selection/` — プレイヤー選択状態管理
 | クラス | 役割 |
@@ -146,9 +154,9 @@ ModInitializer。ブロック/BlockEntityの登録、イベントリスナー（
 #### `shot/` — インク弾ビジュアル
 | クラス | 役割 |
 |---|---|
-| `ClientInkShot.java` | クライアント側の1発分ビジュアルデータ（Phase 6+）。サーバーから受信した軌道制御点→線形補間表示。`totalTicks` はサーバーの実際のシミュレーションtick数を使用。`age >= totalTicks` で消滅。距離ベースの独自計算は不使用。 |
-| `ClientInkShotManager.java` | 全アクティブショット（最大512）・トレイル滴（最大256）のシングルトン管理（Phase 6+）。Payload受信で追加、毎フレームTick更新・消滅時除去、着弾時スプラッシュパーティクル生成、次元移動時全クリア。 |
-| `ClientInkTrailDrop.java` | クライアント側のトレイル滴ビジュアル。開始位置→着弾位置まで加速落下。`totalTicks` で寿命管理。 |
+| `ClientInkShot.java` | クライアント側の視覚主弾（Phase 9）。サーバーと同じ物理計算で毎tick位置更新。Impact Payload受信までは表示継続、受信後は最低1フレーム表示してから消滅。`CLIENT_HARD_SAFETY_TICKS=1200` で通信異常時の保険。 |
+| `ClientInkShotManager.java` | クライアント側主弾・トレイル滴管理シングルトン（Phase 9）。`addShotSpawn()`, `applyShotImpact()`, `addDropSpawn()`, `applyDropImpact()` でSpawn/Impact分離受信。サーバー時刻による遅延補正付き。 |
+| `ClientInkTrailDrop.java` | クライアント側の視覚トレイル滴（Phase 9）。サーバーと同じ物理計算で毎tick落下。Impact Payload受信までは表示継続、親弾の終了に依存しない。 |
 | `InkShotRenderer.java` | インク弾描画レンダラー（Phase 6+）。`StagedVertexBuffer` + `RenderPipeline`（`salmon:pipeline/ink_shot`）を使用し、カメラ相対座標で全アクティブショットを有色立方体QUADSとして描画。 |
 
 #### `mixin/` — クライアントMixin

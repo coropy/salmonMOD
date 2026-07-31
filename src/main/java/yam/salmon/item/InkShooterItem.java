@@ -136,19 +136,17 @@ public class InkShooterItem extends Item {
             return;
         }
 
-        long shotSeed = player.level().getRandom().nextLong();
-        InkTrajectoryResult result = InkShooterService.fire(player, config, shotSeed);
+        // 発射: ライフサイクルマネージャーに主弾を登録（塗装・ダメージは実際の衝突tickまで遅延）
+        yam.salmon.weapon.InkProjectileLifecycleManager.getInstance()
+                .spawnShot(level, player, config);
 
         // 発射音（サーバー側即時）
         InkShotEffects.spawnFireEffect(level, player.getEyePosition(), player);
 
-        // 視覚弾道Payloadを周囲に送信
-        sendVisualPayload(player, result, config);
-
         markFired(player, serverTick, config.fireIntervalTicks());
 
-        LOGGER.debug("Shooter fired: player={} hitType={} tick={}",
-                player.getUUID(), result.hitType(), serverTick);
+        LOGGER.debug("Shooter fired: player={} tick={}",
+                player.getUUID(), serverTick);
     }
 
     // ===================================================================

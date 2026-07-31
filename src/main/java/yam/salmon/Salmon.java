@@ -24,11 +24,16 @@ import yam.salmon.network.ArenaDebugPayload;
 import yam.salmon.network.ArenaDebugSync;
 import yam.salmon.network.InkArenaClearPayload;
 import yam.salmon.network.InkFaceUpdatePayload;
+import yam.salmon.network.InkShotImpactPayload;
+import yam.salmon.network.InkShotSpawnPayload;
 import yam.salmon.network.InkShotVisualPayload;
 import yam.salmon.network.InkSyncBeginPayload;
 import yam.salmon.network.InkSyncEndPayload;
 import yam.salmon.network.InkSyncManager;
+import yam.salmon.network.InkTrailDropImpactPayload;
+import yam.salmon.network.InkTrailDropSpawnPayload;
 import yam.salmon.selection.PlayerMarkerSelectionManager;
+import yam.salmon.weapon.InkProjectileLifecycleManager;
 
 public class Salmon implements ModInitializer {
     public static final String MOD_ID = "salmon";
@@ -43,6 +48,7 @@ public class Salmon implements ModInitializer {
         ModItems.register();
         InkAreaMarkerBlockEntity.register();
         InkShooterTickHandler.register();
+        InkProjectileLifecycleManager.getInstance().register();
 
         // 武器設定レジストリ初期化
         InkWeaponRegistry.registerDefaults();
@@ -54,6 +60,10 @@ public class Salmon implements ModInitializer {
         PayloadTypeRegistry.clientboundPlay().register(InkSyncEndPayload.TYPE, InkSyncEndPayload.STREAM_CODEC);
         PayloadTypeRegistry.clientboundPlay().register(InkArenaClearPayload.TYPE, InkArenaClearPayload.STREAM_CODEC);
         PayloadTypeRegistry.clientboundPlay().register(InkShotVisualPayload.TYPE, InkShotVisualPayload.STREAM_CODEC);
+        PayloadTypeRegistry.clientboundPlay().register(InkShotSpawnPayload.TYPE, InkShotSpawnPayload.STREAM_CODEC);
+        PayloadTypeRegistry.clientboundPlay().register(InkShotImpactPayload.TYPE, InkShotImpactPayload.STREAM_CODEC);
+        PayloadTypeRegistry.clientboundPlay().register(InkTrailDropSpawnPayload.TYPE, InkTrailDropSpawnPayload.STREAM_CODEC);
+        PayloadTypeRegistry.clientboundPlay().register(InkTrailDropImpactPayload.TYPE, InkTrailDropImpactPayload.STREAM_CODEC);
 
         // コマンド登録
         CommandRegistrationCallback.EVENT.register(SalmonCommands::register);
