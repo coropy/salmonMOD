@@ -325,8 +325,8 @@
     "semantic_hash": "8f8b62eb6550c2e8ac7794f6021a16ea"
   },
   "src/main/java/yam/salmon/weapon/InkShooterService.java": {
-    "mtime": 1785487853.0989795,
-    "ast_hash": "639dfa2185cda6807eacaaf07c9fad5b",
+    "mtime": 1785410769.7792783,
+    "ast_hash": "1f7f8323a1d2b500ac6bc4cf85934935",
     "semantic_hash": ""
   },
   "src/main/java/yam/salmon/weapon/InkShooterVisualConfig.java": {
@@ -435,8 +435,8 @@
     "semantic_hash": "3c1089c43ac18e1042be52a67bcd6b0f"
   },
   "AGENTS.md": {
-    "mtime": 1785488189.368123,
-    "ast_hash": "45131223f024f485dd71be96d2c5c984",
+    "mtime": 1785410966.3074052,
+    "ast_hash": "8bd3aa60549102e6bc247234f618a089",
     "semantic_hash": ""
   },
   "README.md": {
@@ -470,8 +470,8 @@
     "semantic_hash": ""
   },
   "src/main/java/yam/salmon/weapon/InkTrailPaintConfig.java": {
-    "mtime": 1785487078.9653087,
-    "ast_hash": "a3a26a63a7edfa959844ad2b8a2bad13",
+    "mtime": 1785485899.850369,
+    "ast_hash": "7863d4d2b8f3cde7482138d4b7c2c5f2",
     "semantic_hash": ""
   },
   "src/main/java/yam/salmon/weapon/InkTrailPaintService.java": {
@@ -480,18 +480,18 @@
     "semantic_hash": ""
   },
   "src/main/java/yam/salmon/weapon/InkTrajectoryResult.java": {
-    "mtime": 1785487823.587062,
-    "ast_hash": "b0004055af3594413f1d7649748d6092",
+    "mtime": 1785232241.3362231,
+    "ast_hash": "f2c094d7dec8fd4991f15c9e04018141",
     "semantic_hash": ""
   },
   "src/main/java/yam/salmon/weapon/InkTrajectorySimulator.java": {
-    "mtime": 1785488020.3875577,
-    "ast_hash": "96f1a26bf20aa85663f1fa66b8091757",
+    "mtime": 1785485855.113398,
+    "ast_hash": "adba5df976e74448bde223650268c4d9",
     "semantic_hash": ""
   },
   "src/main/java/yam/salmon/weapon/InkWeaponConfig.java": {
-    "mtime": 1785487752.1539834,
-    "ast_hash": "d1bd2ad610d874ef20e019a2b9a9e445",
+    "mtime": 1785410800.8363853,
+    "ast_hash": "b13a7951b32e539294294aa3411976f9",
     "semantic_hash": ""
   },
   "src/main/java/yam/salmon/weapon/InkWeaponRegistry.java": {

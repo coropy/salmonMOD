@@ -23,10 +23,10 @@ public record InkWeaponConfig(
         /** 1tickあたりの重力加速度（下向き） */
         double gravityPerTick,
 
-        /** 弾の最大飛翔tick数。1以上 */
+        /** 安全上限tick数（無限飛行防止用。通常は衝突で終了）。1以上 */
         int maxFlightTicks,
 
-        /** 最大射程（blocks）。0より大きいこと */
+        /** 参考射程（blocks）。武器設計上のパラメータ。飛行中の強制削除には使用しない */
         double maxRange,
 
         /** 水平方向の拡散角度（度数法）。0以上 */
@@ -65,8 +65,8 @@ public record InkWeaponConfig(
             3,      // fireIntervalTicks
             1.85,   // initialSpeed (blocks/tick)
             0.11,   // gravityPerTick
-            9,      // maxFlightTicks
-            13.0,   // maxRange (blocks)
+            60,     // maxFlightTicks（安全上限。初速1.85/重力0.11→頂点16.8tick、往復33.6tick）
+            13.0,   // maxRange（参考射程、blocks）
             1.5,    // horizontalSpreadDegrees
             1.0,    // verticalSpreadDegrees
             2.0f,   // damage
@@ -85,8 +85,8 @@ public record InkWeaponConfig(
             2,      // fireIntervalTicks
             2.5,    // initialSpeed
             0.06,   // gravityPerTick
-            10,     // maxFlightTicks
-            16.0,   // maxRange
+            80,     // maxFlightTicks（安全上限。初速2.5/重力0.06→頂点41.7tick、往復83.3tick）
+            16.0,   // maxRange（参考射程、blocks）
             4.0,    // horizontalSpreadDegrees
             3.0,    // verticalSpreadDegrees
             2.5f,   // damage
@@ -105,8 +105,8 @@ public record InkWeaponConfig(
             5,      // fireIntervalTicks
             4.5,    // initialSpeed
             0.02,   // gravityPerTick
-            20,     // maxFlightTicks
-            36.0,   // maxRange
+            120,    // maxFlightTicks（安全上限。初速4.5/重力0.02→頂点225tick、往復450tick。256seg = 120*8=960不可。32tick制限付き）
+            36.0,   // maxRange（参考射程、blocks）
             0.8,    // horizontalSpreadDegrees
             0.5,    // verticalSpreadDegrees
             3.0f,   // damage
@@ -158,11 +158,11 @@ public record InkWeaponConfig(
             throw new IllegalArgumentException("collisionRadius must be >= 0, got " + collisionRadius);
         }
 
-        // パフォーマンス上限: 最大判定セグメント数 <= 256
+        // パフォーマンス上限: 最大判定セグメント数 <= 1024（32tick*32substeps相当）
         int maxSegments = maxFlightTicks * trajectorySubstepsPerTick;
-        if (maxSegments > 256) {
+        if (maxSegments > 1024) {
             throw new IllegalArgumentException(
-                    "maxFlightTicks * trajectorySubstepsPerTick must be <= 256, got " + maxSegments);
+                    "maxFlightTicks * trajectorySubstepsPerTick must be <= 1024, got " + maxSegments);
         }
     }
 

@@ -48,9 +48,10 @@ public final class InkShooterService {
 
         InkTrajectoryResult result = InkTrajectorySimulator.simulate(level, player, config);
 
-        LOGGER.debug("Trajectory result: weapon={} hitType={} dist={:.2f} segments={} points={} trailSegments={}",
+        LOGGER.debug("Trajectory result: weapon={} hitType={} dist={:.2f} segments={} points={} trailSegments={} finishReason={}",
                 config.weaponId(), result.hitType(), result.travelledDistance(),
-                result.simulatedSegments(), result.points().size(), result.trailSegments().size());
+                result.simulatedSegments(), result.points().size(), result.trailSegments().size(),
+                result.finishReason());
 
         // アリーナ別トランザクション（主弾+滴の全変更を集約）
         InkShotPaintTransaction transaction = new InkShotPaintTransaction();
@@ -96,7 +97,7 @@ public final class InkShooterService {
                 result.hitType(), result.blockHitPos(), result.blockHitFace(),
                 result.blockHitExactLocation(), result.entityId(),
                 result.entityHitPosition(), result.damaged(),
-                result.trailSegments(), trailResult);
+                result.trailSegments(), trailResult, result.finishReason());
     }
 
     private static void handleBlockHit(ServerPlayer player, ServerLevel level,
@@ -175,8 +176,8 @@ public final class InkShooterService {
     private static void handleMiss(ServerLevel level, InkTrajectoryResult result) {
         InkShotEffects.spawnMissEffect(level, result.endPosition(), null);
 
-        LOGGER.info("Shooter miss: endPos=({:.1f},{:.1f},{:.1f}) dist={:.2f} segments={}",
+        LOGGER.info("Shooter miss: endPos=({:.1f},{:.1f},{:.1f}) dist={:.2f} segments={} finishReason={}",
                 result.endPosition().x, result.endPosition().y, result.endPosition().z,
-                result.travelledDistance(), result.simulatedSegments());
+                result.travelledDistance(), result.simulatedSegments(), result.finishReason());
     }
 }

@@ -20,7 +20,8 @@ public record InkTrajectoryResult(
         @Nullable Vec3 entityHitPosition,
         boolean damaged,
         List<InkTrailPaintService.TrailSegment> trailSegments,
-        @Nullable InkTrailPaintService.TrailPaintResult trailPaintResult
+        @Nullable InkTrailPaintService.TrailPaintResult trailPaintResult,
+        @Nullable String finishReason
 ) {
     public enum HitType { MISS, BLOCK_HIT, ENTITY_HIT }
 
@@ -31,21 +32,21 @@ public record InkTrajectoryResult(
     public static InkTrajectoryResult miss(List<Vec3> points, Vec3 endPosition,
                                             double travelledDistance, int simulatedSegments) {
         return new InkTrajectoryResult(points, endPosition, travelledDistance, simulatedSegments,
-                HitType.MISS, null, null, null, -1, null, false, List.of(), null);
+                HitType.MISS, null, null, null, -1, null, false, List.of(), null, null);
     }
 
     public static InkTrajectoryResult blockHit(List<Vec3> points, Vec3 endPosition,
                                                 double travelledDistance, int simulatedSegments,
                                                 BlockPos hitPos, Direction face, Vec3 hitLocation) {
         return new InkTrajectoryResult(points, endPosition, travelledDistance, simulatedSegments,
-                HitType.BLOCK_HIT, hitPos, face, hitLocation, -1, null, false, List.of(), null);
+                HitType.BLOCK_HIT, hitPos, face, hitLocation, -1, null, false, List.of(), null, null);
     }
 
     public static InkTrajectoryResult entityHit(List<Vec3> points, Vec3 endPosition,
                                                  double travelledDistance, int simulatedSegments,
                                                  int entityId, Vec3 hitPosition, boolean damaged) {
         return new InkTrajectoryResult(points, endPosition, travelledDistance, simulatedSegments,
-                HitType.ENTITY_HIT, null, null, null, entityId, hitPosition, damaged, List.of(), null);
+                HitType.ENTITY_HIT, null, null, null, entityId, hitPosition, damaged, List.of(), null, null);
     }
 
     public InkShotResult.Result toLegacyResult() {
