@@ -6,7 +6,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
@@ -155,12 +154,8 @@ public final class InkTrailPaintService {
                 Vec3 rayStart = jitteredPos.add(0, trail.verticalStartOffset(), 0);
                 Vec3 rayEnd = rayStart.add(0, -trail.downwardRange(), 0);
 
-                BlockHitResult hit = level.clip(new ClipContext(
-                        rayStart, rayEnd,
-                        ClipContext.Block.OUTLINE,
-                        ClipContext.Fluid.NONE,
-                        shooter
-                ));
+                BlockHitResult hit = InkCollisionRaycast.clipSolidBlocks(
+                        level, rayStart, rayEnd, shooter);
 
                 if (hit == null || hit.getType() == HitResult.Type.MISS) {
                     rayMisses++;

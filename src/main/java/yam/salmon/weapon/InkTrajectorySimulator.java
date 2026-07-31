@@ -7,7 +7,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
@@ -67,6 +66,15 @@ public final class InkTrajectorySimulator {
 
         List<InkTrailPaintService.TrailSegment> trailSegments = new ArrayList<>();
 
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("Trajectory start: lookDir=({:.3f},{:.3f},{:.3f}) startPos=({:.3f},{:.3f},{:.3f}) "
+                            + "initVel=({:.3f},{:.3f},{:.3f}) gravity={} maxTicks={} maxRange={}",
+                    lookDir.x, lookDir.y, lookDir.z,
+                    startPos.x, startPos.y, startPos.z,
+                    velocity.x, velocity.y, velocity.z,
+                    config.gravityPerTick(), maxFlightTicks, maxRange);
+        }
+
         for (int tick = 0; tick < maxFlightTicks; tick++) {
             for (int sub = 0; sub < substepsPerTick; sub++) {
                 simulatedSegments++;
@@ -100,12 +108,9 @@ public final class InkTrajectorySimulator {
                             simulatedSegments, trailSegments);
                 }
 
-                BlockHitResult blockHit = level.clip(new ClipContext(
-                        previousPosition, position,
-                        ClipContext.Block.OUTLINE,
-                        ClipContext.Fluid.NONE,
-                        shooter
-                ));
+                // 共通レイキャスト: COLLIDER基準（草・花を通過）
+                BlockHitResult blockHit = InkCollisionRaycast.clipSolidBlocks(
+                        level, previousPosition, position, shooter);
 
                 AABB segmentBox = new AABB(previousPosition, position)
                         .inflate(config.collisionRadius());
