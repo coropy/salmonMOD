@@ -28,6 +28,11 @@ bin/
 
 *.DS_Store
 
+# graphify - ignore visualization artifacts and date snapshots
+graphify-out/graph.html
+graphify-out/GRAPH_REPORT.md
+graphify-out/20*/
+
 # fabric
 
 run/

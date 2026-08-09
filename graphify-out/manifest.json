@@ -155,9 +155,9 @@
     "semantic_hash": "7f82c40722549ecdcb078bfe0e47d6cd"
   },
   "src/main/java/yam/salmon/ink/InkFaceData.java": {
-    "mtime": 1785053888.2799087,
-    "ast_hash": "c1565fa573f2195833906c17eac03b4a",
-    "semantic_hash": "c1565fa573f2195833906c17eac03b4a"
+    "mtime": 1786243286.313213,
+    "ast_hash": "746fca30bfa2ff67cd16b43d988d20c4",
+    "semantic_hash": ""
   },
   "src/main/java/yam/salmon/ink/InkHitResolver.java": {
     "mtime": 1785138089.7011917,
@@ -200,9 +200,9 @@
     "semantic_hash": "ef6d0ca124deef217fc2842b77df0793"
   },
   "src/main/java/yam/salmon/ink/InkStorage.java": {
-    "mtime": 1785158130.4769945,
-    "ast_hash": "e7f194a51563322c89ff793379a27e54",
-    "semantic_hash": "e7f194a51563322c89ff793379a27e54"
+    "mtime": 1786243454.0438435,
+    "ast_hash": "8feabaa923185b5c1050e35d022a9ace",
+    "semantic_hash": ""
   },
   "src/main/java/yam/salmon/ink/InkSurfaceKey.java": {
     "mtime": 1785136714.2420492,
@@ -470,8 +470,8 @@
     "semantic_hash": ""
   },
   "src/main/java/yam/salmon/weapon/InkTrailPaintConfig.java": {
-    "mtime": 1786239687.5187552,
-    "ast_hash": "6cb2a36d4138cfcbb13abecdfcecca11",
+    "mtime": 1786240141.2414443,
+    "ast_hash": "352cd9bdba9c2eeb3bd7b5cc7f3d6074",
     "semantic_hash": ""
   },
   "src/main/java/yam/salmon/weapon/InkTrailPaintService.java": {

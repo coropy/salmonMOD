@@ -180,4 +180,5 @@ public final class InkShooterService {
                 result.endPosition().x, result.endPosition().y, result.endPosition().z,
                 result.travelledDistance(), result.simulatedSegments(), result.finishReason());
     }
+
 }

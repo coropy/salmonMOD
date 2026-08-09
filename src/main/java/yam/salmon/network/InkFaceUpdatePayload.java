@@ -15,7 +15,7 @@ import java.util.UUID;
  * 1面のインクデータ更新ペイロード。
  * サーバー→クライアント方向。
  *
- * <p>変更された1面の64セル全体を送信する。
+ * <p>変更された1面の256セル全体を送信する。
  * 差分同期および完全同期のバッチ送信に使用する。</p>
  *
  * <p>Phase 8: Patch ID 全情報（normal, plane, minU, minV, maxU, maxV）を
@@ -27,7 +27,7 @@ import java.util.UUID;
  * @param blockPos    ブロック座標
  * @param faceName    面のシリアライズ名（後方互換用・描画には使用しない）
  * @param patchId     Surface Patch ID（normal, plane, minU, minV, maxU, maxV を含む）
- * @param cells       64セル配列（byte[64]）
+ * @param cells       256セル配列（byte[256]）
  * @param revision    アリーナごとの単調増加リビジョン
  */
 public record InkFaceUpdatePayload(

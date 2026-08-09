@@ -19,7 +19,7 @@ import java.util.UUID;
  * @param face        面方向（後方互換用・描画には patchId を使用）
  * @param key         キャッシュキー
  * @param patchId     Surface Patch ID（描画位置の真の情報源）
- * @param cells       64セル配列（防御コピー済み）
+ * @param cells       256セル配列（防御コピー済み）
  * @param revision    リビジョン
  * @param teamACells  Team Aのセル数
  * @param teamBCells  Team Bのセル数
@@ -39,12 +39,12 @@ public record ClientInkSurface(
 ) {
     /**
      * 指定セルのチーム値を取得する。
-     * @param cellU 0..7
-     * @param cellV 0..7
+     * @param cellU 0..15
+     * @param cellV 0..15
      * @return 0=NONE, 1=TEAM_A, 2=TEAM_B
      */
     public byte getCell(int cellU, int cellV) {
-        int index = cellV * 8 + cellU;
+        int index = cellV * yam.salmon.ink.InkFaceData.GRID_SIZE + cellU;
         if (index < 0 || index >= cells.length) return 0;
         return cells[index];
     }

@@ -179,9 +179,10 @@ public final class InkPaintDistributor {
             InkFaceData faceData = surfaces.computeIfAbsent(key, k -> new InkFaceData());
 
             // 球中心をパッチ面に投影し、パッチローカルUVを取得
+            // clamp しない: 範囲外のUVは隣接ブロックとの連続性に必要
             FaceBasis.LocalUV localUV = patch.projectOntoPatch(sphereCenter);
-            double pu = Math.clamp(localUV.u(), 0.0, 1.0);
-            double pv = Math.clamp(localUV.v(), 0.0, 1.0);
+            double pu = localUV.u();
+            double pv = localUV.v();
             double radiusPatch = clampedRadius;
 
             double cellSize = 1.0 / InkFaceData.GRID_SIZE;

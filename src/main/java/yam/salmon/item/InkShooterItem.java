@@ -1,6 +1,8 @@
 package yam.salmon.item;
 
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
@@ -12,6 +14,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,6 +32,7 @@ import yam.salmon.weapon.InkWeaponRegistry;
 
 import java.util.Map;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -140,6 +144,9 @@ public class InkShooterItem extends Item {
         yam.salmon.weapon.InkProjectileLifecycleManager.getInstance()
                 .spawnShot(level, player, config);
 
+        // 発射直後にプレイヤーの真下を塗装（主弾・トレイル滴とは独立して即時実行）
+        paintFootStep(level, player, config);
+
         // 発射音（サーバー側即時）
         InkShotEffects.spawnFireEffect(level, player.getEyePosition(), player);
 
@@ -147,6 +154,64 @@ public class InkShooterItem extends Item {
 
         LOGGER.debug("Shooter fired: player={} tick={}",
                 player.getUUID(), serverTick);
+    }
+
+    /**
+     * 発射直後にプレイヤー真下の地面を確実に塗装する。
+     *
+     * <p>主弾・トレイル滴とは独立した単発の即時塗装。
+     * プレイヤーの足元からわずかに下のブロック上面を主弾と同じ半径で塗装する。</p>
+     */
+    private static void paintFootStep(ServerLevel level, ServerPlayer player,
+                                       InkWeaponConfig config) {
+        // プレイヤー足元直下のブロック
+        BlockPos footBlock = BlockPos.containing(
+                player.getX(), player.getY() - 0.1, player.getZ());
+
+        Optional<yam.salmon.arena.InkArena> arenaOpt =
+                yam.salmon.arena.InkArenaManager.getInstance()
+                        .findArenaContaining(level, footBlock);
+        if (arenaOpt.isEmpty()) {
+            return;
+        }
+
+        yam.salmon.arena.InkArena arena = arenaOpt.get();
+        BlockState targetState = level.getBlockState(footBlock);
+        Direction hitFace = Direction.UP;
+
+        if (!yam.salmon.ink.InkPaintability.isPaintableBlock(level, footBlock, targetState)) {
+            return;
+        }
+        if (!yam.salmon.ink.InkPaintability.isSurfaceExposed(level, footBlock, hitFace)) {
+            return;
+        }
+
+        // プレイヤーの実際の足元位置（ブロック中心ではなくプレイヤー位置）
+        Vec3 hitLoc = new Vec3(
+                player.getX(),
+                footBlock.getY() + 1.0,
+                player.getZ());
+
+        byte team = player.isShiftKeyDown()
+                ? yam.salmon.ink.InkTeam.TEAM_B
+                : yam.salmon.ink.InkTeam.TEAM_A;
+
+        yam.salmon.ink.InkStorage inkStorage =
+                yam.salmon.arena.InkArenaManager.getInstance().getInkStorage();
+
+        yam.salmon.ink.MultiSurfacePaintResult paintResult =
+                yam.salmon.ink.InkPaintingService.paint(
+                        level, arena, inkStorage,
+                        footBlock, hitFace, hitLoc,
+                        config.paintRadius(), team);
+
+        if (paintResult.success()) {
+            LOGGER.debug("Footstep paint: player={} pos={}/{} radius={} surfaces={} cells={}",
+                    player.getUUID(), footBlock, hitFace,
+                    config.paintRadius(),
+                    paintResult.changedSurfaceCount(),
+                    paintResult.changedCellCount());
+        }
     }
 
     // ===================================================================

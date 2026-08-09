@@ -45,7 +45,7 @@ public record InkTrailPaintConfig(
             0.80,   // paintRadius
             0.08,   // horizontalJitter
             0.05,   // verticalStartOffset
-            0.75,   // minimumDistanceFromMuzzle
+            0.0,    // minimumDistanceFromMuzzle
             0.35,   // minimumDistanceFromImpact
             2,      // maxTrailDropsPerShot
             0.9,    // paintChance
@@ -61,7 +61,7 @@ public record InkTrailPaintConfig(
             0.80,   // paintRadius
             0.08,   // horizontalJitter
             0.05,   // verticalStartOffset
-            0.5,    // minimumDistanceFromMuzzle
+            0.0,    // minimumDistanceFromMuzzle
             0.3,    // minimumDistanceFromImpact
             5,      // maxTrailDropsPerShot
             0.9,    // paintChance
@@ -77,7 +77,7 @@ public record InkTrailPaintConfig(
             0.36,   // paintRadius
             0.03,   // horizontalJitter
             0.05,   // verticalStartOffset
-            1.0,    // minimumDistanceFromMuzzle
+            0.0,    // minimumDistanceFromMuzzle
             0.5,    // minimumDistanceFromImpact
             7,      // maxTrailDropsPerShot
             0.75,   // paintChance

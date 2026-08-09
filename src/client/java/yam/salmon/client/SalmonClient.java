@@ -58,7 +58,7 @@ public class SalmonClient implements ClientModInitializer {
 
         ClientPlayNetworking.registerGlobalReceiver(InkFaceUpdatePayload.TYPE, (payload, context) -> {
             context.client().execute(() -> {
-                if (payload.cells() == null || payload.cells().length != 64) return;
+                if (payload.cells() == null || payload.cells().length != yam.salmon.ink.InkFaceData.CELL_COUNT) return;
                 if (payload.patchId() == null) return;
                 ClientInkCache.getInstance().applyFaceUpdate(
                         payload.arenaUuid(), payload.arenaNumber(), payload.dimensionId(),
