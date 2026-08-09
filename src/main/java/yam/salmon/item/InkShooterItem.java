@@ -160,7 +160,8 @@ public class InkShooterItem extends Item {
      * 発射直後にプレイヤー真下の地面を確実に塗装する。
      *
      * <p>主弾・トレイル滴とは独立した単発の即時塗装。
-     * プレイヤーの足元からわずかに下のブロック上面を主弾と同じ半径で塗装する。</p>
+     * プレイヤーの足元からわずかに下のブロック上面を主弾と同じ半径で塗装する。
+     * プレイヤーの移動速度を渡すことで、歩きながら撃ったときに進行方向へ伸びる。</p>
      */
     private static void paintFootStep(ServerLevel level, ServerPlayer player,
                                        InkWeaponConfig config) {
@@ -199,11 +200,14 @@ public class InkShooterItem extends Item {
         yam.salmon.ink.InkStorage inkStorage =
                 yam.salmon.arena.InkArenaManager.getInstance().getInkStorage();
 
+        // プレイヤーの移動速度を渡す（歩きながら撃つと進行方向に伸びる）
+        Vec3 playerVelocity = player.getDeltaMovement();
         yam.salmon.ink.MultiSurfacePaintResult paintResult =
                 yam.salmon.ink.InkPaintingService.paint(
                         level, arena, inkStorage,
                         footBlock, hitFace, hitLoc,
-                        config.paintRadius(), team);
+                        config.paintRadius(), team,
+                        playerVelocity);
 
         if (paintResult.success()) {
             LOGGER.debug("Footstep paint: player={} pos={}/{} radius={} surfaces={} cells={}",

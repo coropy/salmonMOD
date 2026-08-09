@@ -103,12 +103,13 @@ public class InkableBlock extends Block {
         // ShiftでTeam B、通常でTeam A
         byte team = player.isShiftKeyDown() ? InkTeam.TEAM_B : InkTeam.TEAM_A;
 
-        // Phase 4+5: 共通塗装サービスを使用
+        // Phase 4+5: 共通塗装サービスを使用（クリック塗装は歪みなし）
         InkStorage inkStorage = InkArenaManager.getInstance().getInkStorage();
         MultiSurfacePaintResult paintResult = InkPaintingService.paint(
                 serverLevel, arena, inkStorage,
                 pos, direction, hitLoc,
-                InkPaintDistributor.DEFAULT_PAINT_RADIUS_BLOCKS, team);
+                InkPaintDistributor.DEFAULT_PAINT_RADIUS_BLOCKS, team,
+                null);
 
         if (paintResult.success()) {
             // 管理者向けメッセージ

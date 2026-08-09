@@ -6,6 +6,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import yam.salmon.Salmon;
@@ -19,6 +20,8 @@ import java.util.*;
  * <p>Phase 7: Surface Patch ベースの分配。VoxelShape から抽出した
  * パッチ単位で走査し、部分ブロック（階段、ハーフブロック）にも
  * 正しく塗装を分配する。</p>
+ *
+ * <p>Phase 10: 歪み円塗装。速度方向伸張、輪郭ノイズ、液滴飛沫を追加。</p>
  */
 public final class InkPaintDistributor {
     private static final Logger LOGGER = LoggerFactory.getLogger(Salmon.MOD_ID + ".ink");
@@ -28,11 +31,26 @@ public final class InkPaintDistributor {
     public static final double DEFAULT_PAINT_RADIUS_BLOCKS = 2.0 / InkFaceData.GRID_SIZE;
     public static final int MAX_PROPAGATION_DEPTH = 3;
 
-    /**
-     * AABB 列挙時にブロック境界で隣接ブロックが欠落しないようにする探索用 epsilon。
-     * 1e-6 で十分だが、float/double の境界判定の安全のため。1/1024 以下にする。
-     */
     private static final double BLOCK_SCAN_EPSILON = 1.0e-6;
+
+    // ---- Phase 10 歪みパラメータ ----
+    /** 輪郭ノイズの振幅（半径に対する割合） */
+    private static final double EDGE_NOISE_AMPLITUDE = 0.25;
+    /** 輪郭ノイズの周波数 */
+    private static final double EDGE_NOISE_FREQUENCY = 3.0;
+    /** 速度方向伸張の最大倍率（1.0 + この値 が最大伸張率。0.65 → 最大65%伸びる） */
+    private static final double MAX_VELOCITY_STRETCH = 0.65;
+    /** 速度の大きさを伸張量に変換するスケール */
+    private static final double VELOCITY_STRETCH_SCALE = 0.20;
+    /** 飛沫の数 */
+    private static final int SPLATTER_COUNT_MIN = 3;
+    private static final int SPLATTER_COUNT_MAX = 7;
+    /** 飛沫の半径（メイン円半径に対する割合） */
+    private static final double SPLATTER_RADIUS_MIN = 0.08;
+    private static final double SPLATTER_RADIUS_MAX = 0.18;
+    /** 飛沫の中心までの距離（メイン円半径に対する割合） */
+    private static final double SPLATTER_DISTANCE_MIN = 0.7;
+    private static final double SPLATTER_DISTANCE_MAX = 1.15;
 
     private InkPaintDistributor() {}
 
@@ -44,7 +62,8 @@ public final class InkPaintDistributor {
             Direction hitFace,
             Vec3 worldHitPos,
             double radiusBlocks,
-            byte team) {
+            byte team,
+            @Nullable Vec3 impactVelocity) {
 
         if (!InkTeam.isValidTeam(team)) {
             return MultiSurfacePaintResult.fail(PaintFailureReason.INVALID_TEAM);
@@ -60,10 +79,8 @@ public final class InkPaintDistributor {
             return MultiSurfacePaintResult.fail(PaintFailureReason.INVALID_TEAM);
         }
 
-        // ブラシ中心は正確な着弾位置（内側補正は呼び出し元の責任）
         Vec3 sphereCenter = worldHitPos;
 
-        // epsilon 付きで AABB を計算し、ブロック境界での欠落を防止
         int minX = Mth.floor(sphereCenter.x - clampedRadius - BLOCK_SCAN_EPSILON);
         int maxX = Mth.floor(sphereCenter.x + clampedRadius + BLOCK_SCAN_EPSILON);
         int minY = Mth.floor(sphereCenter.y - clampedRadius - BLOCK_SCAN_EPSILON);
@@ -71,7 +88,6 @@ public final class InkPaintDistributor {
         int minZ = Mth.floor(sphereCenter.z - clampedRadius - BLOCK_SCAN_EPSILON);
         int maxZ = Mth.floor(sphereCenter.z + clampedRadius + BLOCK_SCAN_EPSILON);
 
-        // 各ブラシ呼び出しごとに新規作成（射撃をまたいだ状態持越し防止）
         List<PatchCandidate> allCandidates = new ArrayList<>();
         Set<InkSurfaceKey> seen = new HashSet<>();
         int totalBlocksChecked = 0;
@@ -93,14 +109,12 @@ public final class InkPaintDistributor {
                     BlockState blockState = level.getBlockState(pos);
                     if (!InkPaintability.isPaintableBlock(level, pos, blockState)) continue;
 
-                    // BlockAABB と球の交差判定で早期リジェクト
                     if (!sphereIntersectsBlockAABB(sphereCenter, clampedRadius, r2, pos)) {
                         continue;
                     }
 
                     totalPaintableBlocks++;
 
-                    // 抽出されたパッチで走査（PatchId をキャッシュし、正しい BlockPos で構築）
                     List<InkSurfacePatch> patches =
                             InkSurfacePatchExtractor.extract(blockState, level, pos);
 
@@ -119,18 +133,15 @@ public final class InkPaintDistributor {
                         double maxV = patch.id().maxV()
                                 / (double) InkSurfacePatchId.BLOCK_RESOLUTION;
 
-                        // 球とパッチ矩形の交差判定
                         if (!basis.sphereIntersectsPatchRect(sphereCenter, clampedRadius,
                                 pos, planeCoord, minU, minV, maxU, maxV)) {
                             continue;
                         }
 
-                        // 簡易露出判定
                         if (!hasAirExposure(level, pos, patch)) {
                             continue;
                         }
 
-                        // 重複排除キーは BlockPos + PatchId
                         InkSurfaceKey key = patch.toSurfaceKey();
                         if (!seen.add(key)) continue;
 
@@ -160,7 +171,12 @@ public final class InkPaintDistributor {
                 sphereCenter, clampedRadius, totalBlocksChecked, totalPaintableBlocks,
                 totalExtractedPatches, candidateCount);
 
-        // --- 各パッチに塗装を分配 ---
+        boolean useDistortion = impactVelocity != null && impactVelocity.lengthSqr() > 0.001;
+
+        long distortionSeed = Mth.floor(sphereCenter.x * 1000)
+                ^ (Mth.floor(sphereCenter.y * 1000) << 11)
+                ^ (Mth.floor(sphereCenter.z * 1000) << 22);
+
         List<MultiSurfacePaintResult.UpdatedInkSurface> updatedSurfaces = new ArrayList<>();
         int totalChangedSurfaces = 0;
         int totalChangedCells = 0;
@@ -178,20 +194,49 @@ public final class InkPaintDistributor {
             InkSurfaceKey key = patch.toSurfaceKey();
             InkFaceData faceData = surfaces.computeIfAbsent(key, k -> new InkFaceData());
 
-            // 球中心をパッチ面に投影し、パッチローカルUVを取得
-            // clamp しない: 範囲外のUVは隣接ブロックとの連続性に必要
             FaceBasis.LocalUV localUV = patch.projectOntoPatch(sphereCenter);
             double pu = localUV.u();
             double pv = localUV.v();
             double radiusPatch = clampedRadius;
 
             double cellSize = 1.0 / InkFaceData.GRID_SIZE;
-            int cellUMin = Math.max(0, (int) Math.floor((pu - radiusPatch) / cellSize));
+
+            double stretchU = 0.0;
+            double stretchV = 0.0;
+            double velMagnitude = 0.0;
+
+            if (useDistortion) {
+                // FaceBasis.normal() returns Vec3i; convert to Vec3
+                Vec3 normalVec = Vec3.atLowerCornerOf(basis.normal());
+                Vec3 tangentVel = impactVelocity.subtract(
+                        normalVec.scale(impactVelocity.dot(normalVec)));
+                velMagnitude = tangentVel.length();
+
+                if (velMagnitude > 0.001) {
+                    Vec3 velDir = tangentVel.normalize();
+                    // project velocity direction into patch UV axes (Vec3i -> Vec3)
+                    Vec3 uAxis = Vec3.atLowerCornerOf(basis.uAxis());
+                    Vec3 vAxis = Vec3.atLowerCornerOf(basis.vAxis());
+                    stretchU = velDir.dot(uAxis) * velMagnitude * VELOCITY_STRETCH_SCALE;
+                    stretchV = velDir.dot(vAxis) * velMagnitude * VELOCITY_STRETCH_SCALE;
+
+                    double stretchMag = Math.sqrt(stretchU * stretchU + stretchV * stretchV);
+                    if (stretchMag > MAX_VELOCITY_STRETCH) {
+                        double scale = MAX_VELOCITY_STRETCH / stretchMag;
+                        stretchU *= scale;
+                        stretchV *= scale;
+                    }
+                }
+            }
+
+            int cellUMin = Math.max(0,
+                    (int) Math.floor((pu - radiusPatch - Math.abs(stretchU)) / cellSize));
             int cellUMax = Math.min(InkFaceData.GRID_SIZE - 1,
-                    (int) Math.floor((pu + radiusPatch) / cellSize));
-            int cellVMin = Math.max(0, (int) Math.floor((pv - radiusPatch) / cellSize));
+                    (int) Math.floor((pu + radiusPatch + Math.abs(stretchU)) / cellSize));
+            int cellVMin = Math.max(0,
+                    (int) Math.floor((pv - radiusPatch - Math.abs(stretchV)) / cellSize));
             int cellVMax = Math.min(InkFaceData.GRID_SIZE - 1,
-                    (int) Math.floor((pv + radiusPatch) / cellSize));
+                    (int) Math.floor((pv + radiusPatch + Math.abs(stretchV)) / cellSize));
 
             int changed = 0;
 
@@ -204,14 +249,31 @@ public final class InkPaintDistributor {
 
                     double nearestU = InkFaceData.clamp(pu, cellMinU, cellMaxU);
                     double nearestV = InkFaceData.clamp(pv, cellMinV, cellMaxV);
-                    double du = pu - nearestU;
-                    double dv = pv - nearestV;
 
-                    if (du * du + dv * dv <= radiusPatch * radiusPatch) {
-                        int cellIndex = cellV * InkFaceData.GRID_SIZE + cellU;
-                        if (faceData.getCellByIndex(cellIndex) != normalizedTeam) {
-                            faceData.setCell(cellU, cellV, normalizedTeam);
-                            changed++;
+                    if (useDistortion) {
+                        double du = nearestU - pu;
+                        double dv = nearestV - pv;
+
+                        double effectiveR = getDistortedRadius(
+                                du, dv, radiusPatch, stretchU, stretchV,
+                                velMagnitude, distortionSeed, cellU, cellV);
+
+                        if (du * du + dv * dv <= effectiveR * effectiveR) {
+                            int cellIndex = cellV * InkFaceData.GRID_SIZE + cellU;
+                            if (faceData.getCellByIndex(cellIndex) != normalizedTeam) {
+                                faceData.setCell(cellU, cellV, normalizedTeam);
+                                changed++;
+                            }
+                        }
+                    } else {
+                        double du = pu - nearestU;
+                        double dv = pv - nearestV;
+                        if (du * du + dv * dv <= radiusPatch * radiusPatch) {
+                            int cellIndex = cellV * InkFaceData.GRID_SIZE + cellU;
+                            if (faceData.getCellByIndex(cellIndex) != normalizedTeam) {
+                                faceData.setCell(cellU, cellV, normalizedTeam);
+                                changed++;
+                            }
                         }
                     }
                 }
@@ -246,11 +308,119 @@ public final class InkPaintDistributor {
     }
 
     /**
-     * 球がブロックの AABB と交差するか判定する。
-     * 交差があれば必ず true、なければ false。
+     * 歪み半径を計算する。
      *
-     * <p>球と AABB の最短距離を計算し、r² 以下なら交差。</p>
+     * <p>以下の要素を合成:
+     * 1. 速度方向への楕円伸張（進行方向のみ、逆方向には伸びない）
+     * 2. 角度依存の輪郭ノイズ（ハッシュベース）
+     * 3. 飛沫の追加判定（円周付近の小円）
      */
+    private static double getDistortedRadius(
+            double du, double dv, double baseRadius,
+            double stretchU, double stretchV,
+            double velMagnitude, long seed, int cellU, int cellV) {
+
+        if (baseRadius <= 0) return 0;
+
+        double distance = Math.sqrt(du * du + dv * dv);
+        if (distance < 1e-12) return baseRadius;
+
+        // 1. 方向の単位ベクトル
+        double duNorm = du / distance;
+        double dvNorm = dv / distance;
+
+        // 2. 速度方向伸張（楕円変形）- 進行方向のみに伸びる
+        double stretchFactor = 1.0;
+        if (velMagnitude > 0.001) {
+            double stretchMag = Math.sqrt(stretchU * stretchU + stretchV * stretchV);
+            if (stretchMag > 0.001) {
+                double suNorm = stretchU / stretchMag;
+                double svNorm = stretchV / stretchMag;
+                // セル方向と速度方向の内積（0=直交、1=平行、負=逆方向）
+                double align = duNorm * suNorm + dvNorm * svNorm;
+                // 速度の進行方向にのみ伸張（逆方向には伸びない）
+                stretchFactor = 1.0 + Math.max(0.0, align) * stretchMag;
+            }
+        }
+
+        // 3. 輪郭ノイズ（角度依存）
+        double angle = Math.atan2(dvNorm, duNorm);
+        double noise = sampleEdgeNoise(angle, seed);
+        double noiseFactor = 1.0 + noise * EDGE_NOISE_AMPLITUDE;
+
+        // 4. 基本有効半径
+        double effectiveRadius = baseRadius * noiseFactor * stretchFactor;
+
+        // 5. 飛沫判定: 円周の外側に飛沫小円があるか
+        double splatterBoost = checkSplatter(du, dv, baseRadius, seed, cellU, cellV);
+        if (splatterBoost > effectiveRadius) {
+            effectiveRadius = splatterBoost;
+        }
+
+        return effectiveRadius;
+    }
+
+    /**
+     * 角度に基づく輪郭ノイズをサンプリングする。
+     * 2つの異なる周波数のノイズを合成して有機的な歪みを生成する。
+     */
+    private static double sampleEdgeNoise(double angle, long seed) {
+        double a1 = angle * EDGE_NOISE_FREQUENCY;
+        long s1 = seed ^ ((long)(a1 * 1000));
+        double n1 = InkFaceData.hashToDouble(s1);
+
+        double a2 = angle * EDGE_NOISE_FREQUENCY * 2.3 + 1.7;
+        long s2 = seed ^ ((long)(a2 * 1000)) ^ 0xABCD;
+        double n2 = InkFaceData.hashToDouble(s2);
+
+        // n1: 大まかな歪み、n2: 細かいディテール
+        return (n1 - 0.5) * 1.5 + (n2 - 0.5) * 0.5;
+    }
+
+    /**
+     * 飛沫（スプラッター）判定。
+     * 複数の飛沫小円のうち、最も近いものまでの距離を元に
+     * このセルが塗られるべきかを判定する。
+     *
+     * @return このセルを塗るのに必要な最小半径（baseRadius より大きければ塗られる）
+     */
+    private static double checkSplatter(
+            double du, double dv, double baseRadius,
+            long seed, int cellU, int cellV) {
+
+        long splatterSeed = seed ^ 0x5F1A7L;
+        int splatterCount = SPLATTER_COUNT_MIN
+                + (int)(InkFaceData.hashToDouble(splatterSeed) * (SPLATTER_COUNT_MAX - SPLATTER_COUNT_MIN + 1));
+
+        double bestEffectiveRadius = 0;
+
+        for (int i = 0; i < splatterCount; i++) {
+            long sSeed = splatterSeed ^ (i * 0x9E3779B9L);
+
+            double sAngle = InkFaceData.hashToDouble(sSeed) * Math.PI * 2.0;
+            double sDist = SPLATTER_DISTANCE_MIN
+                    + InkFaceData.hashToDouble(sSeed ^ 1) * (SPLATTER_DISTANCE_MAX - SPLATTER_DISTANCE_MIN);
+            double sRadius = SPLATTER_RADIUS_MIN
+                    + InkFaceData.hashToDouble(sSeed ^ 2) * (SPLATTER_RADIUS_MAX - SPLATTER_RADIUS_MIN);
+
+            double scU = Math.cos(sAngle) * sDist * baseRadius;
+            double scV = Math.sin(sAngle) * sDist * baseRadius;
+
+            double sdu = du - scU;
+            double sdv = dv - scV;
+
+            double cellToSplatterDist = Math.sqrt(sdu * sdu + sdv * sdv);
+            if (cellToSplatterDist <= sRadius * baseRadius) {
+                double neededR = Math.sqrt(du * du + dv * dv) + 0.001;
+                if (neededR > bestEffectiveRadius) {
+                    bestEffectiveRadius = neededR;
+                }
+            }
+        }
+
+        return bestEffectiveRadius;
+    }
+
     private static boolean sphereIntersectsBlockAABB(Vec3 center, double radius,
                                                       double r2, BlockPos pos) {
         double bx = pos.getX();
@@ -267,17 +437,7 @@ public final class InkPaintDistributor {
         return dx * dx + dy * dy + dz * dz <= r2;
     }
 
-    /**
-     * パッチが空気に露出しているか簡易判定。
-     *
-     * <p>正準フルキューブ外周面以外のパッチ（ハーフブロック側面・階段状側面・
-     * 内部planeの部分パッチ等）は、VoxelShape抽出時に既にブロック外部への
-     * 露出が保証されているため常に true を返す。</p>
-     *
-     * <p>正準フルキューブ外周面については隣接ブロックの occlusion チェックを行う。</p>
-     */
     private static boolean hasAirExposure(ServerLevel level, BlockPos pos, InkSurfacePatch patch) {
-        // 正準フルキューブ外周面以外は抽出時に露出が保証されているためスキップ
         if (!patch.id().isCanonicalFullCubeFace()) {
             return true;
         }
@@ -289,6 +449,22 @@ public final class InkPaintDistributor {
             return true;
         }
         return !neighborState.isCollisionShapeFullBlock(level, neighbor);
+    }
+
+    /**
+     * 後方互換性のためのオーバーロード（velocity なし）。
+     */
+    public static MultiSurfacePaintResult distributePaint(
+            ServerLevel level,
+            InkArena arena,
+            InkStorage inkStorage,
+            BlockPos hitBlockPos,
+            Direction hitFace,
+            Vec3 worldHitPos,
+            double radiusBlocks,
+            byte team) {
+        return distributePaint(level, arena, inkStorage, hitBlockPos, hitFace,
+                worldHitPos, radiusBlocks, team, null);
     }
 
     private record PatchCandidate(BlockPos blockPos, InkSurfacePatch patch, FaceBasis basis) {}

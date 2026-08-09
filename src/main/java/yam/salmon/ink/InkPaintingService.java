@@ -4,6 +4,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import yam.salmon.Salmon;
@@ -38,6 +39,7 @@ public final class InkPaintingService {
      * @param worldHitPos  ワールド座標でのヒット位置
      * @param radiusBlocks 塗装半径（ブロック単位）
      * @param team         チーム値
+     * @param impactVelocity 衝突時の速度ベクトル（歪みなしの場合は null）
      * @return 塗装分配結果
      */
     public static MultiSurfacePaintResult paint(
@@ -48,13 +50,14 @@ public final class InkPaintingService {
             Direction hitFace,
             Vec3 worldHitPos,
             double radiusBlocks,
-            byte team) {
+            byte team,
+            @Nullable Vec3 impactVelocity) {
 
         // 塗装分配
         MultiSurfacePaintResult result = InkPaintDistributor.distributePaint(
                 level, arena, inkStorage,
                 hitBlockPos, hitFace, worldHitPos,
-                radiusBlocks, team);
+                radiusBlocks, team, impactVelocity);
 
         if (result.success()) {
             // SavedData を保存
@@ -83,6 +86,7 @@ public final class InkPaintingService {
      * @param worldHitPos  ワールド座標でのヒット位置
      * @param radiusBlocks 塗装半径（ブロック単位）
      * @param team         チーム値
+     * @param impactVelocity 衝突時の速度ベクトル（歪みなしの場合は null）
      * @param accumulator  集約先アキュムレータ
      * @return 塗装分配結果
      */
@@ -95,12 +99,13 @@ public final class InkPaintingService {
             Vec3 worldHitPos,
             double radiusBlocks,
             byte team,
+            @Nullable Vec3 impactVelocity,
             InkPaintAccumulator accumulator) {
 
         MultiSurfacePaintResult result = InkPaintDistributor.distributePaint(
                 level, arena, inkStorage,
                 hitBlockPos, hitFace, worldHitPos,
-                radiusBlocks, team);
+                radiusBlocks, team, impactVelocity);
 
         if (result.success() && accumulator != null) {
             accumulator.addAllFrom(result);

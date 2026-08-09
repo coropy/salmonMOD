@@ -284,10 +284,12 @@ public final class InkProjectileLifecycleManager {
                 InkShotPaintTransaction transaction = new InkShotPaintTransaction();
                 InkPaintAccumulator accumulator = transaction.forArena(arena);
 
+                Vec3 shotVelocity = shot.velocity();
                 MultiSurfacePaintResult paintResult = InkPaintingService.paintInto(
                         level, arena, inkStorage,
                         hitPos, hitFace, impactPosition,
                         shot.config().paintRadius(), team,
+                        shotVelocity,
                         accumulator);
 
                 if (transaction.hasAnyChanges()) {
@@ -478,10 +480,12 @@ public final class InkProjectileLifecycleManager {
                 InkShotPaintTransaction transaction = new InkShotPaintTransaction();
                 InkPaintAccumulator accumulator = transaction.forArena(arena);
 
+                Vec3 dropVelocity = drop.velocity();
                 MultiSurfacePaintResult paintResult = InkPaintingService.paintInto(
                         level, arena, inkStorage,
                         hitPos, hitFace, impactPosition,
                         drop.paintRadius(), team,
+                        dropVelocity,
                         accumulator);
 
                 if (transaction.hasAnyChanges()) {

@@ -194,12 +194,15 @@ public final class InkTrailPaintService {
                 }
 
                 // 塗装実行（アリーナ別トランザクションに追加、即時同期しない）
+                // trail drops have mainly downward velocity at impact
+                Vec3 dropVelocity = rayEnd.subtract(rayStart).normalize().scale(2.0);
                 InkStorage inkStorage = InkArenaManager.getInstance().getInkStorage();
                 InkPaintAccumulator accumulator = transaction.forArena(arena);
                 MultiSurfacePaintResult paintResult = InkPaintingService.paintInto(
                         level, arena, inkStorage,
                         hitPos, hitFace, hitLoc,
                         trail.paintRadius(), team,
+                        dropVelocity,
                         accumulator);
 
                 if (paintResult.success()) {

@@ -128,10 +128,12 @@ public final class InkShooterService {
 
                 // アリーナ別トランザクションに追加
                 InkPaintAccumulator accumulator = transaction.forArena(arena);
+                // legacy path: no velocity available, pass null
                 MultiSurfacePaintResult paintResult = InkPaintingService.paintInto(
                         level, arena, inkStorage,
                         hitPos, hitFace, hitLocation,
                         config.paintRadius(), team,
+                        null,
                         accumulator);
 
                 if (paintResult.success()) {

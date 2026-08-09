@@ -214,6 +214,18 @@ public final class InkFaceData {
         return sb.toString();
     }
 
+    /**
+     * 簡易決定論的ハッシュ（インク形状の歪み生成用）。
+     * 同じ入力から常に同じ [0, 1) 範囲の double を返す。
+     */
+    public static double hashToDouble(long seed) {
+        long h = seed * 0x9E3779B97F4A7C15L;
+        h = (h ^ (h >>> 30)) * 0xBF58476D1CE4E5B9L;
+        h = (h ^ (h >>> 27)) * 0x94D049BB133111EBL;
+        h = h ^ (h >>> 31);
+        return (double)(h & 0x7FFFFFFFFFFFFFFFL) / (double)Long.MAX_VALUE;
+    }
+
     private static int index(int u, int v) {
         return v * GRID_SIZE + u;
     }
