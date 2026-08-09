@@ -22,6 +22,7 @@ public final class ActiveTrailDrop {
     private final double gravity;
     private final long spawnGameTime;
     private final float visualSize;
+    private final double paintRadius;
     private final int colorRgb;
 
     private Vec3 position;
@@ -39,7 +40,7 @@ public final class ActiveTrailDrop {
     ActiveTrailDrop(UUID dropId, UUID parentShotId, UUID shooterId,
                     ResourceKey<Level> dimension, Vec3 position,
                     Vec3 velocity, double gravity, long spawnGameTime,
-                    float visualSize, int colorRgb) {
+                    float visualSize, double paintRadius, int colorRgb) {
         this.dropId = dropId;
         this.parentShotId = parentShotId;
         this.shooterId = shooterId;
@@ -49,6 +50,7 @@ public final class ActiveTrailDrop {
         this.gravity = gravity;
         this.spawnGameTime = spawnGameTime;
         this.visualSize = visualSize;
+        this.paintRadius = paintRadius;
         this.age = 0;
         this.finished = false;
         this.finishReason = ProjectileFinishReason.ALIVE;
@@ -64,6 +66,7 @@ public final class ActiveTrailDrop {
     public double gravity() { return gravity; }
     public long spawnGameTime() { return spawnGameTime; }
     public float visualSize() { return visualSize; }
+    public double paintRadius() { return paintRadius; }
     public int colorRgb() { return colorRgb; }
 
     public Vec3 position() { return position; }

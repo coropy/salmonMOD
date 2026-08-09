@@ -470,8 +470,8 @@
     "semantic_hash": ""
   },
   "src/main/java/yam/salmon/weapon/InkTrailPaintConfig.java": {
-    "mtime": 1786237703.974039,
-    "ast_hash": "6d191dabb352eb997e8bbf62ffd86459",
+    "mtime": 1786239687.5187552,
+    "ast_hash": "6cb2a36d4138cfcbb13abecdfcecca11",
     "semantic_hash": ""
   },
   "src/main/java/yam/salmon/weapon/InkTrailPaintService.java": {
@@ -490,8 +490,8 @@
     "semantic_hash": ""
   },
   "src/main/java/yam/salmon/weapon/InkWeaponConfig.java": {
-    "mtime": 1786237690.1471088,
-    "ast_hash": "fea1df1c9682387f3be16e5a68838e86",
+    "mtime": 1786239544.6927178,
+    "ast_hash": "aac85e6d59aa51e6a1dc4a507eca5ce4",
     "semantic_hash": ""
   },
   "src/main/java/yam/salmon/weapon/InkWeaponRegistry.java": {
@@ -535,13 +535,13 @@
     "semantic_hash": ""
   },
   "src/main/java/yam/salmon/weapon/ActiveTrailDrop.java": {
-    "mtime": 1785497944.6768963,
-    "ast_hash": "e935eb9f834c173cc2a33b7b862b09c9",
+    "mtime": 1786239882.8276505,
+    "ast_hash": "1f384cbca8c960ebe26674ad22f777cd",
     "semantic_hash": ""
   },
   "src/main/java/yam/salmon/weapon/InkProjectileLifecycleManager.java": {
-    "mtime": 1785497958.918679,
-    "ast_hash": "2392fed3a879b82cadad4f8945758e33",
+    "mtime": 1786239895.3589585,
+    "ast_hash": "b995435739069fa6224db17d98f88f5b",
     "semantic_hash": ""
   },
   "src/main/java/yam/salmon/weapon/ProjectileFinishReason.java": {

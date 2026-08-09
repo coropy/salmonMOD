@@ -3,14 +3,14 @@ package yam.salmon.ink;
 import java.util.Arrays;
 
 /**
- * ブロック1面の8×8インクグリッドデータ。
+ * ブロック1面の16×16インクグリッドデータ。
  * 各セルは byte でチーム値を保持する。
  *
  * <p>内部配列は cellIndex = v * GRID_SIZE + u</p>
  */
 public final class InkFaceData {
-    public static final int GRID_SIZE = 8;
-    public static final int CELL_COUNT = 64;
+    public static final int GRID_SIZE = 16;
+    public static final int CELL_COUNT = GRID_SIZE * GRID_SIZE;
 
     /**
      * セルと円の交差判定方式。
@@ -200,7 +200,7 @@ public final class InkFaceData {
     }
 
     /**
-     * 8×8の文字列表現を返す（デバッグ表示用）。
+     * 16×16の文字列表現を返す（デバッグ表示用）。
      */
     @Override
     public String toString() {

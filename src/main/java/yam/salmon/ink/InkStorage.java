@@ -24,7 +24,7 @@ import java.util.*;
 public class InkStorage {
     private static final Logger LOGGER = LoggerFactory.getLogger(Salmon.MOD_ID + ".ink");
 
-    /** デフォルトの塗装半径（8×8グリッドで直径約4セル） */
+    /** デフォルトの塗装半径（UV座標系） */
     public static final double DEFAULT_PAINT_RADIUS = 0.24;
 
     /** アリーナUUID → 塗装面マップ */
@@ -240,13 +240,21 @@ public class InkStorage {
                             ss.faceName(), ss.blockPos(), saved.arenaId());
                     continue;
                 }
-                if (ss.cells().length != InkFaceData.CELL_COUNT) {
-                    LOGGER.warn("Invalid cell count {} for surface {} / {} in arena {}, skipping",
-                            ss.cells().length, ss.blockPos(), ss.faceName(), saved.arenaId());
-                    continue;
+                byte[] cells = ss.cells();
+                if (cells.length != InkFaceData.CELL_COUNT) {
+                    // 旧8×8データ（64バイト）を16×16（256バイト）にアップスケール
+                    if (cells.length == 64) {
+                        cells = upscaleFrom8x8(cells);
+                        LOGGER.info("Upscaled 8x8 cells to 16x16 for surface {} / {} in arena {}",
+                                ss.blockPos(), ss.faceName(), saved.arenaId());
+                    } else {
+                        LOGGER.warn("Invalid cell count {} for surface {} / {} in arena {}, skipping",
+                                cells.length, ss.blockPos(), ss.faceName(), saved.arenaId());
+                        continue;
+                    }
                 }
                 surfaces.put(new InkSurfaceKey(ss.blockPos(), patchId),
-                        new InkFaceData(ss.cells()));
+                        new InkFaceData(cells));
             }
             if (!surfaces.isEmpty()) {
                 result.put(saved.arenaId(), surfaces);
@@ -254,6 +262,30 @@ public class InkStorage {
         }
         LOGGER.info("Loaded {} arena ink data sets", result.size());
         return result;
+    }
+
+    /**
+     * 旧8×8（64バイト）のセルデータを16×16（256バイト）にアップスケールする。
+     * 各旧セルを2×2の新セルに拡大する。
+     */
+    private static byte[] upscaleFrom8x8(byte[] oldCells) {
+        final int OLD_GRID = 8;
+        final int NEW_GRID = 16;
+        byte[] newCells = new byte[NEW_GRID * NEW_GRID];
+        for (int ov = 0; ov < OLD_GRID; ov++) {
+            for (int ou = 0; ou < OLD_GRID; ou++) {
+                byte team = oldCells[ov * OLD_GRID + ou];
+                // 1つの旧セルを2×2=4つの新セルに拡大
+                int nvStart = ov * 2;
+                int nuStart = ou * 2;
+                for (int dv = 0; dv < 2; dv++) {
+                    for (int du = 0; du < 2; du++) {
+                        newCells[(nvStart + dv) * NEW_GRID + (nuStart + du)] = team;
+                    }
+                }
+            }
+        }
+        return newCells;
     }
 
     private static List<SavedArenaInk> toSavedList(Map<UUID, Map<InkSurfaceKey, InkFaceData>> data) {

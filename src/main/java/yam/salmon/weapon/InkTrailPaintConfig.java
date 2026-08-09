@@ -42,14 +42,14 @@ public record InkTrailPaintConfig(
             3.0,    // minTrailDropSpacing
             5.0,    // maxTrailDropSpacing
             2.5,    // downwardRange
-            0.5,   // paintRadius
+            0.80,   // paintRadius
             0.08,   // horizontalJitter
             0.05,   // verticalStartOffset
             0.75,   // minimumDistanceFromMuzzle
             0.35,   // minimumDistanceFromImpact
             2,      // maxTrailDropsPerShot
             0.9,    // paintChance
-            0.42f   // visualDropSize
+            0.14f   // visualDropSize
     );
 
     /** 短射程シューター用トレイル設定 */
@@ -58,14 +58,14 @@ public record InkTrailPaintConfig(
             0.7,    // minTrailDropSpacing
             1.2,    // maxTrailDropSpacing
             1.5,    // downwardRange
-            0.22,   // paintRadius
+            0.80,   // paintRadius
             0.08,   // horizontalJitter
             0.05,   // verticalStartOffset
             0.5,    // minimumDistanceFromMuzzle
             0.3,    // minimumDistanceFromImpact
             5,      // maxTrailDropsPerShot
             0.9,    // paintChance
-            0.33f   // visualDropSize
+            0.11f   // visualDropSize
     );
 
     /** 長射程シューター用トレイル設定 */
@@ -74,14 +74,14 @@ public record InkTrailPaintConfig(
             1.1,    // minTrailDropSpacing
             1.7,    // maxTrailDropSpacing
             2.75,   // downwardRange
-            0.12,   // paintRadius
+            0.36,   // paintRadius
             0.03,   // horizontalJitter
             0.05,   // verticalStartOffset
             1.0,    // minimumDistanceFromMuzzle
             0.5,    // minimumDistanceFromImpact
             7,      // maxTrailDropsPerShot
             0.75,   // paintChance
-            0.18f   // visualDropSize
+            0.06f   // visualDropSize
     );
 
     /** トレイル塗装無効 */

@@ -51,6 +51,12 @@ public final class InkProjectileLifecycleManager {
     /** 視線方向に前に出す距離 */
     private static final double EYE_OFFSET = 0.3;
 
+    /** 発射位置の右方向オフセット（プレイヤーの利き手側） */
+    private static final double RIGHT_OFFSET = 0.4;
+
+    /** 発射位置の下方向オフセット */
+    private static final double DOWN_OFFSET = 0.5;
+
     /** ワールド外判定マージン */
     static final int OUT_OF_WORLD_MARGIN = 64;
 
@@ -105,7 +111,10 @@ public final class InkProjectileLifecycleManager {
         Vec3 eyePos = shooter.getEyePosition();
         Vec3 lookDir = shooter.getLookAngle();
         Vec3 shootDir = InkTrajectorySimulator.applySpread(lookDir, config, random);
-        Vec3 startPos = eyePos.add(shootDir.scale(EYE_OFFSET));
+        Vec3 right = lookDir.cross(new Vec3(0, 1, 0)).normalize();
+        Vec3 startPos = eyePos.add(shootDir.scale(EYE_OFFSET))
+                .add(right.scale(RIGHT_OFFSET))
+                .add(0, -DOWN_OFFSET, 0);
         Vec3 initialVelocity = shootDir.scale(config.initialSpeed());
 
         int colorRgb = InkVisualColorResolver.resolveShotColor(shooter);
@@ -395,7 +404,8 @@ public final class InkProjectileLifecycleManager {
                 dropId, shot.shotId(), shot.shooterId(),
                 level.dimension(), dropPos, dropVelocity,
                 shot.gravity(), level.getGameTime(),
-                trail.visualDropSize(), shot.visualColorRgb());
+                trail.visualDropSize(), trail.paintRadius(),
+                shot.visualColorRgb());
 
         pendingDropAdds.add(drop);
         shot.incrementDropCount();
@@ -471,7 +481,7 @@ public final class InkProjectileLifecycleManager {
                 MultiSurfacePaintResult paintResult = InkPaintingService.paintInto(
                         level, arena, inkStorage,
                         hitPos, hitFace, impactPosition,
-                        drop.visualSize() * 0.5, team,
+                        drop.paintRadius(), team,
                         accumulator);
 
                 if (transaction.hasAnyChanges()) {
