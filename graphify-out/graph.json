@@ -92,7 +92,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_salmonclient",
-      "community": 38,
+      "community": 35,
       "community_name": "SalmonClient.java",
       "norm_label": "salmonclient.java"
     },
@@ -103,7 +103,7 @@
       "source_location": "L26",
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_salmonclient_salmonclient",
-      "community": 38,
+      "community": 35,
       "community_name": "SalmonClient.java",
       "norm_label": "salmonclient"
     },
@@ -114,7 +114,7 @@
       "source_location": "",
       "_origin": "ast",
       "id": "clientmodinitializer",
-      "community": 38,
+      "community": 35,
       "community_name": "SalmonClient.java",
       "norm_label": "clientmodinitializer"
     },
@@ -125,8 +125,8 @@
       "source_location": "L28",
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_salmonclient_salmonclient_oninitializeclient",
-      "community": 9,
-      "community_name": "InkRenderer.java",
+      "community": 54,
+      "community_name": ".onInitializeClient",
       "norm_label": ".oninitializeclient()"
     },
     {
@@ -136,8 +136,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_salmonclient_java_override",
-      "community": 9,
-      "community_name": "InkRenderer.java",
+      "community": 54,
+      "community_name": ".onInitializeClient",
       "norm_label": "override"
     },
     {
@@ -257,8 +257,8 @@
       "source_location": "L105",
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_arena_arenadebugrenderer_arenadebugrenderer_getinstance",
-      "community": 9,
-      "community_name": "InkRenderer.java",
+      "community": 54,
+      "community_name": ".onInitializeClient",
       "norm_label": ".getinstance()"
     },
     {
@@ -598,8 +598,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_ink_clientinkcache",
-      "community": 2,
-      "community_name": "InkSurfacePatchId",
+      "community": 20,
+      "community_name": "ClientInkCache",
       "norm_label": "clientinkcache.java"
     },
     {
@@ -609,8 +609,8 @@
       "source_location": "L26",
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_ink_clientinkcache_clientinkcache",
-      "community": 2,
-      "community_name": "InkSurfacePatchId",
+      "community": 20,
+      "community_name": "ClientInkCache",
       "norm_label": "clientinkcache"
     },
     {
@@ -620,8 +620,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_ink_clientinkcache_java_identifier",
-      "community": 2,
-      "community_name": "InkSurfacePatchId",
+      "community": 20,
+      "community_name": "ClientInkCache",
       "norm_label": "identifier"
     },
     {
@@ -631,8 +631,8 @@
       "source_location": "L45",
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_ink_clientinkcache_clientinkcache_clientinkcache",
-      "community": 2,
-      "community_name": "InkSurfacePatchId",
+      "community": 20,
+      "community_name": "ClientInkCache",
       "norm_label": ".clientinkcache()"
     },
     {
@@ -642,8 +642,8 @@
       "source_location": "L47",
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_ink_clientinkcache_clientinkcache_getinstance",
-      "community": 9,
-      "community_name": "InkRenderer.java",
+      "community": 54,
+      "community_name": ".onInitializeClient",
       "norm_label": ".getinstance()"
     },
     {
@@ -653,8 +653,8 @@
       "source_location": "L51",
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_ink_clientinkcache_clientinkcache_isdebugenabled",
-      "community": 2,
-      "community_name": "InkSurfacePatchId",
+      "community": 20,
+      "community_name": "ClientInkCache",
       "norm_label": ".isdebugenabled()"
     },
     {
@@ -664,8 +664,8 @@
       "source_location": "L55",
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_ink_clientinkcache_clientinkcache_setdebugenabled",
-      "community": 2,
-      "community_name": "InkSurfacePatchId",
+      "community": 20,
+      "community_name": "ClientInkCache",
       "norm_label": ".setdebugenabled()"
     },
     {
@@ -675,8 +675,8 @@
       "source_location": "L66",
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_ink_clientinkcache_clientinkcache_beginfullsync",
-      "community": 2,
-      "community_name": "InkSurfacePatchId",
+      "community": 20,
+      "community_name": "ClientInkCache",
       "norm_label": ".beginfullsync()"
     },
     {
@@ -686,8 +686,8 @@
       "source_location": "L84",
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_ink_clientinkcache_clientinkcache_addsyncface",
-      "community": 2,
-      "community_name": "InkSurfacePatchId",
+      "community": 20,
+      "community_name": "ClientInkCache",
       "norm_label": ".addsyncface()"
     },
     {
@@ -697,8 +697,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_ink_clientinkcache_java_blockpos",
-      "community": 2,
-      "community_name": "InkSurfacePatchId",
+      "community": 20,
+      "community_name": "ClientInkCache",
       "norm_label": "blockpos"
     },
     {
@@ -708,8 +708,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_ink_clientinkcache_java_direction",
-      "community": 2,
-      "community_name": "InkSurfacePatchId",
+      "community": 20,
+      "community_name": "ClientInkCache",
       "norm_label": "direction"
     },
     {
@@ -719,8 +719,8 @@
       "source_location": "L113",
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_ink_clientinkcache_clientinkcache_endfullsync",
-      "community": 2,
-      "community_name": "InkSurfacePatchId",
+      "community": 20,
+      "community_name": "ClientInkCache",
       "norm_label": ".endfullsync()"
     },
     {
@@ -730,8 +730,8 @@
       "source_location": "L153",
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_ink_clientinkcache_clientinkcache_applyfaceupdate",
-      "community": 2,
-      "community_name": "InkSurfacePatchId",
+      "community": 20,
+      "community_name": "ClientInkCache",
       "norm_label": ".applyfaceupdate()"
     },
     {
@@ -741,8 +741,8 @@
       "source_location": "L222",
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_ink_clientinkcache_clientinkcache_cleararena",
-      "community": 2,
-      "community_name": "InkSurfacePatchId",
+      "community": 20,
+      "community_name": "ClientInkCache",
       "norm_label": ".cleararena()"
     },
     {
@@ -752,8 +752,8 @@
       "source_location": "L243",
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_ink_clientinkcache_clientinkcache_cleardimension",
-      "community": 2,
-      "community_name": "InkSurfacePatchId",
+      "community": 20,
+      "community_name": "ClientInkCache",
       "norm_label": ".cleardimension()"
     },
     {
@@ -763,8 +763,8 @@
       "source_location": "L260",
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_ink_clientinkcache_clientinkcache_clearall",
-      "community": 2,
-      "community_name": "InkSurfacePatchId",
+      "community": 20,
+      "community_name": "ClientInkCache",
       "norm_label": ".clearall()"
     },
     {
@@ -774,8 +774,8 @@
       "source_location": "L282",
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_ink_clientinkcache_clientinkcache_getsurfacesfordimension",
-      "community": 2,
-      "community_name": "InkSurfacePatchId",
+      "community": 20,
+      "community_name": "ClientInkCache",
       "norm_label": ".getsurfacesfordimension()"
     },
     {
@@ -785,8 +785,8 @@
       "source_location": "L296",
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_ink_clientinkcache_clientinkcache_getsurfacecount",
-      "community": 2,
-      "community_name": "InkSurfacePatchId",
+      "community": 20,
+      "community_name": "ClientInkCache",
       "norm_label": ".getsurfacecount()"
     },
     {
@@ -796,8 +796,8 @@
       "source_location": "L310",
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_ink_clientinkcache_clientinkcache_createsurface",
-      "community": 2,
-      "community_name": "InkSurfacePatchId",
+      "community": 20,
+      "community_name": "ClientInkCache",
       "norm_label": ".createsurface()"
     },
     {
@@ -807,8 +807,8 @@
       "source_location": "L340",
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_ink_clientinkcache_clientinkcache_logdiagnostics",
-      "community": 2,
-      "community_name": "InkSurfacePatchId",
+      "community": 20,
+      "community_name": "ClientInkCache",
       "norm_label": ".logdiagnostics()"
     },
     {
@@ -818,8 +818,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_ink_clientinkcolors",
-      "community": 9,
-      "community_name": "InkRenderer.java",
+      "community": 36,
+      "community_name": ".extractInkState",
       "norm_label": "clientinkcolors.java"
     },
     {
@@ -829,8 +829,8 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_ink_clientinkcolors_clientinkcolors",
-      "community": 9,
-      "community_name": "InkRenderer.java",
+      "community": 36,
+      "community_name": ".extractInkState",
       "norm_label": "clientinkcolors"
     },
     {
@@ -840,8 +840,8 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_ink_clientinkcolors_clientinkcolors_getcolor",
-      "community": 9,
-      "community_name": "InkRenderer.java",
+      "community": 36,
+      "community_name": ".extractInkState",
       "norm_label": ".getcolor()"
     },
     {
@@ -851,8 +851,8 @@
       "source_location": "L28",
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_ink_clientinkcolors_clientinkcolors_clientinkcolors",
-      "community": 9,
-      "community_name": "InkRenderer.java",
+      "community": 36,
+      "community_name": ".extractInkState",
       "norm_label": ".clientinkcolors()"
     },
     {
@@ -862,8 +862,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_ink_clientinksurface",
-      "community": 2,
-      "community_name": "InkSurfacePatchId",
+      "community": 55,
+      "community_name": "ClientInkSurface",
       "norm_label": "clientinksurface.java"
     },
     {
@@ -873,8 +873,8 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_ink_clientinksurface_clientinksurface",
-      "community": 2,
-      "community_name": "InkSurfacePatchId",
+      "community": 55,
+      "community_name": "ClientInkSurface",
       "norm_label": "clientinksurface"
     },
     {
@@ -884,8 +884,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_ink_clientinksurface_java_identifier",
-      "community": 2,
-      "community_name": "InkSurfacePatchId",
+      "community": 55,
+      "community_name": "ClientInkSurface",
       "norm_label": "identifier"
     },
     {
@@ -895,8 +895,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_ink_clientinksurface_java_blockpos",
-      "community": 2,
-      "community_name": "InkSurfacePatchId",
+      "community": 55,
+      "community_name": "ClientInkSurface",
       "norm_label": "blockpos"
     },
     {
@@ -906,8 +906,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_ink_clientinksurface_java_direction",
-      "community": 2,
-      "community_name": "InkSurfacePatchId",
+      "community": 55,
+      "community_name": "ClientInkSurface",
       "norm_label": "direction"
     },
     {
@@ -917,8 +917,8 @@
       "source_location": "L46",
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_ink_clientinksurface_clientinksurface_getcell",
-      "community": 2,
-      "community_name": "InkSurfacePatchId",
+      "community": 55,
+      "community_name": "ClientInkSurface",
       "norm_label": ".getcell()"
     },
     {
@@ -928,8 +928,8 @@
       "source_location": "L55",
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_ink_clientinksurface_clientinksurface_isempty",
-      "community": 2,
-      "community_name": "InkSurfacePatchId",
+      "community": 55,
+      "community_name": "ClientInkSurface",
       "norm_label": ".isempty()"
     },
     {
@@ -939,8 +939,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_ink_clientinksurfacekey",
-      "community": 2,
-      "community_name": "InkSurfacePatchId",
+      "community": 56,
+      "community_name": "ClientInkSurfaceKey",
       "norm_label": "clientinksurfacekey.java"
     },
     {
@@ -950,8 +950,8 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_ink_clientinksurfacekey_clientinksurfacekey",
-      "community": 2,
-      "community_name": "InkSurfacePatchId",
+      "community": 56,
+      "community_name": "ClientInkSurfaceKey",
       "norm_label": "clientinksurfacekey"
     },
     {
@@ -961,8 +961,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_ink_clientinksurfacekey_java_blockpos",
-      "community": 2,
-      "community_name": "InkSurfacePatchId",
+      "community": 56,
+      "community_name": "ClientInkSurfaceKey",
       "norm_label": "blockpos"
     },
     {
@@ -972,8 +972,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_ink_clientinksurfacekey_java_direction",
-      "community": 2,
-      "community_name": "InkSurfacePatchId",
+      "community": 56,
+      "community_name": "ClientInkSurfaceKey",
       "norm_label": "direction"
     },
     {
@@ -983,8 +983,8 @@
       "source_location": "L28",
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_ink_clientinksurfacekey_clientinksurfacekey_clientinksurfacekey",
-      "community": 2,
-      "community_name": "InkSurfacePatchId",
+      "community": 56,
+      "community_name": "ClientInkSurfaceKey",
       "norm_label": ".clientinksurfacekey()"
     },
     {
@@ -994,8 +994,8 @@
       "source_location": "L35",
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_ink_clientinksurfacekey_clientinksurfacekey_fromlegacy",
-      "community": 2,
-      "community_name": "InkSurfacePatchId",
+      "community": 56,
+      "community_name": "ClientInkSurfaceKey",
       "norm_label": ".fromlegacy()"
     },
     {
@@ -1093,8 +1093,8 @@
       "source_location": "L82",
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_ink_inkrenderer_inkrenderer_getinstance",
-      "community": 9,
-      "community_name": "InkRenderer.java",
+      "community": 54,
+      "community_name": ".onInitializeClient",
       "norm_label": ".getinstance()"
     },
     {
@@ -1104,8 +1104,8 @@
       "source_location": "L90",
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_ink_inkrenderer_inkrenderer_extractinkstate",
-      "community": 9,
-      "community_name": "InkRenderer.java",
+      "community": 36,
+      "community_name": ".extractInkState",
       "norm_label": ".extractinkstate()"
     },
     {
@@ -1214,8 +1214,8 @@
       "source_location": "L329",
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_ink_inkrenderer_inkrenderstate",
-      "community": 9,
-      "community_name": "InkRenderer.java",
+      "community": 36,
+      "community_name": ".extractInkState",
       "norm_label": "inkrenderstate"
     },
     {
@@ -1225,8 +1225,8 @@
       "source_location": "L332",
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_ink_inkrenderer_inkrenderstate_inkrenderstate",
-      "community": 9,
-      "community_name": "InkRenderer.java",
+      "community": 36,
+      "community_name": ".extractInkState",
       "norm_label": ".inkrenderstate()"
     },
     {
@@ -1236,8 +1236,8 @@
       "source_location": "L336",
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_ink_inkrenderer_inkrenderstate_empty",
-      "community": 9,
-      "community_name": "InkRenderer.java",
+      "community": 36,
+      "community_name": ".extractInkState",
       "norm_label": ".empty()"
     },
     {
@@ -1247,8 +1247,8 @@
       "source_location": "L340",
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_ink_inkrenderer_coloredquad",
-      "community": 9,
-      "community_name": "InkRenderer.java",
+      "community": 36,
+      "community_name": ".extractInkState",
       "norm_label": "coloredquad"
     },
     {
@@ -1390,7 +1390,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_shot_clientinkshot",
-      "community": 22,
+      "community": 13,
       "community_name": "ClientInkShot",
       "norm_label": "clientinkshot.java"
     },
@@ -1401,7 +1401,7 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_shot_clientinkshot_clientinkshot",
-      "community": 22,
+      "community": 13,
       "community_name": "ClientInkShot",
       "norm_label": "clientinkshot"
     },
@@ -1412,7 +1412,7 @@
       "source_location": "",
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_shot_clientinkshot_java_vec3",
-      "community": 22,
+      "community": 13,
       "community_name": "ClientInkShot",
       "norm_label": "vec3"
     },
@@ -1423,7 +1423,7 @@
       "source_location": "L32",
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_shot_clientinkshot_clientinkshot_clientinkshot",
-      "community": 22,
+      "community": 13,
       "community_name": "ClientInkShot",
       "norm_label": ".clientinkshot()"
     },
@@ -1435,7 +1435,7 @@
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_shot_clientinkshot_clientinkshot_tick",
       "community": 22,
-      "community_name": "ClientInkShot",
+      "community_name": "ClientInkShotManager",
       "norm_label": ".tick()"
     },
     {
@@ -1445,7 +1445,7 @@
       "source_location": "L82",
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_shot_clientinkshot_clientinkshot_applyimpact",
-      "community": 22,
+      "community": 13,
       "community_name": "ClientInkShot",
       "norm_label": ".applyimpact()"
     },
@@ -1456,7 +1456,7 @@
       "source_location": "L93",
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_shot_clientinkshot_clientinkshot_getrenderposition",
-      "community": 22,
+      "community": 13,
       "community_name": "ClientInkShot",
       "norm_label": ".getrenderposition()"
     },
@@ -1467,7 +1467,7 @@
       "source_location": "L97",
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_shot_clientinkshot_clientinkshot_shotid",
-      "community": 22,
+      "community": 13,
       "community_name": "ClientInkShot",
       "norm_label": ".shotid()"
     },
@@ -1478,7 +1478,7 @@
       "source_location": "L98",
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_shot_clientinkshot_clientinkshot_isalive",
-      "community": 22,
+      "community": 13,
       "community_name": "ClientInkShot",
       "norm_label": ".isalive()"
     },
@@ -1489,7 +1489,7 @@
       "source_location": "L99",
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_shot_clientinkshot_clientinkshot_age",
-      "community": 22,
+      "community": 13,
       "community_name": "ClientInkShot",
       "norm_label": ".age()"
     },
@@ -1500,7 +1500,7 @@
       "source_location": "L100",
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_shot_clientinkshot_clientinkshot_colorrgb",
-      "community": 22,
+      "community": 13,
       "community_name": "ClientInkShot",
       "norm_label": ".colorrgb()"
     },
@@ -1511,7 +1511,7 @@
       "source_location": "L101",
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_shot_clientinkshot_clientinkshot_size",
-      "community": 22,
+      "community": 13,
       "community_name": "ClientInkShot",
       "norm_label": ".size()"
     },
@@ -1522,7 +1522,7 @@
       "source_location": "L102",
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_shot_clientinkshot_clientinkshot_start",
-      "community": 22,
+      "community": 13,
       "community_name": "ClientInkShot",
       "norm_label": ".start()"
     },
@@ -1533,7 +1533,7 @@
       "source_location": "L103",
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_shot_clientinkshot_clientinkshot_end",
-      "community": 22,
+      "community": 13,
       "community_name": "ClientInkShot",
       "norm_label": ".end()"
     },
@@ -1544,7 +1544,7 @@
       "source_location": "L104",
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_shot_clientinkshot_clientinkshot_isimpactreceived",
-      "community": 22,
+      "community": 13,
       "community_name": "ClientInkShot",
       "norm_label": ".isimpactreceived()"
     },
@@ -1556,7 +1556,7 @@
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_shot_clientinkshotmanager",
       "community": 22,
-      "community_name": "ClientInkShot",
+      "community_name": "ClientInkShotManager",
       "norm_label": "clientinkshotmanager.java"
     },
     {
@@ -1567,7 +1567,7 @@
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_shot_clientinkshotmanager_clientinkshotmanager",
       "community": 22,
-      "community_name": "ClientInkShot",
+      "community_name": "ClientInkShotManager",
       "norm_label": "clientinkshotmanager"
     },
     {
@@ -1578,7 +1578,7 @@
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_shot_clientinkshotmanager_clientinkshotmanager_clientinkshotmanager",
       "community": 22,
-      "community_name": "ClientInkShot",
+      "community_name": "ClientInkShotManager",
       "norm_label": ".clientinkshotmanager()"
     },
     {
@@ -1588,8 +1588,8 @@
       "source_location": "L35",
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_shot_clientinkshotmanager_clientinkshotmanager_getinstance",
-      "community": 9,
-      "community_name": "InkRenderer.java",
+      "community": 54,
+      "community_name": ".onInitializeClient",
       "norm_label": ".getinstance()"
     },
     {
@@ -1600,7 +1600,7 @@
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_shot_clientinkshotmanager_clientinkshotmanager_addshotspawn",
       "community": 22,
-      "community_name": "ClientInkShot",
+      "community_name": "ClientInkShotManager",
       "norm_label": ".addshotspawn()"
     },
     {
@@ -1611,7 +1611,7 @@
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_shot_clientinkshotmanager_clientinkshotmanager_applyshotimpact",
       "community": 22,
-      "community_name": "ClientInkShot",
+      "community_name": "ClientInkShotManager",
       "norm_label": ".applyshotimpact()"
     },
     {
@@ -1621,8 +1621,8 @@
       "source_location": "L76",
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_shot_clientinkshotmanager_clientinkshotmanager_adddropspawn",
-      "community": 13,
-      "community_name": "ClientInkTrailDrop",
+      "community": 22,
+      "community_name": "ClientInkShotManager",
       "norm_label": ".adddropspawn()"
     },
     {
@@ -1633,7 +1633,7 @@
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_shot_clientinkshotmanager_clientinkshotmanager_applydropimpact",
       "community": 22,
-      "community_name": "ClientInkShot",
+      "community_name": "ClientInkShotManager",
       "norm_label": ".applydropimpact()"
     },
     {
@@ -1644,7 +1644,7 @@
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_shot_clientinkshotmanager_clientinkshotmanager_tick",
       "community": 22,
-      "community_name": "ClientInkShot",
+      "community_name": "ClientInkShotManager",
       "norm_label": ".tick()"
     },
     {
@@ -1655,7 +1655,7 @@
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_shot_clientinkshotmanager_clientinkshotmanager_clear",
       "community": 22,
-      "community_name": "ClientInkShot",
+      "community_name": "ClientInkShotManager",
       "norm_label": ".clear()"
     },
     {
@@ -1666,7 +1666,7 @@
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_shot_clientinkshotmanager_clientinkshotmanager_getactiveshots",
       "community": 22,
-      "community_name": "ClientInkShot",
+      "community_name": "ClientInkShotManager",
       "norm_label": ".getactiveshots()"
     },
     {
@@ -1677,7 +1677,7 @@
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_shot_clientinkshotmanager_clientinkshotmanager_getactivedrops",
       "community": 13,
-      "community_name": "ClientInkTrailDrop",
+      "community_name": "ClientInkShot",
       "norm_label": ".getactivedrops()"
     },
     {
@@ -1688,7 +1688,7 @@
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_shot_clientinkshotmanager_clientinkshotmanager_spawnarrivaleffect",
       "community": 22,
-      "community_name": "ClientInkShot",
+      "community_name": "ClientInkShotManager",
       "norm_label": ".spawnarrivaleffect()"
     },
     {
@@ -1699,7 +1699,7 @@
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_shot_clientinkshotmanager_java_vec3",
       "community": 22,
-      "community_name": "ClientInkShot",
+      "community_name": "ClientInkShotManager",
       "norm_label": "vec3"
     },
     {
@@ -1710,7 +1710,7 @@
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_shot_clientinktraildrop",
       "community": 13,
-      "community_name": "ClientInkTrailDrop",
+      "community_name": "ClientInkShot",
       "norm_label": "clientinktraildrop.java"
     },
     {
@@ -1721,7 +1721,7 @@
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_shot_clientinktraildrop_clientinktraildrop",
       "community": 13,
-      "community_name": "ClientInkTrailDrop",
+      "community_name": "ClientInkShot",
       "norm_label": "clientinktraildrop"
     },
     {
@@ -1732,7 +1732,7 @@
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_shot_clientinktraildrop_java_vec3",
       "community": 13,
-      "community_name": "ClientInkTrailDrop",
+      "community_name": "ClientInkShot",
       "norm_label": "vec3"
     },
     {
@@ -1743,7 +1743,7 @@
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_shot_clientinktraildrop_clientinktraildrop_clientinktraildrop",
       "community": 13,
-      "community_name": "ClientInkTrailDrop",
+      "community_name": "ClientInkShot",
       "norm_label": ".clientinktraildrop()"
     },
     {
@@ -1753,8 +1753,8 @@
       "source_location": "L52",
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_shot_clientinktraildrop_clientinktraildrop_tick",
-      "community": 13,
-      "community_name": "ClientInkTrailDrop",
+      "community": 22,
+      "community_name": "ClientInkShotManager",
       "norm_label": ".tick()"
     },
     {
@@ -1765,7 +1765,7 @@
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_shot_clientinktraildrop_clientinktraildrop_applyimpact",
       "community": 13,
-      "community_name": "ClientInkTrailDrop",
+      "community_name": "ClientInkShot",
       "norm_label": ".applyimpact()"
     },
     {
@@ -1776,7 +1776,7 @@
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_shot_clientinktraildrop_clientinktraildrop_getrenderposition",
       "community": 13,
-      "community_name": "ClientInkTrailDrop",
+      "community_name": "ClientInkShot",
       "norm_label": ".getrenderposition()"
     },
     {
@@ -1787,7 +1787,7 @@
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_shot_clientinktraildrop_clientinktraildrop_dropid",
       "community": 13,
-      "community_name": "ClientInkTrailDrop",
+      "community_name": "ClientInkShot",
       "norm_label": ".dropid()"
     },
     {
@@ -1798,7 +1798,7 @@
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_shot_clientinktraildrop_clientinktraildrop_parentshotid",
       "community": 13,
-      "community_name": "ClientInkTrailDrop",
+      "community_name": "ClientInkShot",
       "norm_label": ".parentshotid()"
     },
     {
@@ -1809,7 +1809,7 @@
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_shot_clientinktraildrop_clientinktraildrop_isalive",
       "community": 13,
-      "community_name": "ClientInkTrailDrop",
+      "community_name": "ClientInkShot",
       "norm_label": ".isalive()"
     },
     {
@@ -1820,7 +1820,7 @@
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_shot_clientinktraildrop_clientinktraildrop_size",
       "community": 13,
-      "community_name": "ClientInkTrailDrop",
+      "community_name": "ClientInkShot",
       "norm_label": ".size()"
     },
     {
@@ -1831,7 +1831,7 @@
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_shot_clientinktraildrop_clientinktraildrop_colorrgb",
       "community": 13,
-      "community_name": "ClientInkTrailDrop",
+      "community_name": "ClientInkShot",
       "norm_label": ".colorrgb()"
     },
     {
@@ -1842,7 +1842,7 @@
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_shot_clientinktraildrop_clientinktraildrop_end",
       "community": 13,
-      "community_name": "ClientInkTrailDrop",
+      "community_name": "ClientInkShot",
       "norm_label": ".end()"
     },
     {
@@ -1853,7 +1853,7 @@
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_shot_clientinktraildrop_clientinktraildrop_isimpactreceived",
       "community": 13,
-      "community_name": "ClientInkTrailDrop",
+      "community_name": "ClientInkShot",
       "norm_label": ".isimpactreceived()"
     },
     {
@@ -1864,7 +1864,7 @@
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_shot_inkshotrenderer",
       "community": 13,
-      "community_name": "ClientInkTrailDrop",
+      "community_name": "ClientInkShot",
       "norm_label": "inkshotrenderer.java"
     },
     {
@@ -1875,7 +1875,7 @@
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_shot_inkshotrenderer_inkshotrenderer",
       "community": 13,
-      "community_name": "ClientInkTrailDrop",
+      "community_name": "ClientInkShot",
       "norm_label": "inkshotrenderer"
     },
     {
@@ -1886,7 +1886,7 @@
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_shot_inkshotrenderer_java_renderpipeline",
       "community": 13,
-      "community_name": "ClientInkTrailDrop",
+      "community_name": "ClientInkShot",
       "norm_label": "renderpipeline"
     },
     {
@@ -1897,7 +1897,7 @@
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_shot_inkshotrenderer_java_stagedvertexbuffer",
       "community": 13,
-      "community_name": "ClientInkTrailDrop",
+      "community_name": "ClientInkShot",
       "norm_label": "stagedvertexbuffer"
     },
     {
@@ -1908,7 +1908,7 @@
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_shot_inkshotrenderer_java_vector4f",
       "community": 13,
-      "community_name": "ClientInkTrailDrop",
+      "community_name": "ClientInkShot",
       "norm_label": "vector4f"
     },
     {
@@ -1919,7 +1919,7 @@
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_shot_inkshotrenderer_java_vector3f",
       "community": 13,
-      "community_name": "ClientInkTrailDrop",
+      "community_name": "ClientInkShot",
       "norm_label": "vector3f"
     },
     {
@@ -1930,7 +1930,7 @@
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_shot_inkshotrenderer_java_matrix4f",
       "community": 13,
-      "community_name": "ClientInkTrailDrop",
+      "community_name": "ClientInkShot",
       "norm_label": "matrix4f"
     },
     {
@@ -1941,7 +1941,7 @@
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_shot_inkshotrenderer_inkshotrenderer_inkshotrenderer",
       "community": 13,
-      "community_name": "ClientInkTrailDrop",
+      "community_name": "ClientInkShot",
       "norm_label": ".inkshotrenderer()"
     },
     {
@@ -1951,8 +1951,8 @@
       "source_location": "L63",
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_shot_inkshotrenderer_inkshotrenderer_getinstance",
-      "community": 9,
-      "community_name": "InkRenderer.java",
+      "community": 54,
+      "community_name": ".onInitializeClient",
       "norm_label": ".getinstance()"
     },
     {
@@ -1963,7 +1963,7 @@
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_shot_inkshotrenderer_inkshotrenderer_render",
       "community": 13,
-      "community_name": "ClientInkTrailDrop",
+      "community_name": "ClientInkShot",
       "norm_label": ".render()"
     },
     {
@@ -1974,7 +1974,7 @@
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_shot_inkshotrenderer_java_levelrendercontext",
       "community": 13,
-      "community_name": "ClientInkTrailDrop",
+      "community_name": "ClientInkShot",
       "norm_label": "levelrendercontext"
     },
     {
@@ -1985,7 +1985,7 @@
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_shot_inkshotrenderer_inkshotrenderer_renderfilledbox",
       "community": 13,
-      "community_name": "ClientInkTrailDrop",
+      "community_name": "ClientInkShot",
       "norm_label": ".renderfilledbox()"
     },
     {
@@ -1996,7 +1996,7 @@
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_shot_inkshotrenderer_java_matrix4fc",
       "community": 13,
-      "community_name": "ClientInkTrailDrop",
+      "community_name": "ClientInkShot",
       "norm_label": "matrix4fc"
     },
     {
@@ -2007,7 +2007,7 @@
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_shot_inkshotrenderer_java_vertexconsumer",
       "community": 13,
-      "community_name": "ClientInkTrailDrop",
+      "community_name": "ClientInkShot",
       "norm_label": "vertexconsumer"
     },
     {
@@ -2018,7 +2018,7 @@
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_shot_inkshotrenderer_inkshotrenderer_drawshot",
       "community": 13,
-      "community_name": "ClientInkTrailDrop",
+      "community_name": "ClientInkShot",
       "norm_label": ".drawshot()"
     },
     {
@@ -2029,7 +2029,7 @@
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_shot_inkshotrenderer_java_executeinfo",
       "community": 13,
-      "community_name": "ClientInkTrailDrop",
+      "community_name": "ClientInkShot",
       "norm_label": "executeinfo"
     },
     {
@@ -2040,7 +2040,7 @@
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_shot_inkshotrenderer_inkshotrenderer_renderdrops",
       "community": 13,
-      "community_name": "ClientInkTrailDrop",
+      "community_name": "ClientInkShot",
       "norm_label": ".renderdrops()"
     },
     {
@@ -2051,7 +2051,7 @@
       "_origin": "ast",
       "id": "src_client_java_yam_salmon_client_shot_inkshotrenderer_inkshotrenderer_close",
       "community": 13,
-      "community_name": "ClientInkTrailDrop",
+      "community_name": "ClientInkShot",
       "norm_label": ".close()"
     },
     {
@@ -2061,7 +2061,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_salmon",
-      "community": 33,
+      "community": 17,
       "community_name": "Salmon.java",
       "norm_label": "salmon.java"
     },
@@ -2072,7 +2072,7 @@
       "source_location": "L38",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_salmon_salmon",
-      "community": 33,
+      "community": 17,
       "community_name": "Salmon.java",
       "norm_label": "salmon"
     },
@@ -2083,7 +2083,7 @@
       "source_location": "",
       "_origin": "ast",
       "id": "modinitializer",
-      "community": 33,
+      "community": 17,
       "community_name": "Salmon.java",
       "norm_label": "modinitializer"
     },
@@ -2094,7 +2094,7 @@
       "source_location": "",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_salmon_java_logger",
-      "community": 33,
+      "community": 17,
       "community_name": "Salmon.java",
       "norm_label": "logger"
     },
@@ -2127,7 +2127,7 @@
       "source_location": "L142",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_salmon_salmon_id",
-      "community": 33,
+      "community": 17,
       "community_name": "Salmon.java",
       "norm_label": ".id()"
     },
@@ -2138,7 +2138,7 @@
       "source_location": "",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_salmon_java_identifier",
-      "community": 33,
+      "community": 17,
       "community_name": "Salmon.java",
       "norm_label": "identifier"
     },
@@ -2150,7 +2150,7 @@
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_arena_arenapermission",
       "community": 11,
-      "community_name": "InkAreaMarkerBlock.java",
+      "community_name": ".useWithoutItem",
       "norm_label": "arenapermission.java"
     },
     {
@@ -2161,7 +2161,7 @@
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_arena_arenapermission_arenapermission",
       "community": 11,
-      "community_name": "InkAreaMarkerBlock.java",
+      "community_name": ".useWithoutItem",
       "norm_label": "arenapermission"
     },
     {
@@ -2172,7 +2172,7 @@
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_arena_arenapermission_arenapermission_canconfigure",
       "community": 11,
-      "community_name": "InkAreaMarkerBlock.java",
+      "community_name": ".useWithoutItem",
       "norm_label": ".canconfigure()"
     },
     {
@@ -2183,7 +2183,7 @@
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_arena_arenapermission_java_player",
       "community": 11,
-      "community_name": "InkAreaMarkerBlock.java",
+      "community_name": ".useWithoutItem",
       "norm_label": "player"
     },
     {
@@ -2270,8 +2270,8 @@
       "source_location": "L68",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_arena_inkarena_inkarena_getarenaid",
-      "community": 32,
-      "community_name": ".getArenaNumber",
+      "community": 21,
+      "community_name": "InkArena",
       "norm_label": ".getarenaid()"
     },
     {
@@ -2281,8 +2281,8 @@
       "source_location": "L72",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_arena_inkarena_inkarena_getarenanumber",
-      "community": 32,
-      "community_name": ".getArenaNumber",
+      "community": 21,
+      "community_name": "InkArena",
       "norm_label": ".getarenanumber()"
     },
     {
@@ -2545,7 +2545,7 @@
       "source_location": "L59",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_arena_inkarenamanager_inkarenamanager_getinkstorage",
-      "community": 34,
+      "community": 48,
       "community_name": "InkStorage",
       "norm_label": ".getinkstorage()"
     },
@@ -2600,8 +2600,8 @@
       "source_location": "L86",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_arena_inkarenamanager_inkarenamanager_onserverstopping",
-      "community": 4,
-      "community_name": "InkArenaManager",
+      "community": 48,
+      "community_name": "InkStorage",
       "norm_label": ".onserverstopping()"
     },
     {
@@ -2622,8 +2622,8 @@
       "source_location": "L151",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_arena_inkarenamanager_inkarenamanager_savedimensiondata",
-      "community": 4,
-      "community_name": "InkArenaManager",
+      "community": 48,
+      "community_name": "InkStorage",
       "norm_label": ".savedimensiondata()"
     },
     {
@@ -3018,8 +3018,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_block_inkareamarkerblock",
-      "community": 11,
-      "community_name": "InkAreaMarkerBlock.java",
+      "community": 32,
+      "community_name": ".useWithoutItem",
       "norm_label": "inkareamarkerblock.java"
     },
     {
@@ -3029,8 +3029,8 @@
       "source_location": "L34",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_block_inkareamarkerblock_inkareamarkerblock",
-      "community": 11,
-      "community_name": "InkAreaMarkerBlock.java",
+      "community": 32,
+      "community_name": ".useWithoutItem",
       "norm_label": "inkareamarkerblock"
     },
     {
@@ -3041,7 +3041,7 @@
       "_origin": "ast",
       "id": "block",
       "community": 11,
-      "community_name": "InkAreaMarkerBlock.java",
+      "community_name": ".useWithoutItem",
       "norm_label": "block"
     },
     {
@@ -3051,8 +3051,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "entityblock",
-      "community": 11,
-      "community_name": "InkAreaMarkerBlock.java",
+      "community": 32,
+      "community_name": ".useWithoutItem",
       "norm_label": "entityblock"
     },
     {
@@ -3062,8 +3062,8 @@
       "source_location": "L36",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_block_inkareamarkerblock_inkareamarkerblock_inkareamarkerblock",
-      "community": 11,
-      "community_name": "InkAreaMarkerBlock.java",
+      "community": 32,
+      "community_name": ".useWithoutItem",
       "norm_label": ".inkareamarkerblock()"
     },
     {
@@ -3073,8 +3073,8 @@
       "source_location": "L46",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_block_inkareamarkerblock_inkareamarkerblock_newblockentity",
-      "community": 11,
-      "community_name": "InkAreaMarkerBlock.java",
+      "community": 32,
+      "community_name": ".useWithoutItem",
       "norm_label": ".newblockentity()"
     },
     {
@@ -3084,8 +3084,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_block_inkareamarkerblock_java_blockpos",
-      "community": 11,
-      "community_name": "InkAreaMarkerBlock.java",
+      "community": 32,
+      "community_name": ".useWithoutItem",
       "norm_label": "blockpos"
     },
     {
@@ -3095,8 +3095,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_block_inkareamarkerblock_java_blockstate",
-      "community": 11,
-      "community_name": "InkAreaMarkerBlock.java",
+      "community": 32,
+      "community_name": ".useWithoutItem",
       "norm_label": "blockstate"
     },
     {
@@ -3106,8 +3106,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_block_inkareamarkerblock_java_blockentity",
-      "community": 11,
-      "community_name": "InkAreaMarkerBlock.java",
+      "community": 32,
+      "community_name": ".useWithoutItem",
       "norm_label": "blockentity"
     },
     {
@@ -3117,8 +3117,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_block_inkareamarkerblock_java_override",
-      "community": 11,
-      "community_name": "InkAreaMarkerBlock.java",
+      "community": 32,
+      "community_name": ".useWithoutItem",
       "norm_label": "override"
     },
     {
@@ -3128,8 +3128,8 @@
       "source_location": "L51",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_block_inkareamarkerblock_inkareamarkerblock_usewithoutitem",
-      "community": 21,
-      "community_name": "InkArena",
+      "community": 32,
+      "community_name": ".useWithoutItem",
       "norm_label": ".usewithoutitem()"
     },
     {
@@ -3139,8 +3139,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_block_inkareamarkerblock_java_level",
-      "community": 11,
-      "community_name": "InkAreaMarkerBlock.java",
+      "community": 32,
+      "community_name": ".useWithoutItem",
       "norm_label": "level"
     },
     {
@@ -3150,8 +3150,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_block_inkareamarkerblock_java_player",
-      "community": 11,
-      "community_name": "InkAreaMarkerBlock.java",
+      "community": 32,
+      "community_name": ".useWithoutItem",
       "norm_label": "player"
     },
     {
@@ -3161,8 +3161,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_block_inkareamarkerblock_java_blockhitresult",
-      "community": 11,
-      "community_name": "InkAreaMarkerBlock.java",
+      "community": 32,
+      "community_name": ".useWithoutItem",
       "norm_label": "blockhitresult"
     },
     {
@@ -3172,8 +3172,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_block_inkareamarkerblock_java_interactionresult",
-      "community": 11,
-      "community_name": "InkAreaMarkerBlock.java",
+      "community": 32,
+      "community_name": ".useWithoutItem",
       "norm_label": "interactionresult"
     },
     {
@@ -3492,7 +3492,7 @@
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_block_inkableblock",
       "community": 11,
-      "community_name": "InkAreaMarkerBlock.java",
+      "community_name": ".useWithoutItem",
       "norm_label": "inkableblock.java"
     },
     {
@@ -3503,7 +3503,7 @@
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_block_inkableblock_inkableblock",
       "community": 11,
-      "community_name": "InkAreaMarkerBlock.java",
+      "community_name": ".useWithoutItem",
       "norm_label": "inkableblock"
     },
     {
@@ -3514,7 +3514,7 @@
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_block_inkableblock_inkableblock_inkableblock",
       "community": 11,
-      "community_name": "InkAreaMarkerBlock.java",
+      "community_name": ".useWithoutItem",
       "norm_label": ".inkableblock()"
     },
     {
@@ -3525,7 +3525,7 @@
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_block_inkableblock_inkableblock_usewithoutitem",
       "community": 11,
-      "community_name": "InkAreaMarkerBlock.java",
+      "community_name": ".useWithoutItem",
       "norm_label": ".usewithoutitem()"
     },
     {
@@ -3536,7 +3536,7 @@
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_block_inkableblock_java_blockstate",
       "community": 11,
-      "community_name": "InkAreaMarkerBlock.java",
+      "community_name": ".useWithoutItem",
       "norm_label": "blockstate"
     },
     {
@@ -3547,7 +3547,7 @@
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_block_inkableblock_java_level",
       "community": 11,
-      "community_name": "InkAreaMarkerBlock.java",
+      "community_name": ".useWithoutItem",
       "norm_label": "level"
     },
     {
@@ -3558,7 +3558,7 @@
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_block_inkableblock_java_blockpos",
       "community": 11,
-      "community_name": "InkAreaMarkerBlock.java",
+      "community_name": ".useWithoutItem",
       "norm_label": "blockpos"
     },
     {
@@ -3569,7 +3569,7 @@
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_block_inkableblock_java_player",
       "community": 11,
-      "community_name": "InkAreaMarkerBlock.java",
+      "community_name": ".useWithoutItem",
       "norm_label": "player"
     },
     {
@@ -3580,7 +3580,7 @@
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_block_inkableblock_java_blockhitresult",
       "community": 11,
-      "community_name": "InkAreaMarkerBlock.java",
+      "community_name": ".useWithoutItem",
       "norm_label": "blockhitresult"
     },
     {
@@ -3591,7 +3591,7 @@
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_block_inkableblock_java_interactionresult",
       "community": 11,
-      "community_name": "InkAreaMarkerBlock.java",
+      "community_name": ".useWithoutItem",
       "norm_label": "interactionresult"
     },
     {
@@ -3602,7 +3602,7 @@
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_block_inkableblock_java_override",
       "community": 11,
-      "community_name": "InkAreaMarkerBlock.java",
+      "community_name": ".useWithoutItem",
       "norm_label": "override"
     },
     {
@@ -3613,7 +3613,7 @@
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_block_inkableblock_inkableblock_clamptorange",
       "community": 11,
-      "community_name": "InkAreaMarkerBlock.java",
+      "community_name": ".useWithoutItem",
       "norm_label": ".clamptorange()"
     },
     {
@@ -3623,8 +3623,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_block_modblocktags",
-      "community": 36,
-      "community_name": "InkPaintabilityService.java",
+      "community": 8,
+      "community_name": ".checkPaintable",
       "norm_label": "modblocktags.java"
     },
     {
@@ -3634,8 +3634,8 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_block_modblocktags_modblocktags",
-      "community": 36,
-      "community_name": "InkPaintabilityService.java",
+      "community": 8,
+      "community_name": ".checkPaintable",
       "norm_label": "modblocktags"
     },
     {
@@ -3645,8 +3645,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_block_modblocktags_java_tagkey",
-      "community": 36,
-      "community_name": "InkPaintabilityService.java",
+      "community": 8,
+      "community_name": ".checkPaintable",
       "norm_label": "tagkey"
     },
     {
@@ -3656,8 +3656,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_block_modblocktags_java_block",
-      "community": 36,
-      "community_name": "InkPaintabilityService.java",
+      "community": 8,
+      "community_name": ".checkPaintable",
       "norm_label": "block"
     },
     {
@@ -3667,8 +3667,8 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_block_modblocktags_modblocktags_modblocktags",
-      "community": 36,
-      "community_name": "InkPaintabilityService.java",
+      "community": 8,
+      "community_name": ".checkPaintable",
       "norm_label": ".modblocktags()"
     },
     {
@@ -3679,7 +3679,7 @@
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_block_modblocks",
       "community": 11,
-      "community_name": "InkAreaMarkerBlock.java",
+      "community_name": ".useWithoutItem",
       "norm_label": "modblocks.java"
     },
     {
@@ -3690,7 +3690,7 @@
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_block_modblocks_modblocks",
       "community": 11,
-      "community_name": "InkAreaMarkerBlock.java",
+      "community_name": ".useWithoutItem",
       "norm_label": "modblocks"
     },
     {
@@ -3701,7 +3701,7 @@
       "_origin": "ast",
       "id": "blockentitytype",
       "community": 11,
-      "community_name": "InkAreaMarkerBlock.java",
+      "community_name": ".useWithoutItem",
       "norm_label": "blockentitytype"
     },
     {
@@ -3712,7 +3712,7 @@
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_block_modblocks_modblocks_register",
       "community": 11,
-      "community_name": "InkAreaMarkerBlock.java",
+      "community_name": ".useWithoutItem",
       "norm_label": ".register()"
     },
     {
@@ -3723,7 +3723,7 @@
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_block_modblocks_modblocks_registerinkableblock",
       "community": 11,
-      "community_name": "InkAreaMarkerBlock.java",
+      "community_name": ".useWithoutItem",
       "norm_label": ".registerinkableblock()"
     },
     {
@@ -4415,8 +4415,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_ink_inkcellgeometry",
-      "community": 9,
-      "community_name": "InkRenderer.java",
+      "community": 53,
+      "community_name": "InkCellGeometry",
       "norm_label": "inkcellgeometry.java"
     },
     {
@@ -4426,8 +4426,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_ink_inkcellgeometry_inkcellgeometry",
-      "community": 9,
-      "community_name": "InkRenderer.java",
+      "community": 53,
+      "community_name": "InkCellGeometry",
       "norm_label": "inkcellgeometry"
     },
     {
@@ -4437,8 +4437,8 @@
       "source_location": "L32",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_ink_inkcellgeometry_inkcellgeometry_inkcellgeometry",
-      "community": 9,
-      "community_name": "InkRenderer.java",
+      "community": 53,
+      "community_name": "InkCellGeometry",
       "norm_label": ".inkcellgeometry()"
     },
     {
@@ -4448,8 +4448,8 @@
       "source_location": "L41",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_ink_inkcellgeometry_inkcellgeometry_getcellbounds",
-      "community": 9,
-      "community_name": "InkRenderer.java",
+      "community": 53,
+      "community_name": "InkCellGeometry",
       "norm_label": ".getcellbounds()"
     },
     {
@@ -4459,8 +4459,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_ink_inkcellgeometry_java_blockpos",
-      "community": 9,
-      "community_name": "InkRenderer.java",
+      "community": 53,
+      "community_name": "InkCellGeometry",
       "norm_label": "blockpos"
     },
     {
@@ -4470,8 +4470,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_ink_inkcellgeometry_java_direction",
-      "community": 9,
-      "community_name": "InkRenderer.java",
+      "community": 53,
+      "community_name": "InkCellGeometry",
       "norm_label": "direction"
     },
     {
@@ -4481,8 +4481,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_ink_inkcellgeometry_java_deprecated",
-      "community": 9,
-      "community_name": "InkRenderer.java",
+      "community": 53,
+      "community_name": "InkCellGeometry",
       "norm_label": "deprecated"
     },
     {
@@ -4492,8 +4492,8 @@
       "source_location": "L88",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_ink_inkcellgeometry_inkcellgeometry_getcellboundsforpatch",
-      "community": 9,
-      "community_name": "InkRenderer.java",
+      "community": 53,
+      "community_name": "InkCellGeometry",
       "norm_label": ".getcellboundsforpatch()"
     },
     {
@@ -4503,8 +4503,8 @@
       "source_location": "L114",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_ink_inkcellgeometry_inkcellgeometry_getcellverticesforpatch",
-      "community": 9,
-      "community_name": "InkRenderer.java",
+      "community": 53,
+      "community_name": "InkCellGeometry",
       "norm_label": ".getcellverticesforpatch()"
     },
     {
@@ -4514,8 +4514,8 @@
       "source_location": "L218",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_ink_inkcellgeometry_inkcellgeometry_getcellquadforpatch",
-      "community": 9,
-      "community_name": "InkRenderer.java",
+      "community": 53,
+      "community_name": "InkCellGeometry",
       "norm_label": ".getcellquadforpatch()"
     },
     {
@@ -4525,8 +4525,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_ink_inkcellquad",
-      "community": 9,
-      "community_name": "InkRenderer.java",
+      "community": 36,
+      "community_name": ".extractInkState",
       "norm_label": "inkcellquad.java"
     },
     {
@@ -4536,8 +4536,8 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_ink_inkcellquad_inkcellquad",
-      "community": 9,
-      "community_name": "InkRenderer.java",
+      "community": 36,
+      "community_name": ".extractInkState",
       "norm_label": "inkcellquad"
     },
     {
@@ -4547,8 +4547,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_ink_inkcellquad_java_direction",
-      "community": 9,
-      "community_name": "InkRenderer.java",
+      "community": 36,
+      "community_name": ".extractInkState",
       "norm_label": "direction"
     },
     {
@@ -4558,8 +4558,8 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_ink_inkcellquad_colored",
-      "community": 9,
-      "community_name": "InkRenderer.java",
+      "community": 36,
+      "community_name": ".extractInkState",
       "norm_label": "colored"
     },
     {
@@ -4635,8 +4635,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_ink_inkfacedata",
-      "community": 2,
-      "community_name": "InkSurfacePatchId",
+      "community": 20,
+      "community_name": "ClientInkCache",
       "norm_label": "inkfacedata.java"
     },
     {
@@ -4767,8 +4767,8 @@
       "source_location": "L181",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_ink_inkfacedata_inkfacedata_isempty",
-      "community": 12,
-      "community_name": "InkFaceData",
+      "community": 18,
+      "community_name": ".fire",
       "norm_label": ".isempty()"
     },
     {
@@ -4789,8 +4789,8 @@
       "source_location": "L198",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_ink_inkfacedata_inkfacedata_copycells",
-      "community": 32,
-      "community_name": ".getArenaNumber",
+      "community": 18,
+      "community_name": ".fire",
       "norm_label": ".copycells()"
     },
     {
@@ -5252,7 +5252,7 @@
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_ink_inkpaintability",
       "community": 8,
-      "community_name": ".paintTrail",
+      "community_name": ".checkPaintable",
       "norm_label": "inkpaintability.java"
     },
     {
@@ -5263,7 +5263,7 @@
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_ink_inkpaintability_inkpaintability",
       "community": 8,
-      "community_name": ".paintTrail",
+      "community_name": ".checkPaintable",
       "norm_label": "inkpaintability"
     },
     {
@@ -5274,7 +5274,7 @@
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_ink_inkpaintability_java_logger",
       "community": 8,
-      "community_name": ".paintTrail",
+      "community_name": ".checkPaintable",
       "norm_label": "logger"
     },
     {
@@ -5285,7 +5285,7 @@
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_ink_inkpaintability_inkpaintability_inkpaintability",
       "community": 8,
-      "community_name": ".paintTrail",
+      "community_name": ".checkPaintable",
       "norm_label": ".inkpaintability()"
     },
     {
@@ -5296,7 +5296,7 @@
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_ink_inkpaintability_inkpaintability_checkpaintable",
       "community": 8,
-      "community_name": ".paintTrail",
+      "community_name": ".checkPaintable",
       "norm_label": ".checkpaintable()"
     },
     {
@@ -5307,7 +5307,7 @@
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_ink_inkpaintability_java_blockgetter",
       "community": 8,
-      "community_name": ".paintTrail",
+      "community_name": ".checkPaintable",
       "norm_label": "blockgetter"
     },
     {
@@ -5318,7 +5318,7 @@
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_ink_inkpaintability_java_blockpos",
       "community": 8,
-      "community_name": ".paintTrail",
+      "community_name": ".checkPaintable",
       "norm_label": "blockpos"
     },
     {
@@ -5329,7 +5329,7 @@
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_ink_inkpaintability_java_direction",
       "community": 8,
-      "community_name": ".paintTrail",
+      "community_name": ".checkPaintable",
       "norm_label": "direction"
     },
     {
@@ -5340,7 +5340,7 @@
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_ink_inkpaintability_inkpaintability_ispaintableblock",
       "community": 8,
-      "community_name": ".paintTrail",
+      "community_name": ".checkPaintable",
       "norm_label": ".ispaintableblock()"
     },
     {
@@ -5351,7 +5351,7 @@
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_ink_inkpaintability_java_blockstate",
       "community": 8,
-      "community_name": ".paintTrail",
+      "community_name": ".checkPaintable",
       "norm_label": "blockstate"
     },
     {
@@ -5362,7 +5362,7 @@
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_ink_inkpaintability_inkpaintability_isliquidblock",
       "community": 8,
-      "community_name": ".paintTrail",
+      "community_name": ".checkPaintable",
       "norm_label": ".isliquidblock()"
     },
     {
@@ -5373,7 +5373,7 @@
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_ink_inkpaintability_inkpaintability_iswaterlogged",
       "community": 8,
-      "community_name": ".paintTrail",
+      "community_name": ".checkPaintable",
       "norm_label": ".iswaterlogged()"
     },
     {
@@ -5384,7 +5384,7 @@
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_ink_inkpaintability_inkpaintability_issurfaceexposed",
       "community": 8,
-      "community_name": ".paintTrail",
+      "community_name": ".checkPaintable",
       "norm_label": ".issurfaceexposed()"
     },
     {
@@ -5394,8 +5394,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_ink_inkpaintabilityservice",
-      "community": 36,
-      "community_name": "InkPaintabilityService.java",
+      "community": 8,
+      "community_name": ".checkPaintable",
       "norm_label": "inkpaintabilityservice.java"
     },
     {
@@ -5405,8 +5405,8 @@
       "source_location": "L30",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_ink_inkpaintabilityservice_inkpaintabilityservice",
-      "community": 36,
-      "community_name": "InkPaintabilityService.java",
+      "community": 8,
+      "community_name": ".checkPaintable",
       "norm_label": "inkpaintabilityservice"
     },
     {
@@ -5416,8 +5416,8 @@
       "source_location": "L32",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_ink_inkpaintabilityservice_inkpaintabilityservice_inkpaintabilityservice",
-      "community": 36,
-      "community_name": "InkPaintabilityService.java",
+      "community": 8,
+      "community_name": ".checkPaintable",
       "norm_label": ".inkpaintabilityservice()"
     },
     {
@@ -5427,8 +5427,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_ink_inkpaintabilityservice_java_tagkey",
-      "community": 36,
-      "community_name": "InkPaintabilityService.java",
+      "community": 8,
+      "community_name": ".checkPaintable",
       "norm_label": "tagkey"
     },
     {
@@ -5438,8 +5438,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_ink_inkpaintabilityservice_java_block",
-      "community": 36,
-      "community_name": "InkPaintabilityService.java",
+      "community": 8,
+      "community_name": ".checkPaintable",
       "norm_label": "block"
     },
     {
@@ -5449,8 +5449,8 @@
       "source_location": "L59",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_ink_inkpaintabilityservice_inkpaintabilityservice_canpaintblock",
-      "community": 36,
-      "community_name": "InkPaintabilityService.java",
+      "community": 8,
+      "community_name": ".checkPaintable",
       "norm_label": ".canpaintblock()"
     },
     {
@@ -5460,8 +5460,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_ink_inkpaintabilityservice_java_serverlevel",
-      "community": 36,
-      "community_name": "InkPaintabilityService.java",
+      "community": 8,
+      "community_name": ".checkPaintable",
       "norm_label": "serverlevel"
     },
     {
@@ -5471,8 +5471,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_ink_inkpaintabilityservice_java_blockpos",
-      "community": 36,
-      "community_name": "InkPaintabilityService.java",
+      "community": 8,
+      "community_name": ".checkPaintable",
       "norm_label": "blockpos"
     },
     {
@@ -5482,8 +5482,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_ink_inkpaintabilityservice_java_blockstate",
-      "community": 36,
-      "community_name": "InkPaintabilityService.java",
+      "community": 8,
+      "community_name": ".checkPaintable",
       "norm_label": "blockstate"
     },
     {
@@ -5493,8 +5493,8 @@
       "source_location": "L87",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_ink_inkpaintabilityservice_inkpaintabilityservice_canpaintface",
-      "community": 36,
-      "community_name": "InkPaintabilityService.java",
+      "community": 8,
+      "community_name": ".checkPaintable",
       "norm_label": ".canpaintface()"
     },
     {
@@ -5504,8 +5504,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_ink_inkpaintabilityservice_java_direction",
-      "community": 36,
-      "community_name": "InkPaintabilityService.java",
+      "community": 8,
+      "community_name": ".checkPaintable",
       "norm_label": "direction"
     },
     {
@@ -5515,8 +5515,8 @@
       "source_location": "L114",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_ink_inkpaintabilityservice_inkpaintabilityservice_isdefaultpaintable",
-      "community": 36,
-      "community_name": "InkPaintabilityService.java",
+      "community": 8,
+      "community_name": ".checkPaintable",
       "norm_label": ".isdefaultpaintable()"
     },
     {
@@ -5813,7 +5813,7 @@
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_ink_inkstorage",
       "community": 34,
-      "community_name": "InkStorage",
+      "community_name": "InkStorage.java",
       "norm_label": "inkstorage.java"
     },
     {
@@ -5823,7 +5823,7 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_ink_inkstorage_inkstorage",
-      "community": 34,
+      "community": 48,
       "community_name": "InkStorage",
       "norm_label": "inkstorage"
     },
@@ -5835,7 +5835,7 @@
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_ink_inkstorage_java_logger",
       "community": 34,
-      "community_name": "InkStorage",
+      "community_name": "InkStorage.java",
       "norm_label": "logger"
     },
     {
@@ -5857,7 +5857,7 @@
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_ink_inkstorage_java_serverlevel",
       "community": 34,
-      "community_name": "InkStorage",
+      "community_name": "InkStorage.java",
       "norm_label": "serverlevel"
     },
     {
@@ -5868,7 +5868,7 @@
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_ink_inkstorage_java_blockpos",
       "community": 34,
-      "community_name": "InkStorage",
+      "community_name": "InkStorage.java",
       "norm_label": "blockpos"
     },
     {
@@ -5879,7 +5879,7 @@
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_ink_inkstorage_java_direction",
       "community": 34,
-      "community_name": "InkStorage",
+      "community_name": "InkStorage.java",
       "norm_label": "direction"
     },
     {
@@ -5890,7 +5890,7 @@
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_ink_inkstorage_inkstorage_getface",
       "community": 34,
-      "community_name": "InkStorage",
+      "community_name": "InkStorage.java",
       "norm_label": ".getface()"
     },
     {
@@ -5901,7 +5901,7 @@
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_ink_inkstorage_inkstorage_getfaceorempty",
       "community": 34,
-      "community_name": "InkStorage",
+      "community_name": "InkStorage.java",
       "norm_label": ".getfaceorempty()"
     },
     {
@@ -5911,8 +5911,8 @@
       "source_location": "L110",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_ink_inkstorage_inkstorage_cleararena",
-      "community": 32,
-      "community_name": ".getArenaNumber",
+      "community": 21,
+      "community_name": "InkArena",
       "norm_label": ".cleararena()"
     },
     {
@@ -5922,8 +5922,8 @@
       "source_location": "L123",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_ink_inkstorage_inkstorage_removearena",
-      "community": 32,
-      "community_name": ".getArenaNumber",
+      "community": 21,
+      "community_name": "InkArena",
       "norm_label": ".removearena()"
     },
     {
@@ -5933,8 +5933,8 @@
       "source_location": "L136",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_ink_inkstorage_inkstorage_getsurfacecount",
-      "community": 32,
-      "community_name": ".getArenaNumber",
+      "community": 21,
+      "community_name": "InkArena",
       "norm_label": ".getsurfacecount()"
     },
     {
@@ -5945,7 +5945,7 @@
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_ink_inkstorage_inkstorage_getrawarenamap",
       "community": 48,
-      "community_name": "InkSurfaceKey",
+      "community_name": "InkStorage",
       "norm_label": ".getrawarenamap()"
     },
     {
@@ -5955,8 +5955,8 @@
       "source_location": "L148",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_ink_inkstorage_inkstorage_hasdata",
-      "community": 4,
-      "community_name": "InkArenaManager",
+      "community": 48,
+      "community_name": "InkStorage",
       "norm_label": ".hasdata()"
     },
     {
@@ -5966,7 +5966,7 @@
       "source_location": "L152",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_ink_inkstorage_inkstorage_clearall",
-      "community": 34,
+      "community": 48,
       "community_name": "InkStorage",
       "norm_label": ".clearall()"
     },
@@ -5977,7 +5977,7 @@
       "source_location": "L163",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_ink_inkstorage_savedsurface",
-      "community": 34,
+      "community": 48,
       "community_name": "InkStorage",
       "norm_label": "savedsurface"
     },
@@ -5988,7 +5988,7 @@
       "source_location": "",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_ink_inkstorage_java_codec",
-      "community": 34,
+      "community": 48,
       "community_name": "InkStorage",
       "norm_label": "codec"
     },
@@ -6000,7 +6000,7 @@
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_ink_inkstorage_savedsurface_getface",
       "community": 34,
-      "community_name": "InkStorage",
+      "community_name": "InkStorage.java",
       "norm_label": ".getface()"
     },
     {
@@ -6011,7 +6011,7 @@
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_ink_inkstorage_savedsurface_haspatchid",
       "community": 34,
-      "community_name": "InkStorage",
+      "community_name": "InkStorage.java",
       "norm_label": ".haspatchid()"
     },
     {
@@ -6022,7 +6022,7 @@
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_ink_inkstorage_savedsurface_getpatchid",
       "community": 34,
-      "community_name": "InkStorage",
+      "community_name": "InkStorage.java",
       "norm_label": ".getpatchid()"
     },
     {
@@ -6032,7 +6032,7 @@
       "source_location": "L216",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_ink_inkstorage_savedarenaink",
-      "community": 34,
+      "community": 48,
       "community_name": "InkStorage",
       "norm_label": "savedarenaink"
     },
@@ -6043,7 +6043,7 @@
       "source_location": "L232",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_ink_inkstorage_inkstorage_fromsavedlist",
-      "community": 34,
+      "community": 48,
       "community_name": "InkStorage",
       "norm_label": ".fromsavedlist()"
     },
@@ -6054,7 +6054,7 @@
       "source_location": "L259",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_ink_inkstorage_inkstorage_tosavedlist",
-      "community": 34,
+      "community": 48,
       "community_name": "InkStorage",
       "norm_label": ".tosavedlist()"
     },
@@ -6065,8 +6065,8 @@
       "source_location": "L284",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_ink_inkstorage_inkstorage_exportdata",
-      "community": 4,
-      "community_name": "InkArenaManager",
+      "community": 48,
+      "community_name": "InkStorage",
       "norm_label": ".exportdata()"
     },
     {
@@ -6077,7 +6077,7 @@
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_ink_inkstorage_inkstorage_importdata",
       "community": 48,
-      "community_name": "InkSurfaceKey",
+      "community_name": "InkStorage",
       "norm_label": ".importdata()"
     },
     {
@@ -6088,7 +6088,7 @@
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_ink_inksurfacekey",
       "community": 48,
-      "community_name": "InkSurfaceKey",
+      "community_name": "InkStorage",
       "norm_label": "inksurfacekey.java"
     },
     {
@@ -6099,7 +6099,7 @@
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_ink_inksurfacekey_inksurfacekey",
       "community": 48,
-      "community_name": "InkSurfaceKey",
+      "community_name": "InkStorage",
       "norm_label": "inksurfacekey"
     },
     {
@@ -6110,7 +6110,7 @@
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_ink_inksurfacekey_java_blockpos",
       "community": 48,
-      "community_name": "InkSurfaceKey",
+      "community_name": "InkStorage",
       "norm_label": "blockpos"
     },
     {
@@ -6121,7 +6121,7 @@
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_ink_inksurfacekey_inksurfacekey_fullface",
       "community": 48,
-      "community_name": "InkSurfaceKey",
+      "community_name": "InkStorage",
       "norm_label": ".fullface()"
     },
     {
@@ -6132,7 +6132,7 @@
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_ink_inksurfacekey_java_direction",
       "community": 48,
-      "community_name": "InkSurfaceKey",
+      "community_name": "InkStorage",
       "norm_label": "direction"
     },
     {
@@ -6143,7 +6143,7 @@
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_ink_inksurfacekey_inksurfacekey_getnormal",
       "community": 48,
-      "community_name": "InkSurfaceKey",
+      "community_name": "InkStorage",
       "norm_label": ".getnormal()"
     },
     {
@@ -6594,7 +6594,7 @@
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_ink_inksurfacepatchid_inksurfacepatchid_fullface",
       "community": 34,
-      "community_name": "InkStorage",
+      "community_name": "InkStorage.java",
       "norm_label": ".fullface()"
     },
     {
@@ -6802,8 +6802,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_ink_inkteam",
-      "community": 12,
-      "community_name": "InkFaceData",
+      "community": 20,
+      "community_name": "ClientInkCache",
       "norm_label": "inkteam.java"
     },
     {
@@ -6835,8 +6835,8 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_ink_inkteam_inkteam_toname",
-      "community": 12,
-      "community_name": "InkFaceData",
+      "community": 39,
+      "community_name": ".paint",
       "norm_label": ".toname()"
     },
     {
@@ -7133,7 +7133,7 @@
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_ink_paintabilityfailurereason",
       "community": 8,
-      "community_name": ".paintTrail",
+      "community_name": ".checkPaintable",
       "norm_label": "paintabilityfailurereason.java"
     },
     {
@@ -7144,7 +7144,7 @@
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_ink_paintabilityfailurereason_paintabilityfailurereason",
       "community": 8,
-      "community_name": ".paintTrail",
+      "community_name": ".checkPaintable",
       "norm_label": "paintabilityfailurereason"
     },
     {
@@ -7155,7 +7155,7 @@
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_ink_paintabilityfailurereason_paintabilityfailurereason_not_paintable_block",
       "community": 8,
-      "community_name": ".paintTrail",
+      "community_name": ".checkPaintable",
       "norm_label": "not_paintable_block"
     },
     {
@@ -7166,7 +7166,7 @@
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_ink_paintabilityfailurereason_paintabilityfailurereason_outside_arena",
       "community": 8,
-      "community_name": ".paintTrail",
+      "community_name": ".checkPaintable",
       "norm_label": "outside_arena"
     },
     {
@@ -7177,7 +7177,7 @@
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_ink_paintabilityfailurereason_paintabilityfailurereason_face_occluded",
       "community": 8,
-      "community_name": ".paintTrail",
+      "community_name": ".checkPaintable",
       "norm_label": "face_occluded"
     },
     {
@@ -7188,7 +7188,7 @@
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_ink_paintabilityresult",
       "community": 8,
-      "community_name": ".paintTrail",
+      "community_name": ".checkPaintable",
       "norm_label": "paintabilityresult.java"
     },
     {
@@ -7199,7 +7199,7 @@
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_ink_paintabilityresult_paintabilityresult",
       "community": 8,
-      "community_name": ".paintTrail",
+      "community_name": ".checkPaintable",
       "norm_label": "paintabilityresult"
     },
     {
@@ -7210,7 +7210,7 @@
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_ink_paintabilityresult_paintabilityresult_success",
       "community": 8,
-      "community_name": ".paintTrail",
+      "community_name": ".checkPaintable",
       "norm_label": ".success()"
     },
     {
@@ -7221,7 +7221,7 @@
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_ink_paintabilityresult_paintabilityresult_fail",
       "community": 8,
-      "community_name": ".paintTrail",
+      "community_name": ".checkPaintable",
       "norm_label": ".fail()"
     },
     {
@@ -7462,8 +7462,8 @@
       "source_location": "L156",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_item_inkshooteritem_inkshooteritem_sendvisualpayload",
-      "community": 10,
-      "community_name": "InkWeaponConfig",
+      "community": 51,
+      "community_name": "InkShotVisualPayload",
       "norm_label": ".sendvisualpayload()"
     },
     {
@@ -7616,7 +7616,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_arenadebugpayload",
-      "community": 20,
+      "community": 42,
       "community_name": "ArenaDebugPayload",
       "norm_label": "arenadebugpayload.java"
     },
@@ -7627,7 +7627,7 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_arenadebugpayload_arenadebugpayload",
-      "community": 20,
+      "community": 42,
       "community_name": "ArenaDebugPayload",
       "norm_label": "arenadebugpayload"
     },
@@ -7638,7 +7638,7 @@
       "source_location": "",
       "_origin": "ast",
       "id": "custompacketpayload",
-      "community": 37,
+      "community": 38,
       "community_name": "CustomPacketPayload",
       "norm_label": "custompacketpayload"
     },
@@ -7649,7 +7649,7 @@
       "source_location": "",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_arenadebugpayload_java_blockpos",
-      "community": 20,
+      "community": 42,
       "community_name": "ArenaDebugPayload",
       "norm_label": "blockpos"
     },
@@ -7660,7 +7660,7 @@
       "source_location": "",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_arenadebugpayload_java_streamcodec",
-      "community": 20,
+      "community": 42,
       "community_name": "ArenaDebugPayload",
       "norm_label": "streamcodec"
     },
@@ -7671,7 +7671,7 @@
       "source_location": "",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_arenadebugpayload_java_friendlybytebuf",
-      "community": 20,
+      "community": 42,
       "community_name": "ArenaDebugPayload",
       "norm_label": "friendlybytebuf"
     },
@@ -7682,7 +7682,7 @@
       "source_location": "L46",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_arenadebugpayload_arenadebugpayload_type",
-      "community": 1,
+      "community": 49,
       "community_name": "Type",
       "norm_label": ".type()"
     },
@@ -7693,7 +7693,7 @@
       "source_location": "",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_arenadebugpayload_java_override",
-      "community": 1,
+      "community": 49,
       "community_name": "Type",
       "norm_label": "override"
     },
@@ -7704,7 +7704,7 @@
       "source_location": "L51",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_arenadebugpayload_arenadebugpayload_write",
-      "community": 20,
+      "community": 42,
       "community_name": "ArenaDebugPayload",
       "norm_label": ".write()"
     },
@@ -7715,7 +7715,7 @@
       "source_location": "L66",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_arenadebugpayload_arenadebugpayload_read",
-      "community": 20,
+      "community": 42,
       "community_name": "ArenaDebugPayload",
       "norm_label": ".read()"
     },
@@ -7726,7 +7726,7 @@
       "source_location": "L91",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_arenadebugpayload_arenadebugpayload_fullsyncbegin",
-      "community": 20,
+      "community": 42,
       "community_name": "ArenaDebugPayload",
       "norm_label": ".fullsyncbegin()"
     },
@@ -7737,7 +7737,7 @@
       "source_location": "L97",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_arenadebugpayload_arenadebugpayload_fullsyncend",
-      "community": 20,
+      "community": 42,
       "community_name": "ArenaDebugPayload",
       "norm_label": ".fullsyncend()"
     },
@@ -7748,7 +7748,7 @@
       "source_location": "L103",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_arenadebugpayload_arenadebugpayload_isfullsyncbegin",
-      "community": 20,
+      "community": 42,
       "community_name": "ArenaDebugPayload",
       "norm_label": ".isfullsyncbegin()"
     },
@@ -7759,7 +7759,7 @@
       "source_location": "L107",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_arenadebugpayload_arenadebugpayload_isfullsyncend",
-      "community": 20,
+      "community": 42,
       "community_name": "ArenaDebugPayload",
       "norm_label": ".isfullsyncend()"
     },
@@ -7770,8 +7770,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_arenadebugsync",
-      "community": 49,
-      "community_name": "ArenaDebugSync.java",
+      "community": 32,
+      "community_name": ".useWithoutItem",
       "norm_label": "arenadebugsync.java"
     },
     {
@@ -7781,8 +7781,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_arenadebugsync_arenadebugsync",
-      "community": 49,
-      "community_name": "ArenaDebugSync.java",
+      "community": 32,
+      "community_name": ".useWithoutItem",
       "norm_label": "arenadebugsync"
     },
     {
@@ -7792,7 +7792,7 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_arenadebugsync_arenadebugsync_sendfullsync",
-      "community": 20,
+      "community": 42,
       "community_name": "ArenaDebugPayload",
       "norm_label": ".sendfullsync()"
     },
@@ -7803,8 +7803,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_arenadebugsync_java_serverplayer",
-      "community": 49,
-      "community_name": "ArenaDebugSync.java",
+      "community": 21,
+      "community_name": "InkArena",
       "norm_label": "serverplayer"
     },
     {
@@ -7836,8 +7836,8 @@
       "source_location": "L94",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_arenadebugsync_arenadebugsync_sendclear",
-      "community": 49,
-      "community_name": "ArenaDebugSync.java",
+      "community": 0,
+      "community_name": ".getInstance",
       "norm_label": ".sendclear()"
     },
     {
@@ -7847,8 +7847,8 @@
       "source_location": "L111",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_arenadebugsync_arenadebugsync_broadcastarenaadded",
-      "community": 49,
-      "community_name": "ArenaDebugSync.java",
+      "community": 32,
+      "community_name": ".useWithoutItem",
       "norm_label": ".broadcastarenaadded()"
     },
     {
@@ -7858,8 +7858,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_arenadebugsync_java_serverlevel",
-      "community": 49,
-      "community_name": "ArenaDebugSync.java",
+      "community": 32,
+      "community_name": ".useWithoutItem",
       "norm_label": "serverlevel"
     },
     {
@@ -7881,7 +7881,7 @@
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_inkarenaclearpayload",
       "community": 35,
-      "community_name": "InkArenaClearPayload",
+      "community_name": "SalmonClient.java",
       "norm_label": "inkarenaclearpayload.java"
     },
     {
@@ -7892,7 +7892,7 @@
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_inkarenaclearpayload_inkarenaclearpayload",
       "community": 35,
-      "community_name": "InkArenaClearPayload",
+      "community_name": "SalmonClient.java",
       "norm_label": "inkarenaclearpayload"
     },
     {
@@ -7903,7 +7903,7 @@
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_inkarenaclearpayload_java_identifier",
       "community": 35,
-      "community_name": "InkArenaClearPayload",
+      "community_name": "SalmonClient.java",
       "norm_label": "identifier"
     },
     {
@@ -7914,7 +7914,7 @@
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_inkarenaclearpayload_java_streamcodec",
       "community": 35,
-      "community_name": "InkArenaClearPayload",
+      "community_name": "SalmonClient.java",
       "norm_label": "streamcodec"
     },
     {
@@ -7925,7 +7925,7 @@
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_inkarenaclearpayload_java_friendlybytebuf",
       "community": 35,
-      "community_name": "InkArenaClearPayload",
+      "community_name": "SalmonClient.java",
       "norm_label": "friendlybytebuf"
     },
     {
@@ -7935,8 +7935,8 @@
       "source_location": "L35",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_inkarenaclearpayload_inkarenaclearpayload_type",
-      "community": 35,
-      "community_name": "InkArenaClearPayload",
+      "community": 49,
+      "community_name": "Type",
       "norm_label": ".type()"
     },
     {
@@ -7946,8 +7946,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_inkarenaclearpayload_java_override",
-      "community": 35,
-      "community_name": "InkArenaClearPayload",
+      "community": 49,
+      "community_name": "Type",
       "norm_label": "override"
     },
     {
@@ -7958,7 +7958,7 @@
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_inkarenaclearpayload_inkarenaclearpayload_write",
       "community": 35,
-      "community_name": "InkArenaClearPayload",
+      "community_name": "SalmonClient.java",
       "norm_label": ".write()"
     },
     {
@@ -7969,7 +7969,7 @@
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_inkarenaclearpayload_inkarenaclearpayload_read",
       "community": 35,
-      "community_name": "InkArenaClearPayload",
+      "community_name": "SalmonClient.java",
       "norm_label": ".read()"
     },
     {
@@ -7979,7 +7979,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_inkfaceupdatepayload",
-      "community": 42,
+      "community": 50,
       "community_name": "InkFaceUpdatePayload",
       "norm_label": "inkfaceupdatepayload.java"
     },
@@ -7990,7 +7990,7 @@
       "source_location": "L33",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_inkfaceupdatepayload_inkfaceupdatepayload",
-      "community": 42,
+      "community": 50,
       "community_name": "InkFaceUpdatePayload",
       "norm_label": "inkfaceupdatepayload"
     },
@@ -8001,7 +8001,7 @@
       "source_location": "",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_inkfaceupdatepayload_java_identifier",
-      "community": 42,
+      "community": 50,
       "community_name": "InkFaceUpdatePayload",
       "norm_label": "identifier"
     },
@@ -8012,7 +8012,7 @@
       "source_location": "",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_inkfaceupdatepayload_java_blockpos",
-      "community": 42,
+      "community": 50,
       "community_name": "InkFaceUpdatePayload",
       "norm_label": "blockpos"
     },
@@ -8023,7 +8023,7 @@
       "source_location": "",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_inkfaceupdatepayload_java_streamcodec",
-      "community": 42,
+      "community": 50,
       "community_name": "InkFaceUpdatePayload",
       "norm_label": "streamcodec"
     },
@@ -8034,7 +8034,7 @@
       "source_location": "",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_inkfaceupdatepayload_java_friendlybytebuf",
-      "community": 42,
+      "community": 50,
       "community_name": "InkFaceUpdatePayload",
       "norm_label": "friendlybytebuf"
     },
@@ -8045,7 +8045,7 @@
       "source_location": "L54",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_inkfaceupdatepayload_inkfaceupdatepayload_getface",
-      "community": 42,
+      "community": 50,
       "community_name": "InkFaceUpdatePayload",
       "norm_label": ".getface()"
     },
@@ -8056,7 +8056,7 @@
       "source_location": "",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_inkfaceupdatepayload_java_direction",
-      "community": 42,
+      "community": 50,
       "community_name": "InkFaceUpdatePayload",
       "norm_label": "direction"
     },
@@ -8067,7 +8067,7 @@
       "source_location": "L58",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_inkfaceupdatepayload_inkfaceupdatepayload_type",
-      "community": 42,
+      "community": 50,
       "community_name": "InkFaceUpdatePayload",
       "norm_label": ".type()"
     },
@@ -8078,7 +8078,7 @@
       "source_location": "",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_inkfaceupdatepayload_java_override",
-      "community": 42,
+      "community": 50,
       "community_name": "InkFaceUpdatePayload",
       "norm_label": "override"
     },
@@ -8089,7 +8089,7 @@
       "source_location": "L63",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_inkfaceupdatepayload_inkfaceupdatepayload_write",
-      "community": 42,
+      "community": 50,
       "community_name": "InkFaceUpdatePayload",
       "norm_label": ".write()"
     },
@@ -8100,7 +8100,7 @@
       "source_location": "L74",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_inkfaceupdatepayload_inkfaceupdatepayload_read",
-      "community": 42,
+      "community": 50,
       "community_name": "InkFaceUpdatePayload",
       "norm_label": ".read()"
     },
@@ -8222,7 +8222,7 @@
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_inkshotspawnpayload",
       "community": 33,
-      "community_name": "Salmon.java",
+      "community_name": "InkShotSpawnPayload",
       "norm_label": "inkshotspawnpayload.java"
     },
     {
@@ -8233,7 +8233,7 @@
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_inkshotspawnpayload_inkshotspawnpayload",
       "community": 33,
-      "community_name": "Salmon.java",
+      "community_name": "InkShotSpawnPayload",
       "norm_label": "inkshotspawnpayload"
     },
     {
@@ -8244,7 +8244,7 @@
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_inkshotspawnpayload_java_vec3",
       "community": 33,
-      "community_name": "Salmon.java",
+      "community_name": "InkShotSpawnPayload",
       "norm_label": "vec3"
     },
     {
@@ -8255,7 +8255,7 @@
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_inkshotspawnpayload_java_streamcodec",
       "community": 33,
-      "community_name": "Salmon.java",
+      "community_name": "InkShotSpawnPayload",
       "norm_label": "streamcodec"
     },
     {
@@ -8266,7 +8266,7 @@
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_inkshotspawnpayload_java_friendlybytebuf",
       "community": 33,
-      "community_name": "Salmon.java",
+      "community_name": "InkShotSpawnPayload",
       "norm_label": "friendlybytebuf"
     },
     {
@@ -8276,8 +8276,8 @@
       "source_location": "L32",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_inkshotspawnpayload_inkshotspawnpayload_type",
-      "community": 1,
-      "community_name": "Type",
+      "community": 33,
+      "community_name": "InkShotSpawnPayload",
       "norm_label": ".type()"
     },
     {
@@ -8287,8 +8287,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_inkshotspawnpayload_java_override",
-      "community": 1,
-      "community_name": "Type",
+      "community": 33,
+      "community_name": "InkShotSpawnPayload",
       "norm_label": "override"
     },
     {
@@ -8299,7 +8299,7 @@
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_inkshotspawnpayload_inkshotspawnpayload_write",
       "community": 33,
-      "community_name": "Salmon.java",
+      "community_name": "InkShotSpawnPayload",
       "norm_label": ".write()"
     },
     {
@@ -8310,7 +8310,7 @@
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_inkshotspawnpayload_inkshotspawnpayload_read",
       "community": 33,
-      "community_name": "Salmon.java",
+      "community_name": "InkShotSpawnPayload",
       "norm_label": ".read()"
     },
     {
@@ -8320,8 +8320,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_inkshotvisualpayload",
-      "community": 10,
-      "community_name": "InkWeaponConfig",
+      "community": 51,
+      "community_name": "InkShotVisualPayload",
       "norm_label": "inkshotvisualpayload.java"
     },
     {
@@ -8331,8 +8331,8 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_inkshotvisualpayload_inkshotvisualpayload",
-      "community": 10,
-      "community_name": "InkWeaponConfig",
+      "community": 51,
+      "community_name": "InkShotVisualPayload",
       "norm_label": "inkshotvisualpayload"
     },
     {
@@ -8342,8 +8342,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_inkshotvisualpayload_java_vec3",
-      "community": 10,
-      "community_name": "InkWeaponConfig",
+      "community": 51,
+      "community_name": "InkShotVisualPayload",
       "norm_label": "vec3"
     },
     {
@@ -8353,8 +8353,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_inkshotvisualpayload_java_streamcodec",
-      "community": 10,
-      "community_name": "InkWeaponConfig",
+      "community": 51,
+      "community_name": "InkShotVisualPayload",
       "norm_label": "streamcodec"
     },
     {
@@ -8364,8 +8364,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_inkshotvisualpayload_java_friendlybytebuf",
-      "community": 10,
-      "community_name": "InkWeaponConfig",
+      "community": 51,
+      "community_name": "InkShotVisualPayload",
       "norm_label": "friendlybytebuf"
     },
     {
@@ -8375,8 +8375,8 @@
       "source_location": "L46",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_inkshotvisualpayload_inktraildropvisual",
-      "community": 10,
-      "community_name": "InkWeaponConfig",
+      "community": 51,
+      "community_name": "InkShotVisualPayload",
       "norm_label": "inktraildropvisual"
     },
     {
@@ -8386,8 +8386,8 @@
       "source_location": "L48",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_inkshotvisualpayload_inkshotvisualpayload_start",
-      "community": 10,
-      "community_name": "InkWeaponConfig",
+      "community": 51,
+      "community_name": "InkShotVisualPayload",
       "norm_label": ".start()"
     },
     {
@@ -8397,8 +8397,8 @@
       "source_location": "L52",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_inkshotvisualpayload_inkshotvisualpayload_end",
-      "community": 10,
-      "community_name": "InkWeaponConfig",
+      "community": 51,
+      "community_name": "InkShotVisualPayload",
       "norm_label": ".end()"
     },
     {
@@ -8408,7 +8408,7 @@
       "source_location": "L56",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_inkshotvisualpayload_inkshotvisualpayload_type",
-      "community": 1,
+      "community": 49,
       "community_name": "Type",
       "norm_label": ".type()"
     },
@@ -8419,7 +8419,7 @@
       "source_location": "",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_inkshotvisualpayload_java_override",
-      "community": 1,
+      "community": 49,
       "community_name": "Type",
       "norm_label": "override"
     },
@@ -8430,8 +8430,8 @@
       "source_location": "L61",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_inkshotvisualpayload_inkshotvisualpayload_write",
-      "community": 10,
-      "community_name": "InkWeaponConfig",
+      "community": 51,
+      "community_name": "InkShotVisualPayload",
       "norm_label": ".write()"
     },
     {
@@ -8441,8 +8441,8 @@
       "source_location": "L95",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_inkshotvisualpayload_inkshotvisualpayload_read",
-      "community": 10,
-      "community_name": "InkWeaponConfig",
+      "community": 51,
+      "community_name": "InkShotVisualPayload",
       "norm_label": ".read()"
     },
     {
@@ -8453,7 +8453,7 @@
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_inksyncbeginpayload",
       "community": 37,
-      "community_name": "CustomPacketPayload",
+      "community_name": "InkSyncBeginPayload",
       "norm_label": "inksyncbeginpayload.java"
     },
     {
@@ -8464,7 +8464,7 @@
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_inksyncbeginpayload_inksyncbeginpayload",
       "community": 37,
-      "community_name": "CustomPacketPayload",
+      "community_name": "InkSyncBeginPayload",
       "norm_label": "inksyncbeginpayload"
     },
     {
@@ -8475,7 +8475,7 @@
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_inksyncbeginpayload_java_identifier",
       "community": 37,
-      "community_name": "CustomPacketPayload",
+      "community_name": "InkSyncBeginPayload",
       "norm_label": "identifier"
     },
     {
@@ -8486,7 +8486,7 @@
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_inksyncbeginpayload_java_streamcodec",
       "community": 37,
-      "community_name": "CustomPacketPayload",
+      "community_name": "InkSyncBeginPayload",
       "norm_label": "streamcodec"
     },
     {
@@ -8497,7 +8497,7 @@
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_inksyncbeginpayload_java_friendlybytebuf",
       "community": 37,
-      "community_name": "CustomPacketPayload",
+      "community_name": "InkSyncBeginPayload",
       "norm_label": "friendlybytebuf"
     },
     {
@@ -8507,8 +8507,8 @@
       "source_location": "L35",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_inksyncbeginpayload_inksyncbeginpayload_type",
-      "community": 1,
-      "community_name": "Type",
+      "community": 37,
+      "community_name": "InkSyncBeginPayload",
       "norm_label": ".type()"
     },
     {
@@ -8518,8 +8518,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_inksyncbeginpayload_java_override",
-      "community": 1,
-      "community_name": "Type",
+      "community": 37,
+      "community_name": "InkSyncBeginPayload",
       "norm_label": "override"
     },
     {
@@ -8530,7 +8530,7 @@
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_inksyncbeginpayload_inksyncbeginpayload_write",
       "community": 37,
-      "community_name": "CustomPacketPayload",
+      "community_name": "InkSyncBeginPayload",
       "norm_label": ".write()"
     },
     {
@@ -8541,7 +8541,7 @@
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_inksyncbeginpayload_inksyncbeginpayload_read",
       "community": 37,
-      "community_name": "CustomPacketPayload",
+      "community_name": "InkSyncBeginPayload",
       "norm_label": ".read()"
     },
     {
@@ -8552,7 +8552,7 @@
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_inksyncendpayload",
       "community": 38,
-      "community_name": "SalmonClient.java",
+      "community_name": "CustomPacketPayload",
       "norm_label": "inksyncendpayload.java"
     },
     {
@@ -8563,7 +8563,7 @@
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_inksyncendpayload_inksyncendpayload",
       "community": 38,
-      "community_name": "SalmonClient.java",
+      "community_name": "CustomPacketPayload",
       "norm_label": "inksyncendpayload"
     },
     {
@@ -8574,7 +8574,7 @@
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_inksyncendpayload_java_streamcodec",
       "community": 38,
-      "community_name": "SalmonClient.java",
+      "community_name": "CustomPacketPayload",
       "norm_label": "streamcodec"
     },
     {
@@ -8585,7 +8585,7 @@
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_inksyncendpayload_java_friendlybytebuf",
       "community": 38,
-      "community_name": "SalmonClient.java",
+      "community_name": "CustomPacketPayload",
       "norm_label": "friendlybytebuf"
     },
     {
@@ -8595,7 +8595,7 @@
       "source_location": "L30",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_inksyncendpayload_inksyncendpayload_type",
-      "community": 1,
+      "community": 49,
       "community_name": "Type",
       "norm_label": ".type()"
     },
@@ -8606,7 +8606,7 @@
       "source_location": "",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_inksyncendpayload_java_override",
-      "community": 1,
+      "community": 49,
       "community_name": "Type",
       "norm_label": "override"
     },
@@ -8618,7 +8618,7 @@
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_inksyncendpayload_inksyncendpayload_write",
       "community": 38,
-      "community_name": "SalmonClient.java",
+      "community_name": "CustomPacketPayload",
       "norm_label": ".write()"
     },
     {
@@ -8629,7 +8629,7 @@
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_inksyncendpayload_inksyncendpayload_read",
       "community": 38,
-      "community_name": "SalmonClient.java",
+      "community_name": "CustomPacketPayload",
       "norm_label": ".read()"
     },
     {
@@ -8639,8 +8639,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_inksyncmanager",
-      "community": 32,
-      "community_name": ".getArenaNumber",
+      "community": 18,
+      "community_name": ".fire",
       "norm_label": "inksyncmanager.java"
     },
     {
@@ -8650,8 +8650,8 @@
       "source_location": "L35",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_inksyncmanager_inksyncmanager",
-      "community": 32,
-      "community_name": ".getArenaNumber",
+      "community": 18,
+      "community_name": ".fire",
       "norm_label": "inksyncmanager"
     },
     {
@@ -8661,8 +8661,8 @@
       "source_location": "L45",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_inksyncmanager_inksyncmanager_inksyncmanager",
-      "community": 32,
-      "community_name": ".getArenaNumber",
+      "community": 18,
+      "community_name": ".fire",
       "norm_label": ".inksyncmanager()"
     },
     {
@@ -8683,8 +8683,8 @@
       "source_location": "L58",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_inksyncmanager_inksyncmanager_getrevision",
-      "community": 32,
-      "community_name": ".getArenaNumber",
+      "community": 18,
+      "community_name": ".fire",
       "norm_label": ".getrevision()"
     },
     {
@@ -8694,8 +8694,8 @@
       "source_location": "L66",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_inksyncmanager_inksyncmanager_incrementrevision",
-      "community": 32,
-      "community_name": ".getArenaNumber",
+      "community": 18,
+      "community_name": ".fire",
       "norm_label": ".incrementrevision()"
     },
     {
@@ -8705,8 +8705,8 @@
       "source_location": "L77",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_inksyncmanager_inksyncmanager_removerevision",
-      "community": 32,
-      "community_name": ".getArenaNumber",
+      "community": 18,
+      "community_name": ".fire",
       "norm_label": ".removerevision()"
     },
     {
@@ -8716,8 +8716,8 @@
       "source_location": "L96",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_inksyncmanager_inksyncmanager_broadcastfaceupdate",
-      "community": 32,
-      "community_name": ".getArenaNumber",
+      "community": 18,
+      "community_name": ".fire",
       "norm_label": ".broadcastfaceupdate()"
     },
     {
@@ -8727,8 +8727,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_inksyncmanager_java_serverlevel",
-      "community": 32,
-      "community_name": ".getArenaNumber",
+      "community": 18,
+      "community_name": ".fire",
       "norm_label": "serverlevel"
     },
     {
@@ -8738,8 +8738,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_inksyncmanager_java_blockpos",
-      "community": 32,
-      "community_name": ".getArenaNumber",
+      "community": 18,
+      "community_name": ".fire",
       "norm_label": "blockpos"
     },
     {
@@ -8749,8 +8749,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_inksyncmanager_java_direction",
-      "community": 32,
-      "community_name": ".getArenaNumber",
+      "community": 18,
+      "community_name": ".fire",
       "norm_label": "direction"
     },
     {
@@ -8760,8 +8760,8 @@
       "source_location": "L136",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_inksyncmanager_inksyncmanager_broadcastmultifaceupdate",
-      "community": 32,
-      "community_name": ".getArenaNumber",
+      "community": 21,
+      "community_name": "InkArena",
       "norm_label": ".broadcastmultifaceupdate()"
     },
     {
@@ -8771,8 +8771,8 @@
       "source_location": "L182",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_inksyncmanager_inksyncmanager_broadcastarenaclear",
-      "community": 32,
-      "community_name": ".getArenaNumber",
+      "community": 21,
+      "community_name": "InkArena",
       "norm_label": ".broadcastarenaclear()"
     },
     {
@@ -8782,8 +8782,8 @@
       "source_location": "L210",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_inksyncmanager_inksyncmanager_broadcastarenaremoved",
-      "community": 32,
-      "community_name": ".getArenaNumber",
+      "community": 18,
+      "community_name": ".fire",
       "norm_label": ".broadcastarenaremoved()"
     },
     {
@@ -8793,8 +8793,8 @@
       "source_location": "L248",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_inksyncmanager_inksyncmanager_commitaccumulator",
-      "community": 32,
-      "community_name": ".getArenaNumber",
+      "community": 18,
+      "community_name": ".fire",
       "norm_label": ".commitaccumulator()"
     },
     {
@@ -8804,8 +8804,8 @@
       "source_location": "L263",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_inksyncmanager_inksyncmanager_sendfullsync",
-      "community": 32,
-      "community_name": ".getArenaNumber",
+      "community": 18,
+      "community_name": ".fire",
       "norm_label": ".sendfullsync()"
     },
     {
@@ -8815,8 +8815,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_network_inksyncmanager_java_serverplayer",
-      "community": 32,
-      "community_name": ".getArenaNumber",
+      "community": 18,
+      "community_name": ".fire",
       "norm_label": "serverplayer"
     },
     {
@@ -10399,7 +10399,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_weapon_inkshoteffects",
-      "community": 17,
+      "community": 52,
       "community_name": "InkShotEffects.java",
       "norm_label": "inkshoteffects.java"
     },
@@ -10410,7 +10410,7 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_weapon_inkshoteffects_inkshoteffects",
-      "community": 17,
+      "community": 52,
       "community_name": "InkShotEffects.java",
       "norm_label": "inkshoteffects"
     },
@@ -10421,7 +10421,7 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_weapon_inkshoteffects_inkshoteffects_inkshoteffects",
-      "community": 17,
+      "community": 52,
       "community_name": "InkShotEffects.java",
       "norm_label": ".inkshoteffects()"
     },
@@ -10432,7 +10432,7 @@
       "source_location": "L34",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_weapon_inkshoteffects_inkshoteffects_spawnfireeffect",
-      "community": 17,
+      "community": 52,
       "community_name": "InkShotEffects.java",
       "norm_label": ".spawnfireeffect()"
     },
@@ -10443,7 +10443,7 @@
       "source_location": "",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_weapon_inkshoteffects_java_serverlevel",
-      "community": 17,
+      "community": 52,
       "community_name": "InkShotEffects.java",
       "norm_label": "serverlevel"
     },
@@ -10454,7 +10454,7 @@
       "source_location": "",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_weapon_inkshoteffects_java_vec3",
-      "community": 17,
+      "community": 52,
       "community_name": "InkShotEffects.java",
       "norm_label": "vec3"
     },
@@ -10465,7 +10465,7 @@
       "source_location": "",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_weapon_inkshoteffects_java_serverplayer",
-      "community": 17,
+      "community": 52,
       "community_name": "InkShotEffects.java",
       "norm_label": "serverplayer"
     },
@@ -10476,7 +10476,7 @@
       "source_location": "L47",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_weapon_inkshoteffects_inkshoteffects_spawnblockhiteffect",
-      "community": 17,
+      "community": 52,
       "community_name": "InkShotEffects.java",
       "norm_label": ".spawnblockhiteffect()"
     },
@@ -10487,7 +10487,7 @@
       "source_location": "",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_weapon_inkshoteffects_java_direction",
-      "community": 17,
+      "community": 52,
       "community_name": "InkShotEffects.java",
       "norm_label": "direction"
     },
@@ -10498,7 +10498,7 @@
       "source_location": "L81",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_weapon_inkshoteffects_inkshoteffects_spawnentityhiteffect",
-      "community": 17,
+      "community": 52,
       "community_name": "InkShotEffects.java",
       "norm_label": ".spawnentityhiteffect()"
     },
@@ -10509,7 +10509,7 @@
       "source_location": "L109",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_weapon_inkshoteffects_inkshoteffects_spawnmisseffect",
-      "community": 17,
+      "community": 52,
       "community_name": "InkShotEffects.java",
       "norm_label": ".spawnmisseffect()"
     },
@@ -10663,7 +10663,7 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_weapon_inkshotresult_type",
-      "community": 1,
+      "community": 49,
       "community_name": "Type",
       "norm_label": "type"
     },
@@ -10674,7 +10674,7 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_weapon_inkshotresult_type_miss",
-      "community": 1,
+      "community": 49,
       "community_name": "Type",
       "norm_label": "miss"
     },
@@ -10685,7 +10685,7 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_weapon_inkshotresult_type_block_hit",
-      "community": 1,
+      "community": 49,
       "community_name": "Type",
       "norm_label": "block_hit"
     },
@@ -10696,7 +10696,7 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_weapon_inkshotresult_type_entity_hit",
-      "community": 1,
+      "community": 49,
       "community_name": "Type",
       "norm_label": "entity_hit"
     },
@@ -10817,8 +10817,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_weapon_inktrailpaintconfig",
-      "community": 8,
-      "community_name": ".paintTrail",
+      "community": 7,
+      "community_name": "InkTrajectoryResult",
       "norm_label": "inktrailpaintconfig.java"
     },
     {
@@ -10828,8 +10828,8 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_weapon_inktrailpaintconfig_inktrailpaintconfig",
-      "community": 8,
-      "community_name": ".paintTrail",
+      "community": 7,
+      "community_name": "InkTrajectoryResult",
       "norm_label": "inktrailpaintconfig"
     },
     {
@@ -10839,8 +10839,8 @@
       "source_location": "L140",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_weapon_inktrailpaintconfig_inktrailpaintconfig_randomspacing",
-      "community": 8,
-      "community_name": ".paintTrail",
+      "community": 7,
+      "community_name": "InkTrajectoryResult",
       "norm_label": ".randomspacing()"
     },
     {
@@ -10850,8 +10850,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_weapon_inktrailpaintconfig_java_randomsource",
-      "community": 8,
-      "community_name": ".paintTrail",
+      "community": 7,
+      "community_name": "InkTrajectoryResult",
       "norm_label": "randomsource"
     },
     {
@@ -10861,8 +10861,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_weapon_inktrailpaintservice",
-      "community": 8,
-      "community_name": ".paintTrail",
+      "community": 7,
+      "community_name": "InkTrajectoryResult",
       "norm_label": "inktrailpaintservice.java"
     },
     {
@@ -10872,8 +10872,8 @@
       "source_location": "L32",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_weapon_inktrailpaintservice_inktrailpaintservice",
-      "community": 8,
-      "community_name": ".paintTrail",
+      "community": 7,
+      "community_name": "InkTrajectoryResult",
       "norm_label": "inktrailpaintservice"
     },
     {
@@ -10883,8 +10883,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_weapon_inktrailpaintservice_java_logger",
-      "community": 8,
-      "community_name": ".paintTrail",
+      "community": 7,
+      "community_name": "InkTrajectoryResult",
       "norm_label": "logger"
     },
     {
@@ -10894,8 +10894,8 @@
       "source_location": "L35",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_weapon_inktrailpaintservice_inktrailpaintservice_inktrailpaintservice",
-      "community": 8,
-      "community_name": ".paintTrail",
+      "community": 7,
+      "community_name": "InkTrajectoryResult",
       "norm_label": ".inktrailpaintservice()"
     },
     {
@@ -10916,8 +10916,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_weapon_inktrailpaintservice_java_vec3",
-      "community": 8,
-      "community_name": ".paintTrail",
+      "community": 7,
+      "community_name": "InkTrajectoryResult",
       "norm_label": "vec3"
     },
     {
@@ -10927,8 +10927,8 @@
       "source_location": "L45",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_weapon_inktrailpaintservice_traildropvisual",
-      "community": 8,
-      "community_name": ".paintTrail",
+      "community": 7,
+      "community_name": "InkTrajectoryResult",
       "norm_label": "traildropvisual"
     },
     {
@@ -10938,8 +10938,8 @@
       "source_location": "L50",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_weapon_inktrailpaintservice_trailpaintresult",
-      "community": 8,
-      "community_name": ".paintTrail",
+      "community": 7,
+      "community_name": "InkTrajectoryResult",
       "norm_label": "trailpaintresult"
     },
     {
@@ -10949,8 +10949,8 @@
       "source_location": "L77",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_weapon_inktrailpaintservice_inktrailpaintservice_painttrail",
-      "community": 8,
-      "community_name": ".paintTrail",
+      "community": 7,
+      "community_name": "InkTrajectoryResult",
       "norm_label": ".painttrail()"
     },
     {
@@ -10960,8 +10960,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_weapon_inktrailpaintservice_java_serverlevel",
-      "community": 8,
-      "community_name": ".paintTrail",
+      "community": 7,
+      "community_name": "InkTrajectoryResult",
       "norm_label": "serverlevel"
     },
     {
@@ -10971,8 +10971,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "src_main_java_yam_salmon_weapon_inktrailpaintservice_java_serverplayer",
-      "community": 8,
-      "community_name": ".paintTrail",
+      "community": 7,
+      "community_name": "InkTrajectoryResult",
       "norm_label": "serverplayer"
     },
     {
@@ -11645,6 +11645,424 @@
       "community": 19,
       "community_name": "ActiveInkShot",
       "norm_label": "invalid_physics"
+    },
+    {
+      "label": "minecraft-assets.md",
+      "file_type": "document",
+      "source_file": ".clinerules/minecraft-assets.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "clinerules_minecraft_assets",
+      "community": 58,
+      "community_name": "minecraft-assets.md",
+      "norm_label": "minecraft-assets.md"
+    },
+    {
+      "label": "Minecraft resource rules",
+      "file_type": "document",
+      "source_file": ".clinerules/minecraft-assets.md",
+      "source_location": "L6",
+      "_origin": "ast",
+      "id": "clinerules_minecraft_assets_minecraft_resource_rules",
+      "community": 58,
+      "community_name": "minecraft-assets.md",
+      "norm_label": "minecraft resource rules"
+    },
+    {
+      "label": "minecraft-java.md",
+      "file_type": "document",
+      "source_file": ".clinerules/minecraft-java.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "clinerules_minecraft_java",
+      "community": 57,
+      "community_name": "Minecraft 26.2 and Fabric Java rules",
+      "norm_label": "minecraft-java.md"
+    },
+    {
+      "label": "Minecraft 26.2 and Fabric Java rules",
+      "file_type": "document",
+      "source_file": ".clinerules/minecraft-java.md",
+      "source_location": "L9",
+      "_origin": "ast",
+      "id": "clinerules_minecraft_java_minecraft_26_2_and_fabric_java_rules",
+      "community": 57,
+      "community_name": "Minecraft 26.2 and Fabric Java rules",
+      "norm_label": "minecraft 26.2 and fabric java rules"
+    },
+    {
+      "label": "API verification",
+      "file_type": "document",
+      "source_file": ".clinerules/minecraft-java.md",
+      "source_location": "L11",
+      "_origin": "ast",
+      "id": "clinerules_minecraft_java_api_verification",
+      "community": 57,
+      "community_name": "Minecraft 26.2 and Fabric Java rules",
+      "norm_label": "api verification"
+    },
+    {
+      "label": "Known 26.2 conventions",
+      "file_type": "document",
+      "source_file": ".clinerules/minecraft-java.md",
+      "source_location": "L18",
+      "_origin": "ast",
+      "id": "clinerules_minecraft_java_known_26_2_conventions",
+      "community": 57,
+      "community_name": "Minecraft 26.2 and Fabric Java rules",
+      "norm_label": "known 26.2 conventions"
+    },
+    {
+      "label": "Verification",
+      "file_type": "document",
+      "source_file": ".clinerules/minecraft-java.md",
+      "source_location": "L28",
+      "_origin": "ast",
+      "id": "clinerules_minecraft_java_verification",
+      "community": 57,
+      "community_name": "Minecraft 26.2 and Fabric Java rules",
+      "norm_label": "verification"
+    },
+    {
+      "label": "salmon-project-reference.md",
+      "file_type": "document",
+      "source_file": "docs/salmon-project-reference.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "docs_salmon_project_reference",
+      "community": 1,
+      "community_name": "2.1. \u30b5\u30fc\u30d0\u30fc\u5074 (`src/main/java/yam/salmon/`)",
+      "norm_label": "salmon-project-reference.md"
+    },
+    {
+      "label": "Salmon project reference (historical architecture catalog)",
+      "file_type": "document",
+      "source_file": "docs/salmon-project-reference.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "docs_salmon_project_reference_salmon_project_reference_historical_architecture_catalog",
+      "community": 1,
+      "community_name": "2.1. \u30b5\u30fc\u30d0\u30fc\u5074 (`src/main/java/yam/salmon/`)",
+      "norm_label": "salmon project reference (historical architecture catalog)"
+    },
+    {
+      "label": "1. \u30d7\u30ed\u30b8\u30a7\u30af\u30c8\u6982\u8981 & \u958b\u767a\u74b0\u5883",
+      "file_type": "document",
+      "source_file": "docs/salmon-project-reference.md",
+      "source_location": "L7",
+      "_origin": "ast",
+      "id": "docs_salmon_project_reference_1_\u30d7\u30ed\u30b8\u30a7\u30af\u30c8\u6982\u8981_\u958b\u767a\u74b0\u5883",
+      "community": 1,
+      "community_name": "2.1. \u30b5\u30fc\u30d0\u30fc\u5074 (`src/main/java/yam/salmon/`)",
+      "norm_label": "1. \u30d5\u30ed\u30b7\u30a7\u30af\u30c8\u6982\u8981 & \u958b\u767a\u74b0\u5883"
+    },
+    {
+      "label": "2. \u30c7\u30a3\u30ec\u30af\u30c8\u30ea\u69cb\u9020\u3068\u4e3b\u8981\u30af\u30e9\u30b9\u306e\u5f79\u5272",
+      "file_type": "document",
+      "source_file": "docs/salmon-project-reference.md",
+      "source_location": "L23",
+      "_origin": "ast",
+      "id": "docs_salmon_project_reference_2_\u30c7\u30a3\u30ec\u30af\u30c8\u30ea\u69cb\u9020\u3068\u4e3b\u8981\u30af\u30e9\u30b9\u306e\u5f79\u5272",
+      "community": 1,
+      "community_name": "2.1. \u30b5\u30fc\u30d0\u30fc\u5074 (`src/main/java/yam/salmon/`)",
+      "norm_label": "2. \u30c6\u30a3\u30ec\u30af\u30c8\u30ea\u69cb\u9020\u3068\u4e3b\u8981\u30af\u30e9\u30b9\u306e\u5f79\u5272"
+    },
+    {
+      "label": "2.1. \u30b5\u30fc\u30d0\u30fc\u5074 (`src/main/java/yam/salmon/`)",
+      "file_type": "document",
+      "source_file": "docs/salmon-project-reference.md",
+      "source_location": "L27",
+      "_origin": "ast",
+      "id": "docs_salmon_project_reference_2_1_\u30b5\u30fc\u30d0\u30fc\u5074_src_main_java_yam_salmon",
+      "community": 1,
+      "community_name": "2.1. \u30b5\u30fc\u30d0\u30fc\u5074 (`src/main/java/yam/salmon/`)",
+      "norm_label": "2.1. \u30b5\u30fc\u30cf\u30fc\u5074 (`src/main/java/yam/salmon/`)"
+    },
+    {
+      "label": "`Salmon.java`",
+      "file_type": "document",
+      "source_file": "docs/salmon-project-reference.md",
+      "source_location": "L29",
+      "_origin": "ast",
+      "id": "docs_salmon_project_reference_salmon_java",
+      "community": 1,
+      "community_name": "2.1. \u30b5\u30fc\u30d0\u30fc\u5074 (`src/main/java/yam/salmon/`)",
+      "norm_label": "`salmon.java`"
+    },
+    {
+      "label": "`block/` \u2014 \u30d6\u30ed\u30c3\u30af\u95a2\u9023",
+      "file_type": "document",
+      "source_file": "docs/salmon-project-reference.md",
+      "source_location": "L32",
+      "_origin": "ast",
+      "id": "docs_salmon_project_reference_block_\u30d6\u30ed\u30c3\u30af\u95a2\u9023",
+      "community": 1,
+      "community_name": "2.1. \u30b5\u30fc\u30d0\u30fc\u5074 (`src/main/java/yam/salmon/`)",
+      "norm_label": "`block/` \u2014 \u30d5\u30ed\u30c3\u30af\u95a2\u9023"
+    },
+    {
+      "label": "`arena/` \u2014 \u30a2\u30ea\u30fc\u30ca\u7ba1\u7406\u30ed\u30b8\u30c3\u30af",
+      "file_type": "document",
+      "source_file": "docs/salmon-project-reference.md",
+      "source_location": "L41",
+      "_origin": "ast",
+      "id": "docs_salmon_project_reference_arena_\u30a2\u30ea\u30fc\u30ca\u7ba1\u7406\u30ed\u30b8\u30c3\u30af",
+      "community": 1,
+      "community_name": "2.1. \u30b5\u30fc\u30d0\u30fc\u5074 (`src/main/java/yam/salmon/`)",
+      "norm_label": "`arena/` \u2014 \u30a2\u30ea\u30fc\u30ca\u7ba1\u7406\u30ed\u30b7\u30c3\u30af"
+    },
+    {
+      "label": "`ink/` \u2014 \u30a4\u30f3\u30af\u5857\u88c5\u30b7\u30b9\u30c6\u30e0",
+      "file_type": "document",
+      "source_file": "docs/salmon-project-reference.md",
+      "source_location": "L48",
+      "_origin": "ast",
+      "id": "docs_salmon_project_reference_ink_\u30a4\u30f3\u30af\u5857\u88c5\u30b7\u30b9\u30c6\u30e0",
+      "community": 1,
+      "community_name": "2.1. \u30b5\u30fc\u30d0\u30fc\u5074 (`src/main/java/yam/salmon/`)",
+      "norm_label": "`ink/` \u2014 \u30a4\u30f3\u30af\u5857\u88c5\u30b7\u30b9\u30c6\u30e0"
+    },
+    {
+      "label": "`item/` \u2014 \u30a2\u30a4\u30c6\u30e0\u767b\u9332",
+      "file_type": "document",
+      "source_file": "docs/salmon-project-reference.md",
+      "source_location": "L72",
+      "_origin": "ast",
+      "id": "docs_salmon_project_reference_item_\u30a2\u30a4\u30c6\u30e0\u767b\u9332",
+      "community": 1,
+      "community_name": "2.1. \u30b5\u30fc\u30d0\u30fc\u5074 (`src/main/java/yam/salmon/`)",
+      "norm_label": "`item/` \u2014 \u30a2\u30a4\u30c6\u30e0\u767b\u9332"
+    },
+    {
+      "label": "`weapon/` \u2014 \u30d6\u30ad\u30b7\u30b9\u30c6\u30e0",
+      "file_type": "document",
+      "source_file": "docs/salmon-project-reference.md",
+      "source_location": "L79",
+      "_origin": "ast",
+      "id": "docs_salmon_project_reference_weapon_\u30d6\u30ad\u30b7\u30b9\u30c6\u30e0",
+      "community": 1,
+      "community_name": "2.1. \u30b5\u30fc\u30d0\u30fc\u5074 (`src/main/java/yam/salmon/`)",
+      "norm_label": "`weapon/` \u2014 \u30d5\u30ad\u30b7\u30b9\u30c6\u30e0"
+    },
+    {
+      "label": "`combat/` \u2014 \u6226\u95d8\u30b7\u30b9\u30c6\u30e0",
+      "file_type": "document",
+      "source_file": "docs/salmon-project-reference.md",
+      "source_location": "L101",
+      "_origin": "ast",
+      "id": "docs_salmon_project_reference_combat_\u6226\u95d8\u30b7\u30b9\u30c6\u30e0",
+      "community": 1,
+      "community_name": "2.1. \u30b5\u30fc\u30d0\u30fc\u5074 (`src/main/java/yam/salmon/`)",
+      "norm_label": "`combat/` \u2014 \u6226\u95d8\u30b7\u30b9\u30c6\u30e0"
+    },
+    {
+      "label": "`command/` \u2014 \u30b3\u30de\u30f3\u30c9\u767b\u9332",
+      "file_type": "document",
+      "source_file": "docs/salmon-project-reference.md",
+      "source_location": "L106",
+      "_origin": "ast",
+      "id": "docs_salmon_project_reference_command_\u30b3\u30de\u30f3\u30c9\u767b\u9332",
+      "community": 1,
+      "community_name": "2.1. \u30b5\u30fc\u30d0\u30fc\u5074 (`src/main/java/yam/salmon/`)",
+      "norm_label": "`command/` \u2014 \u30b3\u30de\u30f3\u30c8\u767b\u9332"
+    },
+    {
+      "label": "`network/` \u2014 \u30cd\u30c3\u30c8\u30ef\u30fc\u30af\u540c\u671f",
+      "file_type": "document",
+      "source_file": "docs/salmon-project-reference.md",
+      "source_location": "L111",
+      "_origin": "ast",
+      "id": "docs_salmon_project_reference_network_\u30cd\u30c3\u30c8\u30ef\u30fc\u30af\u540c\u671f",
+      "community": 1,
+      "community_name": "2.1. \u30b5\u30fc\u30d0\u30fc\u5074 (`src/main/java/yam/salmon/`)",
+      "norm_label": "`network/` \u2014 \u30cd\u30c3\u30c8\u30ef\u30fc\u30af\u540c\u671f"
+    },
+    {
+      "label": "`selection/` \u2014 \u30d7\u30ec\u30a4\u30e4\u30fc\u9078\u629e\u72b6\u614b\u7ba1\u7406",
+      "file_type": "document",
+      "source_file": "docs/salmon-project-reference.md",
+      "source_location": "L127",
+      "_origin": "ast",
+      "id": "docs_salmon_project_reference_selection_\u30d7\u30ec\u30a4\u30e4\u30fc\u9078\u629e\u72b6\u614b\u7ba1\u7406",
+      "community": 1,
+      "community_name": "2.1. \u30b5\u30fc\u30d0\u30fc\u5074 (`src/main/java/yam/salmon/`)",
+      "norm_label": "`selection/` \u2014 \u30d5\u30ec\u30a4\u30e4\u30fc\u9078\u629e\u72b6\u614b\u7ba1\u7406"
+    },
+    {
+      "label": "`mixin/` \u2014 Mixin",
+      "file_type": "document",
+      "source_file": "docs/salmon-project-reference.md",
+      "source_location": "L132",
+      "_origin": "ast",
+      "id": "docs_salmon_project_reference_mixin_mixin",
+      "community": 1,
+      "community_name": "2.1. \u30b5\u30fc\u30d0\u30fc\u5074 (`src/main/java/yam/salmon/`)",
+      "norm_label": "`mixin/` \u2014 mixin"
+    },
+    {
+      "label": "2.2. \u30af\u30e9\u30a4\u30a2\u30f3\u30c8\u5074 (`src/client/java/yam/salmon/client/`)",
+      "file_type": "document",
+      "source_file": "docs/salmon-project-reference.md",
+      "source_location": "L139",
+      "_origin": "ast",
+      "id": "docs_salmon_project_reference_2_2_\u30af\u30e9\u30a4\u30a2\u30f3\u30c8\u5074_src_client_java_yam_salmon_client",
+      "community": 1,
+      "community_name": "2.1. \u30b5\u30fc\u30d0\u30fc\u5074 (`src/main/java/yam/salmon/`)",
+      "norm_label": "2.2. \u30af\u30e9\u30a4\u30a2\u30f3\u30c8\u5074 (`src/client/java/yam/salmon/client/`)"
+    },
+    {
+      "label": "`SalmonClient.java`",
+      "file_type": "document",
+      "source_file": "docs/salmon-project-reference.md",
+      "source_location": "L141",
+      "_origin": "ast",
+      "id": "docs_salmon_project_reference_salmonclient_java",
+      "community": 1,
+      "community_name": "2.1. \u30b5\u30fc\u30d0\u30fc\u5074 (`src/main/java/yam/salmon/`)",
+      "norm_label": "`salmonclient.java`"
+    },
+    {
+      "label": "`arena/` \u2014 \u30a2\u30ea\u30fc\u30ca\u30c7\u30d0\u30c3\u30b0\u63cf\u753b",
+      "file_type": "document",
+      "source_file": "docs/salmon-project-reference.md",
+      "source_location": "L144",
+      "_origin": "ast",
+      "id": "docs_salmon_project_reference_arena_\u30a2\u30ea\u30fc\u30ca\u30c7\u30d0\u30c3\u30b0\u63cf\u753b",
+      "community": 1,
+      "community_name": "2.1. \u30b5\u30fc\u30d0\u30fc\u5074 (`src/main/java/yam/salmon/`)",
+      "norm_label": "`arena/` \u2014 \u30a2\u30ea\u30fc\u30ca\u30c6\u30cf\u30c3\u30af\u63cf\u753b"
+    },
+    {
+      "label": "`ink/` \u2014 \u30a4\u30f3\u30af\u63cf\u753b",
+      "file_type": "document",
+      "source_file": "docs/salmon-project-reference.md",
+      "source_location": "L149",
+      "_origin": "ast",
+      "id": "docs_salmon_project_reference_ink_\u30a4\u30f3\u30af\u63cf\u753b",
+      "community": 1,
+      "community_name": "2.1. \u30b5\u30fc\u30d0\u30fc\u5074 (`src/main/java/yam/salmon/`)",
+      "norm_label": "`ink/` \u2014 \u30a4\u30f3\u30af\u63cf\u753b"
+    },
+    {
+      "label": "`shot/` \u2014 \u30a4\u30f3\u30af\u5f3e\u30d3\u30b8\u30e5\u30a2\u30eb",
+      "file_type": "document",
+      "source_file": "docs/salmon-project-reference.md",
+      "source_location": "L158",
+      "_origin": "ast",
+      "id": "docs_salmon_project_reference_shot_\u30a4\u30f3\u30af\u5f3e\u30d3\u30b8\u30e5\u30a2\u30eb",
+      "community": 1,
+      "community_name": "2.1. \u30b5\u30fc\u30d0\u30fc\u5074 (`src/main/java/yam/salmon/`)",
+      "norm_label": "`shot/` \u2014 \u30a4\u30f3\u30af\u5f3e\u30d2\u30b7\u30e5\u30a2\u30eb"
+    },
+    {
+      "label": "`mixin/` \u2014 \u30af\u30e9\u30a4\u30a2\u30f3\u30c8Mixin",
+      "file_type": "document",
+      "source_file": "docs/salmon-project-reference.md",
+      "source_location": "L166",
+      "_origin": "ast",
+      "id": "docs_salmon_project_reference_mixin_\u30af\u30e9\u30a4\u30a2\u30f3\u30c8mixin",
+      "community": 1,
+      "community_name": "2.1. \u30b5\u30fc\u30d0\u30fc\u5074 (`src/main/java/yam/salmon/`)",
+      "norm_label": "`mixin/` \u2014 \u30af\u30e9\u30a4\u30a2\u30f3\u30c8mixin"
+    },
+    {
+      "label": "2.3. \u30ea\u30bd\u30fc\u30b9 (`src/main/resources/`)",
+      "file_type": "document",
+      "source_file": "docs/salmon-project-reference.md",
+      "source_location": "L173",
+      "_origin": "ast",
+      "id": "docs_salmon_project_reference_2_3_\u30ea\u30bd\u30fc\u30b9_src_main_resources",
+      "community": 1,
+      "community_name": "2.1. \u30b5\u30fc\u30d0\u30fc\u5074 (`src/main/java/yam/salmon/`)",
+      "norm_label": "2.3. \u30ea\u30bd\u30fc\u30b9 (`src/main/resources/`)"
+    },
+    {
+      "label": "3. \u5b9f\u88c5\u6e08\u307f\u6a5f\u80fd\u306e\u30b9\u30c6\u30fc\u30bf\u30b9",
+      "file_type": "document",
+      "source_file": "docs/salmon-project-reference.md",
+      "source_location": "L183",
+      "_origin": "ast",
+      "id": "docs_salmon_project_reference_3_\u5b9f\u88c5\u6e08\u307f\u6a5f\u80fd\u306e\u30b9\u30c6\u30fc\u30bf\u30b9",
+      "community": 1,
+      "community_name": "2.1. \u30b5\u30fc\u30d0\u30fc\u5074 (`src/main/java/yam/salmon/`)",
+      "norm_label": "3. \u5b9f\u88c5\u6e08\u307f\u6a5f\u80fd\u306e\u30b9\u30c6\u30fc\u30bf\u30b9"
+    },
+    {
+      "label": "3.1. Phase 1\u301c5: \u57fa\u76e4\u30b7\u30b9\u30c6\u30e0\uff08\u5b8c\u4e86\uff09",
+      "file_type": "document",
+      "source_file": "docs/salmon-project-reference.md",
+      "source_location": "L185",
+      "_origin": "ast",
+      "id": "docs_salmon_project_reference_3_1_phase_1_5_\u57fa\u76e4\u30b7\u30b9\u30c6\u30e0_\u5b8c\u4e86",
+      "community": 1,
+      "community_name": "2.1. \u30b5\u30fc\u30d0\u30fc\u5074 (`src/main/java/yam/salmon/`)",
+      "norm_label": "3.1. phase 1\u301c5: \u57fa\u76e4\u30b7\u30b9\u30c6\u30e0(\u5b8c\u4e86)"
+    },
+    {
+      "label": "3.2. Phase 6+: \u30d6\u30ad\u30fb\u6226\u95d8\u30b7\u30b9\u30c6\u30e0",
+      "file_type": "document",
+      "source_file": "docs/salmon-project-reference.md",
+      "source_location": "L270",
+      "_origin": "ast",
+      "id": "docs_salmon_project_reference_3_2_phase_6_\u30d6\u30ad_\u6226\u95d8\u30b7\u30b9\u30c6\u30e0",
+      "community": 1,
+      "community_name": "2.1. \u30b5\u30fc\u30d0\u30fc\u5074 (`src/main/java/yam/salmon/`)",
+      "norm_label": "3.2. phase 6+: \u30d5\u30ad\u30fb\u6226\u95d8\u30b7\u30b9\u30c6\u30e0"
+    },
+    {
+      "label": "4. \u65e2\u77e5\u306e\u8ab2\u984c\u30fb\u4eca\u5f8c\u306e\u30bf\u30b9\u30af (Todo)",
+      "file_type": "document",
+      "source_file": "docs/salmon-project-reference.md",
+      "source_location": "L306",
+      "_origin": "ast",
+      "id": "docs_salmon_project_reference_4_\u65e2\u77e5\u306e\u8ab2\u984c_\u4eca\u5f8c\u306e\u30bf\u30b9\u30af_todo",
+      "community": 1,
+      "community_name": "2.1. \u30b5\u30fc\u30d0\u30fc\u5074 (`src/main/java/yam/salmon/`)",
+      "norm_label": "4. \u65e2\u77e5\u306e\u8ab2\u984c\u30fb\u4eca\u5f8c\u306e\u30bf\u30b9\u30af (todo)"
+    },
+    {
+      "label": "5. AI\u3078\u306e\u884c\u52d5\u30eb\u30fc\u30eb & \u5236\u7d04\u4e8b\u9805",
+      "file_type": "document",
+      "source_file": "docs/salmon-project-reference.md",
+      "source_location": "L327",
+      "_origin": "ast",
+      "id": "docs_salmon_project_reference_5_ai\u3078\u306e\u884c\u52d5\u30eb\u30fc\u30eb_\u5236\u7d04\u4e8b\u9805",
+      "community": 1,
+      "community_name": "2.1. \u30b5\u30fc\u30d0\u30fc\u5074 (`src/main/java/yam/salmon/`)",
+      "norm_label": "5. ai\u3078\u306e\u884c\u52d5\u30eb\u30fc\u30eb & \u5236\u7d04\u4e8b\u9805"
+    },
+    {
+      "label": "6. \u30a2\u30bb\u30c3\u30c8\u7ba1\u7406\u30ac\u30a4\u30c9\u30e9\u30a4\u30f3",
+      "file_type": "document",
+      "source_file": "docs/salmon-project-reference.md",
+      "source_location": "L348",
+      "_origin": "ast",
+      "id": "docs_salmon_project_reference_6_\u30a2\u30bb\u30c3\u30c8\u7ba1\u7406\u30ac\u30a4\u30c9\u30e9\u30a4\u30f3",
+      "community": 1,
+      "community_name": "2.1. \u30b5\u30fc\u30d0\u30fc\u5074 (`src/main/java/yam/salmon/`)",
+      "norm_label": "6. \u30a2\u30bb\u30c3\u30c8\u7ba1\u7406\u30ab\u30a4\u30c8\u30e9\u30a4\u30f3"
+    },
+    {
+      "label": "6.1. \u30a2\u30bb\u30c3\u30c8\u30d5\u30a9\u30eb\u30c0\u69cb\u6210",
+      "file_type": "document",
+      "source_file": "docs/salmon-project-reference.md",
+      "source_location": "L350",
+      "_origin": "ast",
+      "id": "docs_salmon_project_reference_6_1_\u30a2\u30bb\u30c3\u30c8\u30d5\u30a9\u30eb\u30c0\u69cb\u6210",
+      "community": 1,
+      "community_name": "2.1. \u30b5\u30fc\u30d0\u30fc\u5074 (`src/main/java/yam/salmon/`)",
+      "norm_label": "6.1. \u30a2\u30bb\u30c3\u30c8\u30d5\u30a9\u30eb\u30bf\u69cb\u6210"
+    },
+    {
+      "label": "6.2. \u30a2\u30a4\u30c6\u30e0\u5b9a\u7fa9\u30d5\u30a9\u30fc\u30de\u30c3\u30c8 (`assets/<mod_id>/items/<item_id>.json`)",
+      "file_type": "document",
+      "source_file": "docs/salmon-project-reference.md",
+      "source_location": "L360",
+      "_origin": "ast",
+      "id": "docs_salmon_project_reference_6_2_\u30a2\u30a4\u30c6\u30e0\u5b9a\u7fa9\u30d5\u30a9\u30fc\u30de\u30c3\u30c8_assets_mod_id_items_item_id_json",
+      "community": 1,
+      "community_name": "2.1. \u30b5\u30fc\u30d0\u30fc\u5074 (`src/main/java/yam/salmon/`)",
+      "norm_label": "6.2. \u30a2\u30a4\u30c6\u30e0\u5b9a\u7fa9\u30d5\u30a9\u30fc\u30de\u30c3\u30c8 (`assets/<mod_id>/items/<item_id>.json`)"
     },
     {
       "label": "AGENTS.md - Splatoon Mod Development Guidelines",
@@ -42454,6 +42872,391 @@
       "confidence_score": 1.0
     },
     {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".clinerules/minecraft-assets.md",
+      "source_location": "L6",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "clinerules_minecraft_assets",
+      "target": "clinerules_minecraft_assets_minecraft_resource_rules",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".clinerules/minecraft-java.md",
+      "source_location": "L9",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "clinerules_minecraft_java",
+      "target": "clinerules_minecraft_java_minecraft_26_2_and_fabric_java_rules",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".clinerules/minecraft-java.md",
+      "source_location": "L11",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "clinerules_minecraft_java_minecraft_26_2_and_fabric_java_rules",
+      "target": "clinerules_minecraft_java_api_verification",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".clinerules/minecraft-java.md",
+      "source_location": "L18",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "clinerules_minecraft_java_minecraft_26_2_and_fabric_java_rules",
+      "target": "clinerules_minecraft_java_known_26_2_conventions",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".clinerules/minecraft-java.md",
+      "source_location": "L28",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "clinerules_minecraft_java_minecraft_26_2_and_fabric_java_rules",
+      "target": "clinerules_minecraft_java_verification",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/salmon-project-reference.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_salmon_project_reference",
+      "target": "docs_salmon_project_reference_salmon_project_reference_historical_architecture_catalog",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/salmon-project-reference.md",
+      "source_location": "L7",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_salmon_project_reference_salmon_project_reference_historical_architecture_catalog",
+      "target": "docs_salmon_project_reference_1_\u30d7\u30ed\u30b8\u30a7\u30af\u30c8\u6982\u8981_\u958b\u767a\u74b0\u5883",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/salmon-project-reference.md",
+      "source_location": "L23",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_salmon_project_reference_salmon_project_reference_historical_architecture_catalog",
+      "target": "docs_salmon_project_reference_2_\u30c7\u30a3\u30ec\u30af\u30c8\u30ea\u69cb\u9020\u3068\u4e3b\u8981\u30af\u30e9\u30b9\u306e\u5f79\u5272",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/salmon-project-reference.md",
+      "source_location": "L183",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_salmon_project_reference_salmon_project_reference_historical_architecture_catalog",
+      "target": "docs_salmon_project_reference_3_\u5b9f\u88c5\u6e08\u307f\u6a5f\u80fd\u306e\u30b9\u30c6\u30fc\u30bf\u30b9",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/salmon-project-reference.md",
+      "source_location": "L306",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_salmon_project_reference_salmon_project_reference_historical_architecture_catalog",
+      "target": "docs_salmon_project_reference_4_\u65e2\u77e5\u306e\u8ab2\u984c_\u4eca\u5f8c\u306e\u30bf\u30b9\u30af_todo",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/salmon-project-reference.md",
+      "source_location": "L327",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_salmon_project_reference_salmon_project_reference_historical_architecture_catalog",
+      "target": "docs_salmon_project_reference_5_ai\u3078\u306e\u884c\u52d5\u30eb\u30fc\u30eb_\u5236\u7d04\u4e8b\u9805",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/salmon-project-reference.md",
+      "source_location": "L348",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_salmon_project_reference_salmon_project_reference_historical_architecture_catalog",
+      "target": "docs_salmon_project_reference_6_\u30a2\u30bb\u30c3\u30c8\u7ba1\u7406\u30ac\u30a4\u30c9\u30e9\u30a4\u30f3",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/salmon-project-reference.md",
+      "source_location": "L27",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_salmon_project_reference_2_\u30c7\u30a3\u30ec\u30af\u30c8\u30ea\u69cb\u9020\u3068\u4e3b\u8981\u30af\u30e9\u30b9\u306e\u5f79\u5272",
+      "target": "docs_salmon_project_reference_2_1_\u30b5\u30fc\u30d0\u30fc\u5074_src_main_java_yam_salmon",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/salmon-project-reference.md",
+      "source_location": "L139",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_salmon_project_reference_2_\u30c7\u30a3\u30ec\u30af\u30c8\u30ea\u69cb\u9020\u3068\u4e3b\u8981\u30af\u30e9\u30b9\u306e\u5f79\u5272",
+      "target": "docs_salmon_project_reference_2_2_\u30af\u30e9\u30a4\u30a2\u30f3\u30c8\u5074_src_client_java_yam_salmon_client",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/salmon-project-reference.md",
+      "source_location": "L173",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_salmon_project_reference_2_\u30c7\u30a3\u30ec\u30af\u30c8\u30ea\u69cb\u9020\u3068\u4e3b\u8981\u30af\u30e9\u30b9\u306e\u5f79\u5272",
+      "target": "docs_salmon_project_reference_2_3_\u30ea\u30bd\u30fc\u30b9_src_main_resources",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/salmon-project-reference.md",
+      "source_location": "L41",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_salmon_project_reference_2_1_\u30b5\u30fc\u30d0\u30fc\u5074_src_main_java_yam_salmon",
+      "target": "docs_salmon_project_reference_arena_\u30a2\u30ea\u30fc\u30ca\u7ba1\u7406\u30ed\u30b8\u30c3\u30af",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/salmon-project-reference.md",
+      "source_location": "L32",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_salmon_project_reference_2_1_\u30b5\u30fc\u30d0\u30fc\u5074_src_main_java_yam_salmon",
+      "target": "docs_salmon_project_reference_block_\u30d6\u30ed\u30c3\u30af\u95a2\u9023",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/salmon-project-reference.md",
+      "source_location": "L101",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_salmon_project_reference_2_1_\u30b5\u30fc\u30d0\u30fc\u5074_src_main_java_yam_salmon",
+      "target": "docs_salmon_project_reference_combat_\u6226\u95d8\u30b7\u30b9\u30c6\u30e0",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/salmon-project-reference.md",
+      "source_location": "L106",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_salmon_project_reference_2_1_\u30b5\u30fc\u30d0\u30fc\u5074_src_main_java_yam_salmon",
+      "target": "docs_salmon_project_reference_command_\u30b3\u30de\u30f3\u30c9\u767b\u9332",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/salmon-project-reference.md",
+      "source_location": "L48",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_salmon_project_reference_2_1_\u30b5\u30fc\u30d0\u30fc\u5074_src_main_java_yam_salmon",
+      "target": "docs_salmon_project_reference_ink_\u30a4\u30f3\u30af\u5857\u88c5\u30b7\u30b9\u30c6\u30e0",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/salmon-project-reference.md",
+      "source_location": "L72",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_salmon_project_reference_2_1_\u30b5\u30fc\u30d0\u30fc\u5074_src_main_java_yam_salmon",
+      "target": "docs_salmon_project_reference_item_\u30a2\u30a4\u30c6\u30e0\u767b\u9332",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/salmon-project-reference.md",
+      "source_location": "L132",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_salmon_project_reference_2_1_\u30b5\u30fc\u30d0\u30fc\u5074_src_main_java_yam_salmon",
+      "target": "docs_salmon_project_reference_mixin_mixin",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/salmon-project-reference.md",
+      "source_location": "L111",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_salmon_project_reference_2_1_\u30b5\u30fc\u30d0\u30fc\u5074_src_main_java_yam_salmon",
+      "target": "docs_salmon_project_reference_network_\u30cd\u30c3\u30c8\u30ef\u30fc\u30af\u540c\u671f",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/salmon-project-reference.md",
+      "source_location": "L29",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_salmon_project_reference_2_1_\u30b5\u30fc\u30d0\u30fc\u5074_src_main_java_yam_salmon",
+      "target": "docs_salmon_project_reference_salmon_java",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/salmon-project-reference.md",
+      "source_location": "L127",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_salmon_project_reference_2_1_\u30b5\u30fc\u30d0\u30fc\u5074_src_main_java_yam_salmon",
+      "target": "docs_salmon_project_reference_selection_\u30d7\u30ec\u30a4\u30e4\u30fc\u9078\u629e\u72b6\u614b\u7ba1\u7406",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/salmon-project-reference.md",
+      "source_location": "L79",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_salmon_project_reference_2_1_\u30b5\u30fc\u30d0\u30fc\u5074_src_main_java_yam_salmon",
+      "target": "docs_salmon_project_reference_weapon_\u30d6\u30ad\u30b7\u30b9\u30c6\u30e0",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/salmon-project-reference.md",
+      "source_location": "L144",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_salmon_project_reference_2_2_\u30af\u30e9\u30a4\u30a2\u30f3\u30c8\u5074_src_client_java_yam_salmon_client",
+      "target": "docs_salmon_project_reference_arena_\u30a2\u30ea\u30fc\u30ca\u30c7\u30d0\u30c3\u30b0\u63cf\u753b",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/salmon-project-reference.md",
+      "source_location": "L149",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_salmon_project_reference_2_2_\u30af\u30e9\u30a4\u30a2\u30f3\u30c8\u5074_src_client_java_yam_salmon_client",
+      "target": "docs_salmon_project_reference_ink_\u30a4\u30f3\u30af\u63cf\u753b",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/salmon-project-reference.md",
+      "source_location": "L166",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_salmon_project_reference_2_2_\u30af\u30e9\u30a4\u30a2\u30f3\u30c8\u5074_src_client_java_yam_salmon_client",
+      "target": "docs_salmon_project_reference_mixin_\u30af\u30e9\u30a4\u30a2\u30f3\u30c8mixin",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/salmon-project-reference.md",
+      "source_location": "L141",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_salmon_project_reference_2_2_\u30af\u30e9\u30a4\u30a2\u30f3\u30c8\u5074_src_client_java_yam_salmon_client",
+      "target": "docs_salmon_project_reference_salmonclient_java",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/salmon-project-reference.md",
+      "source_location": "L158",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_salmon_project_reference_2_2_\u30af\u30e9\u30a4\u30a2\u30f3\u30c8\u5074_src_client_java_yam_salmon_client",
+      "target": "docs_salmon_project_reference_shot_\u30a4\u30f3\u30af\u5f3e\u30d3\u30b8\u30e5\u30a2\u30eb",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/salmon-project-reference.md",
+      "source_location": "L185",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_salmon_project_reference_3_\u5b9f\u88c5\u6e08\u307f\u6a5f\u80fd\u306e\u30b9\u30c6\u30fc\u30bf\u30b9",
+      "target": "docs_salmon_project_reference_3_1_phase_1_5_\u57fa\u76e4\u30b7\u30b9\u30c6\u30e0_\u5b8c\u4e86",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/salmon-project-reference.md",
+      "source_location": "L270",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_salmon_project_reference_3_\u5b9f\u88c5\u6e08\u307f\u6a5f\u80fd\u306e\u30b9\u30c6\u30fc\u30bf\u30b9",
+      "target": "docs_salmon_project_reference_3_2_phase_6_\u30d6\u30ad_\u6226\u95d8\u30b7\u30b9\u30c6\u30e0",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/salmon-project-reference.md",
+      "source_location": "L350",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_salmon_project_reference_6_\u30a2\u30bb\u30c3\u30c8\u7ba1\u7406\u30ac\u30a4\u30c9\u30e9\u30a4\u30f3",
+      "target": "docs_salmon_project_reference_6_1_\u30a2\u30bb\u30c3\u30c8\u30d5\u30a9\u30eb\u30c0\u69cb\u6210",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/salmon-project-reference.md",
+      "source_location": "L360",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_salmon_project_reference_6_\u30a2\u30bb\u30c3\u30c8\u7ba1\u7406\u30ac\u30a4\u30c9\u30e9\u30a4\u30f3",
+      "target": "docs_salmon_project_reference_6_2_\u30a2\u30a4\u30c6\u30e0\u5b9a\u7fa9\u30d5\u30a9\u30fc\u30de\u30c3\u30c8_assets_mod_id_items_item_id_json",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "references",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
@@ -42475,5 +43278,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "2dfbb8e48fbdfd30bd91c6df14a0007187191938"
+  "built_at_commit": "16eaa6e4e6ee28ba051910582da3700a1b7c0db7"
 }

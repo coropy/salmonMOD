@@ -1,43 +1,43 @@
-# Graph Report - salmonMOD  (2026-07-31)
+# Graph Report - salmonMOD  (2026-08-09)
 
 ## Corpus Check
-- 107 files · ~39,341 words
+- 110 files · ~40,241 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1062 nodes · 2615 edges · 50 communities (47 shown, 3 thin omitted)
+- 1100 nodes · 2650 edges · 59 communities (53 shown, 6 thin omitted)
 - Extraction: 89% EXTRACTED · 11% INFERRED · 0% AMBIGUOUS · INFERRED: 283 edges (avg confidence: 0.8)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `2dfbb8e4`
+- Built from commit: `16eaa6e4`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
 ## Community Hubs (Navigation)
 - .getInstance
-- Type
+- 2.1. サーバー側 (`src/main/java/yam/salmon/`)
 - InkSurfacePatchId
 - FaceBasis
 - InkArenaManager
 - ArenaDebugRenderer
 - ExampleMixin.java
 - InkTrajectoryResult
-- .paintTrail
+- .checkPaintable
 - InkRenderer.java
 - InkWeaponConfig
-- InkAreaMarkerBlock.java
+- .useWithoutItem
 - InkFaceData
-- ClientInkTrailDrop
+- ClientInkShot
 - InkAreaMarkerBlockEntity
 - Surface Patch Extraction
 - Result
-- InkShotEffects.java
+- Salmon.java
 - .fire
 - ActiveInkShot
-- ArenaDebugPayload
+- ClientInkCache
 - InkArena
-- ClientInkShot
+- ClientInkShotManager
 - Mixin Example
 - Paint Rules
 - Ink Source Resolver
@@ -45,24 +45,33 @@
 - Mod Documentation
 - Setup README
 - CI Workflow
-- .getArenaNumber
-- Salmon.java
-- InkStorage
-- InkArenaClearPayload
-- InkPaintabilityService.java
-- CustomPacketPayload
+- .useWithoutItem
+- InkShotSpawnPayload
+- InkStorage.java
 - SalmonClient.java
+- .extractInkState
+- InkSyncBeginPayload
+- CustomPacketPayload
 - .paint
 - PlayerMarkerSelectionManager
 - .distributePaint
-- InkFaceUpdatePayload
+- ArenaDebugPayload
 - InkShotImpactPayload
 - InkPlaneCoordinates
 - InkTrailDropImpactPayload
 - PaintFailureReason
 - InkTrailDropSpawnPayload
-- InkSurfaceKey
-- ArenaDebugSync.java
+- InkStorage
+- Type
+- InkFaceUpdatePayload
+- InkShotVisualPayload
+- InkShotEffects.java
+- InkCellGeometry
+- .onInitializeClient
+- ClientInkSurface
+- ClientInkSurfaceKey
+- Minecraft 26.2 and Fabric Java rules
+- minecraft-assets.md
 
 ## God Nodes (most connected - your core abstractions)
 1. `InkArena` - 71 edges
@@ -81,36 +90,36 @@
   AGENTS.md → src/main/resources/assets/salmon/icon.png
 - `AGENTS.md - Splatoon Mod Development Guidelines` --references--> `Ink Area Marker Block Texture`  [EXTRACTED]
   AGENTS.md → src/main/resources/assets/salmon/textures/block/ink_area_marker.png
-- `ClientInkShotManager` --references--> `ClientInkTrailDrop`  [EXTRACTED]
-  src/client/java/yam/salmon/client/shot/ClientInkShotManager.java → src/client/java/yam/salmon/client/shot/ClientInkTrailDrop.java
-- `ArenaCreateResult` --references--> `InkArena`  [EXTRACTED]
-  src/main/java/yam/salmon/arena/InkArenaManager.java → src/main/java/yam/salmon/arena/InkArena.java
-- `ArenaSavedData` --references--> `InkArena`  [EXTRACTED]
-  src/main/java/yam/salmon/arena/InkArenaManager.java → src/main/java/yam/salmon/arena/InkArena.java
+- `ClientInkCache` --references--> `ClientInkSurface`  [EXTRACTED]
+  src/client/java/yam/salmon/client/ink/ClientInkCache.java → src/client/java/yam/salmon/client/ink/ClientInkSurface.java
+- `ClientInkCache` --references--> `ClientInkSurfaceKey`  [EXTRACTED]
+  src/client/java/yam/salmon/client/ink/ClientInkCache.java → src/client/java/yam/salmon/client/ink/ClientInkSurfaceKey.java
+- `ClientInkSurface` --references--> `ClientInkSurfaceKey`  [EXTRACTED]
+  src/client/java/yam/salmon/client/ink/ClientInkSurface.java → src/client/java/yam/salmon/client/ink/ClientInkSurfaceKey.java
 
 ## Import Cycles
 - None detected.
 
-## Communities (50 total, 3 thin omitted)
+## Communities (59 total, 6 thin omitted)
 
 ### Community 0 - ".getInstance"
 Cohesion: 0.16
 Nodes (9): CommandBuildContext, CommandContext, CommandDispatcher, CommandSelection, CommandSourceStack, ServerPlayer, BlockPos, ServerLevel (+1 more)
 
-### Community 1 - "Type"
-Cohesion: 0.14
-Nodes (9): Override, Override, Override, Override, Override, Type, BLOCK_HIT, ENTITY_HIT (+1 more)
+### Community 1 - "2.1. サーバー側 (`src/main/java/yam/salmon/`)"
+Cohesion: 0.06
+Nodes (30): 1. プロジェクト概要 & 開発環境, 2.1. サーバー側 (`src/main/java/yam/salmon/`), 2.2. クライアント側 (`src/client/java/yam/salmon/client/`), 2.3. リソース (`src/main/resources/`), 2. ディレクトリ構造と主要クラスの役割, 3.1. Phase 1〜5: 基盤システム（完了）, 3.2. Phase 6+: ブキ・戦闘システム, 3. 実装済み機能のステータス (+22 more)
 
 ### Community 2 - "InkSurfacePatchId"
-Cohesion: 0.07
-Nodes (15): ClientInkCache, BlockPos, Direction, Identifier, ClientInkSurface, BlockPos, Direction, Identifier (+7 more)
+Cohesion: 0.14
+Nodes (4): InkSurfacePatchId, Deprecated, Direction, FriendlyByteBuf
 
 ### Community 3 - "FaceBasis"
 Cohesion: 0.10
 Nodes (19): Axis, FaceBasis, BlockPos, Direction, Vec3, LocalUV, InkHitResolver, BlockGetter (+11 more)
 
 ### Community 4 - "InkArenaManager"
-Cohesion: 0.13
+Cohesion: 0.15
 Nodes (11): SavedData, SavedDataType, ArenaCreateResult, ArenaSavedData, InkArenaManager, BlockPos, Codec, Level (+3 more)
 
 ### Community 5 - "ArenaDebugRenderer"
@@ -122,32 +131,32 @@ Cohesion: 0.53
 Nodes (4): ExampleMixin, CallbackInfo, Inject, Mixin
 
 ### Community 7 - "InkTrajectoryResult"
-Cohesion: 0.09
-Nodes (23): InkCollisionRaycast, BlockHitResult, Entity, Level, Logger, Vec3, TrailSegment, HitType (+15 more)
+Cohesion: 0.07
+Nodes (32): InkCollisionRaycast, BlockHitResult, Entity, Level, Logger, Vec3, InkTrailPaintConfig, RandomSource (+24 more)
 
-### Community 8 - ".paintTrail"
+### Community 8 - ".checkPaintable"
 Cohesion: 0.10
-Nodes (20): InkPaintability, BlockGetter, BlockPos, BlockState, Direction, Logger, PaintabilityFailureReason, FACE_OCCLUDED (+12 more)
+Nodes (21): Block, TagKey, ModBlockTags, InkPaintability, BlockGetter, BlockPos, BlockState, Direction (+13 more)
 
 ### Community 9 - "InkRenderer.java"
-Cohesion: 0.07
-Nodes (22): ClientInkColors, ColoredQuad, InkRenderer, InkRenderState, Draw, ExecuteInfo, LevelExtractionContext, LevelRenderContext (+14 more)
+Cohesion: 0.20
+Nodes (11): InkRenderer, Draw, ExecuteInfo, LevelExtractionContext, LevelRenderContext, Matrix4f, Minecraft, RenderPipeline (+3 more)
 
 ### Community 10 - "InkWeaponConfig"
 Cohesion: 0.06
-Nodes (27): InteractionHand, Item, InkShooterItem, InteractionResult, Level, Logger, Override, Player (+19 more)
+Nodes (22): InteractionHand, Item, InkShooterItem, InteractionResult, Level, Logger, Override, Player (+14 more)
 
-### Community 11 - "InkAreaMarkerBlock.java"
-Cohesion: 0.09
-Nodes (23): Block, BlockEntityType, EntityBlock, ArenaPermission, Player, InkableBlock, BlockHitResult, BlockPos (+15 more)
+### Community 11 - ".useWithoutItem"
+Cohesion: 0.15
+Nodes (13): Block, BlockEntityType, ArenaPermission, Player, InkableBlock, BlockHitResult, BlockPos, BlockState (+5 more)
 
 ### Community 12 - "InkFaceData"
-Cohesion: 0.13
+Cohesion: 0.16
 Nodes (6): InkFaceData, IntersectionMode, CELL_CENTER, CELL_RECTANGLE_INTERSECTION, Override, InkTeam
 
-### Community 13 - "ClientInkTrailDrop"
-Cohesion: 0.10
-Nodes (12): ClientInkTrailDrop, Vec3, InkShotRenderer, ExecuteInfo, LevelRenderContext, Matrix4f, Matrix4fc, RenderPipeline (+4 more)
+### Community 13 - "ClientInkShot"
+Cohesion: 0.07
+Nodes (14): ClientInkShot, Vec3, ClientInkTrailDrop, Vec3, InkShotRenderer, ExecuteInfo, LevelRenderContext, Matrix4f (+6 more)
 
 ### Community 14 - "InkAreaMarkerBlockEntity"
 Cohesion: 0.12
@@ -161,29 +170,25 @@ Nodes (10): FaceCandidate, FaceCellUV, InkSurfacePatchExtractor, BlockGetter, Bl
 Cohesion: 0.30
 Nodes (5): InkShotResult, BlockPos, Direction, Vec3, Result
 
-### Community 17 - "InkShotEffects.java"
-Cohesion: 0.40
-Nodes (5): InkShotEffects, Direction, ServerLevel, ServerPlayer, Vec3
+### Community 17 - "Salmon.java"
+Cohesion: 0.53
+Nodes (4): ModInitializer, Identifier, Logger, Salmon
 
 ### Community 18 - ".fire"
-Cohesion: 0.07
-Nodes (24): InkCombatService, Entity, Logger, ServerPlayer, InkPaintAccumulator, BlockPos, InkPaintingService, BlockPos (+16 more)
+Cohesion: 0.06
+Nodes (29): InkCombatService, Entity, Logger, ServerPlayer, InkPaintAccumulator, BlockPos, InkPaintingService, BlockPos (+21 more)
 
 ### Community 19 - "ActiveInkShot"
 Cohesion: 0.06
 Nodes (26): EntityHitResult, ActiveInkShot, Level, RandomSource, ResourceKey, Vec3, ActiveTrailDrop, Level (+18 more)
 
-### Community 20 - "ArenaDebugPayload"
-Cohesion: 0.27
-Nodes (4): ArenaDebugPayload, BlockPos, FriendlyByteBuf, StreamCodec
+### Community 20 - "ClientInkCache"
+Cohesion: 0.20
+Nodes (4): ClientInkCache, BlockPos, Direction, Identifier
 
 ### Community 21 - "InkArena"
-Cohesion: 0.17
-Nodes (6): InkArena, BlockPos, Codec, Level, Override, ResourceKey
-
-### Community 22 - "ClientInkShot"
-Cohesion: 0.12
-Nodes (4): ClientInkShot, Vec3, ClientInkShotManager, Vec3
+Cohesion: 0.14
+Nodes (7): InkArena, BlockPos, Codec, Level, Override, ResourceKey, ServerPlayer
 
 ### Community 23 - "Mixin Example"
 Cohesion: 0.53
@@ -201,36 +206,36 @@ Nodes (3): gradlew script, die(), warn()
 Cohesion: 0.67
 Nodes (3): AGENTS.md - Splatoon Mod Development Guidelines, Mod Icon, Ink Area Marker Block Texture
 
-### Community 32 - ".getArenaNumber"
+### Community 32 - ".useWithoutItem"
 Cohesion: 0.20
-Nodes (5): InkSyncManager, BlockPos, Direction, ServerLevel, ServerPlayer
+Nodes (12): EntityBlock, InkAreaMarkerBlock, BlockEntity, BlockHitResult, BlockPos, BlockState, InteractionResult, Level (+4 more)
 
-### Community 33 - "Salmon.java"
-Cohesion: 0.28
-Nodes (8): ModInitializer, InkShotSpawnPayload, FriendlyByteBuf, StreamCodec, Vec3, Identifier, Logger, Salmon
+### Community 33 - "InkShotSpawnPayload"
+Cohesion: 0.39
+Nodes (5): InkShotSpawnPayload, FriendlyByteBuf, Override, StreamCodec, Vec3
 
-### Community 34 - "InkStorage"
+### Community 34 - "InkStorage.java"
+Cohesion: 0.27
+Nodes (4): BlockPos, Direction, Logger, ServerLevel
+
+### Community 35 - "SalmonClient.java"
+Cohesion: 0.33
+Nodes (6): ClientModInitializer, SalmonClient, InkArenaClearPayload, FriendlyByteBuf, Identifier, StreamCodec
+
+### Community 36 - ".extractInkState"
 Cohesion: 0.22
-Nodes (8): InkStorage, BlockPos, Codec, Direction, Logger, ServerLevel, SavedArenaInk, SavedSurface
+Nodes (6): ClientInkColors, ColoredQuad, InkRenderState, Colored, InkCellQuad, Direction
 
-### Community 35 - "InkArenaClearPayload"
+### Community 37 - "InkSyncBeginPayload"
 Cohesion: 0.36
-Nodes (5): InkArenaClearPayload, FriendlyByteBuf, Identifier, Override, StreamCodec
+Nodes (5): InkSyncBeginPayload, FriendlyByteBuf, Identifier, Override, StreamCodec
 
-### Community 36 - "InkPaintabilityService.java"
-Cohesion: 0.24
-Nodes (10): Block, TagKey, ModBlockTags, InkPaintabilityService, Block, BlockPos, BlockState, Direction (+2 more)
-
-### Community 37 - "CustomPacketPayload"
-Cohesion: 0.46
-Nodes (5): CustomPacketPayload, InkSyncBeginPayload, FriendlyByteBuf, Identifier, StreamCodec
-
-### Community 38 - "SalmonClient.java"
-Cohesion: 0.36
-Nodes (5): ClientModInitializer, SalmonClient, InkSyncEndPayload, FriendlyByteBuf, StreamCodec
+### Community 38 - "CustomPacketPayload"
+Cohesion: 0.52
+Nodes (4): CustomPacketPayload, InkSyncEndPayload, FriendlyByteBuf, StreamCodec
 
 ### Community 39 - ".paint"
-Cohesion: 0.31
+Cohesion: 0.28
 Nodes (5): InkFaceCoordinates, Direction, BlockPos, Direction, PaintResult
 
 ### Community 40 - "PlayerMarkerSelectionManager"
@@ -241,9 +246,9 @@ Nodes (5): BlockPos, Level, ResourceKey, MarkerSelection, PlayerMarkerSelectionM
 Cohesion: 0.36
 Nodes (7): InkPaintDistributor, BlockPos, Direction, Logger, ServerLevel, Vec3, PatchCandidate
 
-### Community 42 - "InkFaceUpdatePayload"
+### Community 42 - "ArenaDebugPayload"
 Cohesion: 0.27
-Nodes (7): InkFaceUpdatePayload, BlockPos, Direction, FriendlyByteBuf, Identifier, Override, StreamCodec
+Nodes (4): ArenaDebugPayload, BlockPos, FriendlyByteBuf, StreamCodec
 
 ### Community 43 - "InkShotImpactPayload"
 Cohesion: 0.36
@@ -265,33 +270,61 @@ Nodes (7): PaintFailureReason, FACE_OCCLUDED, INVALID_TEAM, NO_CHANGE, NO_PERMIS
 Cohesion: 0.39
 Nodes (5): InkTrailDropSpawnPayload, FriendlyByteBuf, Override, StreamCodec, Vec3
 
-### Community 48 - "InkSurfaceKey"
-Cohesion: 0.39
-Nodes (3): InkSurfaceKey, BlockPos, Direction
+### Community 48 - "InkStorage"
+Cohesion: 0.18
+Nodes (7): InkStorage, Codec, SavedArenaInk, SavedSurface, InkSurfaceKey, BlockPos, Direction
 
-### Community 49 - "ArenaDebugSync.java"
-Cohesion: 0.47
-Nodes (3): ArenaDebugSync, ServerLevel, ServerPlayer
+### Community 49 - "Type"
+Cohesion: 0.17
+Nodes (8): Override, Override, Override, Override, Type, BLOCK_HIT, ENTITY_HIT, MISS
+
+### Community 50 - "InkFaceUpdatePayload"
+Cohesion: 0.27
+Nodes (7): InkFaceUpdatePayload, BlockPos, Direction, FriendlyByteBuf, Identifier, Override, StreamCodec
+
+### Community 51 - "InkShotVisualPayload"
+Cohesion: 0.38
+Nodes (5): InkShotVisualPayload, InkTrailDropVisual, FriendlyByteBuf, StreamCodec, Vec3
+
+### Community 52 - "InkShotEffects.java"
+Cohesion: 0.40
+Nodes (5): InkShotEffects, Direction, ServerLevel, ServerPlayer, Vec3
+
+### Community 53 - "InkCellGeometry"
+Cohesion: 0.38
+Nodes (4): InkCellGeometry, BlockPos, Deprecated, Direction
+
+### Community 55 - "ClientInkSurface"
+Cohesion: 0.43
+Nodes (4): ClientInkSurface, BlockPos, Direction, Identifier
+
+### Community 56 - "ClientInkSurfaceKey"
+Cohesion: 0.73
+Nodes (3): ClientInkSurfaceKey, BlockPos, Direction
+
+### Community 57 - "Minecraft 26.2 and Fabric Java rules"
+Cohesion: 0.40
+Nodes (4): API verification, Known 26.2 conventions, Minecraft 26.2 and Fabric Java rules, Verification
 
 ## Knowledge Gaps
-- **32 isolated node(s):** `Colored`, `CELL_CENTER`, `CELL_RECTANGLE_INTERSECTION`, `DEFAULT`, `ALLOW` (+27 more)
+- **60 isolated node(s):** `Colored`, `CELL_CENTER`, `CELL_RECTANGLE_INTERSECTION`, `DEFAULT`, `ALLOW` (+55 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **3 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **6 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `InkSurfacePatchId` connect `InkSurfacePatchId` to `.getArenaNumber`, `InkStorage`, `FaceBasis`, `InkRenderer.java`, `InkFaceUpdatePayload`, `Surface Patch Extraction`, `InkSurfaceKey`, `.fire`?**
-  _High betweenness centrality (0.115) - this node is a cross-community bridge._
-- **Why does `InkArena` connect `InkArena` to `.getArenaNumber`, `.getInstance`, `InkStorage`, `InkArenaManager`, `.paint`, `.paintTrail`, `.distributePaint`, `ArenaDebugSync.java`, `.fire`?**
-  _High betweenness centrality (0.083) - this node is a cross-community bridge._
-- **Why does `InkShotSpawnPayload` connect `Salmon.java` to `Type`, `CustomPacketPayload`, `SalmonClient.java`, `ActiveInkShot`, `ClientInkShot`?**
-  _High betweenness centrality (0.048) - this node is a cross-community bridge._
+- **Why does `InkSurfacePatchId` connect `InkSurfacePatchId` to `InkStorage.java`, `FaceBasis`, `Surface Patch Extraction`, `InkStorage`, `.fire`, `InkFaceUpdatePayload`, `ClientInkCache`, `InkCellGeometry`, `ClientInkSurface`, `ClientInkSurfaceKey`?**
+  _High betweenness centrality (0.101) - this node is a cross-community bridge._
+- **Why does `InkArena` connect `InkArena` to `.useWithoutItem`, `.getInstance`, `InkStorage.java`, `InkArenaManager`, `.paint`, `.checkPaintable`, `.distributePaint`, `.fire`?**
+  _High betweenness centrality (0.079) - this node is a cross-community bridge._
+- **Why does `InkShotSpawnPayload` connect `InkShotSpawnPayload` to `SalmonClient.java`, `CustomPacketPayload`, `Type`, `Salmon.java`, `ActiveInkShot`, `ClientInkShotManager`?**
+  _High betweenness centrality (0.046) - this node is a cross-community bridge._
 - **What connects `Colored`, `CELL_CENTER`, `CELL_RECTANGLE_INTERSECTION` to the rest of the system?**
-  _32 weakly-connected nodes found - possible documentation gaps or missing edges._
-- **Should `Type` be split into smaller, more focused modules?**
-  _Cohesion score 0.14285714285714285 - nodes in this community are weakly interconnected._
+  _60 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **Should `2.1. サーバー側 (`src/main/java/yam/salmon/`)` be split into smaller, more focused modules?**
+  _Cohesion score 0.06451612903225806 - nodes in this community are weakly interconnected._
 - **Should `InkSurfacePatchId` be split into smaller, more focused modules?**
-  _Cohesion score 0.07477288609364081 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.14285714285714285 - nodes in this community are weakly interconnected._
 - **Should `FaceBasis` be split into smaller, more focused modules?**
   _Cohesion score 0.09568627450980392 - nodes in this community are weakly interconnected._

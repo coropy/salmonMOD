@@ -65,8 +65,8 @@
     "semantic_hash": ""
   },
   "src/client/java/yam/salmon/client/shot/ClientInkShotManager.java": {
-    "mtime": 1786235945.5812984,
-    "ast_hash": "a9e2902ee9b674b6df55ad36edf95ac3",
+    "mtime": 1785498002.9547439,
+    "ast_hash": "36126b7bee5a1b0c844730ed02203810",
     "semantic_hash": ""
   },
   "src/client/java/yam/salmon/client/shot/InkShotRenderer.java": {
@@ -435,8 +435,8 @@
     "semantic_hash": "3c1089c43ac18e1042be52a67bcd6b0f"
   },
   "AGENTS.md": {
-    "mtime": 1785513095.5808954,
-    "ast_hash": "bf9869081d5428e5347cdeec34f09b77",
+    "mtime": 1785498115.141382,
+    "ast_hash": "f65d463287adc0675eb386b65c6110dd",
     "semantic_hash": ""
   },
   "README.md": {
@@ -470,8 +470,8 @@
     "semantic_hash": ""
   },
   "src/main/java/yam/salmon/weapon/InkTrailPaintConfig.java": {
-    "mtime": 1786237703.974039,
-    "ast_hash": "6d191dabb352eb997e8bbf62ffd86459",
+    "mtime": 1785497045.3423777,
+    "ast_hash": "a3a26a63a7edfa959844ad2b8a2bad13",
     "semantic_hash": ""
   },
   "src/main/java/yam/salmon/weapon/InkTrailPaintService.java": {
@@ -490,8 +490,8 @@
     "semantic_hash": ""
   },
   "src/main/java/yam/salmon/weapon/InkWeaponConfig.java": {
-    "mtime": 1786237690.1471088,
-    "ast_hash": "fea1df1c9682387f3be16e5a68838e86",
+    "mtime": 1785497045.3459833,
+    "ast_hash": "d1bd2ad610d874ef20e019a2b9a9e445",
     "semantic_hash": ""
   },
   "src/main/java/yam/salmon/weapon/InkWeaponRegistry.java": {
@@ -547,21 +547,6 @@
   "src/main/java/yam/salmon/weapon/ProjectileFinishReason.java": {
     "mtime": 1785497526.9183595,
     "ast_hash": "46336c89a655b5562b657f9f505d0db9",
-    "semantic_hash": ""
-  },
-  ".clinerules/minecraft-assets.md": {
-    "mtime": 1785513095.5828948,
-    "ast_hash": "9ca3fde05bc55cad545f45f4dafe7007",
-    "semantic_hash": ""
-  },
-  ".clinerules/minecraft-java.md": {
-    "mtime": 1785513095.5818963,
-    "ast_hash": "afbceef962c0350d6723e50a5be8def8",
-    "semantic_hash": ""
-  },
-  "docs/salmon-project-reference.md": {
-    "mtime": 1785513042.4241402,
-    "ast_hash": "a7de68cf6fadd598df49e1119038347d",
     "semantic_hash": ""
   }
 }

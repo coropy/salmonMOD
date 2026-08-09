@@ -49,7 +49,7 @@ public record InkTrailPaintConfig(
             0.35,   // minimumDistanceFromImpact
             2,      // maxTrailDropsPerShot
             0.9,    // paintChance
-            0.14f   // visualDropSize
+            0.42f   // visualDropSize
     );
 
     /** 短射程シューター用トレイル設定 */
@@ -65,7 +65,7 @@ public record InkTrailPaintConfig(
             0.3,    // minimumDistanceFromImpact
             5,      // maxTrailDropsPerShot
             0.9,    // paintChance
-            0.11f   // visualDropSize
+            0.33f   // visualDropSize
     );
 
     /** 長射程シューター用トレイル設定 */
@@ -81,7 +81,7 @@ public record InkTrailPaintConfig(
             0.5,    // minimumDistanceFromImpact
             7,      // maxTrailDropsPerShot
             0.75,   // paintChance
-            0.06f   // visualDropSize
+            0.18f   // visualDropSize
     );
 
     /** トレイル塗装無効 */

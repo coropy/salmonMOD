@@ -118,7 +118,7 @@ public final class ClientInkShotManager {
         while (dit.hasNext()) {
             ClientInkTrailDrop drop = dit.next();
             if (!drop.tick()) {
-                it.remove();
+                dit.remove();
             }
         }
     }

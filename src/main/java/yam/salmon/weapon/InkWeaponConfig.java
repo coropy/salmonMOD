@@ -73,7 +73,7 @@ public record InkWeaponConfig(
             0.25,   // paintRadius (main impact)
             6,      // trajectorySubstepsPerTick
             0.07,   // collisionRadius
-            0.10f,  // visualProjectileSize
+            0.30f,  // visualProjectileSize
             true,   // paintOnBlockHit
             true,   // damageEntities
             InkTrailPaintConfig.STANDARD
@@ -93,7 +93,7 @@ public record InkWeaponConfig(
             0.35,   // paintRadius
             4,      // trajectorySubstepsPerTick
             0.1,    // collisionRadius
-            0.16f,  // visualProjectileSize
+            0.48f,  // visualProjectileSize
             true,   // paintOnBlockHit
             true,   // damageEntities
             InkTrailPaintConfig.SHORT_RANGE
@@ -113,7 +113,7 @@ public record InkWeaponConfig(
             0.18,   // paintRadius
             8,      // trajectorySubstepsPerTick
             0.05,   // collisionRadius
-            0.12f,  // visualProjectileSize
+            0.36f,  // visualProjectileSize
             true,   // paintOnBlockHit
             true,   // damageEntities
             InkTrailPaintConfig.LONG_RANGE

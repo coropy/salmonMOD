@@ -1,0 +1,20 @@
+# Generated and tool-managed directories
+/.gradle/
+/build/
+/bin/
+/run/
+/.idea/
+/.git/
+
+# Query this through the Graphify CLI instead of loading generated JSON/HTML
+/graphify-out/
+
+# Historical catalog; explicitly @-mention it only when needed
+/docs/salmon-project-reference.md
+
+# Local machine configuration and accidental artifacts
+/local.properties
+/$null
+*.class
+*.jar
+*.log
