@@ -41,7 +41,7 @@ public final class InkPaintDistributor {
     /** 速度方向伸張の最大倍率（1.0 + この値 が最大伸張率。0.65 → 最大65%伸びる） */
     private static final double MAX_VELOCITY_STRETCH = 0.65;
     /** 速度の大きさを伸張量に変換するスケール */
-    private static final double VELOCITY_STRETCH_SCALE = 0.20;
+    private static final double VELOCITY_STRETCH_SCALE = 0.15;
     /** 飛沫の数 */
     private static final int SPLATTER_COUNT_MIN = 3;
     private static final int SPLATTER_COUNT_MAX = 7;
@@ -330,7 +330,7 @@ public final class InkPaintDistributor {
         double dvNorm = dv / distance;
 
         // 2. 速度方向伸張（楕円変形）- 進行方向のみに伸びる
-        double stretchFactor = 1.0;
+        double stretchOffset = 0.0;
         if (velMagnitude > 0.001) {
             double stretchMag = Math.sqrt(stretchU * stretchU + stretchV * stretchV);
             if (stretchMag > 0.001) {
@@ -339,7 +339,9 @@ public final class InkPaintDistributor {
                 // セル方向と速度方向の内積（0=直交、1=平行、負=逆方向）
                 double align = duNorm * suNorm + dvNorm * svNorm;
                 // 速度の進行方向にのみ伸張（逆方向には伸びない）
-                stretchFactor = 1.0 + Math.max(0.0, align) * stretchMag;
+                // 加算方式: stretchMag は既に UV 単位の伸張量なので、
+                // baseRadius に乗算せず直接加算する
+                stretchOffset = Math.max(0.0, align) * stretchMag;
             }
         }
 
@@ -348,8 +350,8 @@ public final class InkPaintDistributor {
         double noise = sampleEdgeNoise(angle, seed);
         double noiseFactor = 1.0 + noise * EDGE_NOISE_AMPLITUDE;
 
-        // 4. 基本有効半径
-        double effectiveRadius = baseRadius * noiseFactor * stretchFactor;
+        // 4. 基本有効半径（ノイズ変形 + 速度方向への加算伸張）
+        double effectiveRadius = baseRadius * noiseFactor + stretchOffset;
 
         // 5. 飛沫判定: 円周の外側に飛沫小円があるか
         double splatterBoost = checkSplatter(du, dv, baseRadius, seed, cellU, cellV);
