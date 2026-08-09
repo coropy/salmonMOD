@@ -60,6 +60,10 @@ public final class InkPaintDistributor {
     /** 飛沫の中心までの距離（メイン円半径に対する割合） */
     private static final double SPLATTER_DISTANCE_MIN = 0.7;
     private static final double SPLATTER_DISTANCE_MAX = 1.15;
+    /** 液滴ウィング: 根本での追加幅（streak 基本幅の倍率） */
+    private static final double DROPLET_WING_FACTOR = 1.8;
+    /** 液滴ウィング: ウィングが消えるまでの長さ（streak 全長に対する割合） */
+    private static final double DROPLET_WING_FADE_RATIO = 0.35;
 
     private InkPaintDistributor() {}
 
@@ -378,7 +382,18 @@ public final class InkPaintDistributor {
                     double taper = 1.0 - (alongDist / streakLength);
                     double streakHalfWidth = (STREAK_BASE_HALF_WIDTH_CELLS / InkFaceData.GRID_SIZE) * taper;
 
-                    if (perpDist < streakHalfWidth) {
+                    // 液滴ウィング: 円の境界（alongDist == baseRadius）から
+                    // streak の左右にインクを追加して雫型にする。
+                    // streak 長の DROPLET_WING_FADE_RATIO 分で徐々に消える。
+                    double wingExtra = 0.0;
+                    double distPastCircleAlongStreak = alongDist - baseRadius;
+                    double wingFadeLength = streakLength * DROPLET_WING_FADE_RATIO;
+                    if (distPastCircleAlongStreak > 0 && distPastCircleAlongStreak < wingFadeLength) {
+                        double wingFade = 1.0 - (distPastCircleAlongStreak / wingFadeLength);
+                        wingExtra = streakHalfWidth * DROPLET_WING_FACTOR * wingFade;
+                    }
+
+                    if (perpDist < streakHalfWidth + wingExtra) {
                         // セルが streak 内 → このセルを塗る
                         effectiveRadius = Math.max(effectiveRadius, distance + 1.0e-6);
                         break;  // 1つの streak に入れば十分

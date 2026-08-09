@@ -165,8 +165,8 @@
     "semantic_hash": "3dab5ff3d5cebb9128b097dda16129b5"
   },
   "src/main/java/yam/salmon/ink/InkPaintDistributor.java": {
-    "mtime": 1786271840.6135113,
-    "ast_hash": "538ec3477e4c40ce3640a638e3c87e94",
+    "mtime": 1786277960.9948928,
+    "ast_hash": "b60e57f60539cec5caaa35af63e41bab",
     "semantic_hash": ""
   },
   "src/main/java/yam/salmon/ink/InkPaintRule.java": {
