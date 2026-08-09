@@ -38,10 +38,19 @@ public final class InkPaintDistributor {
     private static final double EDGE_NOISE_AMPLITUDE = 0.25;
     /** 輪郭ノイズの周波数 */
     private static final double EDGE_NOISE_FREQUENCY = 3.0;
-    /** 速度方向伸張の最大倍率（1.0 + この値 が最大伸張率。0.65 → 最大65%伸びる） */
-    private static final double MAX_VELOCITY_STRETCH = 0.65;
-    /** 速度の大きさを伸張量に変換するスケール */
-    private static final double VELOCITY_STRETCH_SCALE = 0.15;
+    // ---- Phase 10 streak パラメータ ----
+    /** streak の角度広がり（速度方向を中心とした ± の範囲 rad。0.3 ≈ ±17°） */
+    private static final double STREAK_ANGLE_SPREAD = 0.3;
+    /** streak の根元の半幅（セル数。3.0 で根元が 6 セル幅、先端で 0 にテーパー） */
+    private static final double STREAK_BASE_HALF_WIDTH_CELLS = 3.0;
+    /** streak の最小長さ（UV単位。約 8 セル） */
+    private static final double STREAK_MIN_LENGTH = 0.5;
+    /** streak の最大長さ（UV単位。約 20 セル = 20/16 = 1.25） */
+    private static final double STREAK_MAX_LENGTH = 1.25;
+    /** streak の数（最小） */
+    private static final int STREAK_COUNT_MIN = 2;
+    /** streak の数（最大） */
+    private static final int STREAK_COUNT_MAX = 5;
     /** 飛沫の数 */
     private static final int SPLATTER_COUNT_MIN = 3;
     private static final int SPLATTER_COUNT_MAX = 7;
@@ -201,8 +210,8 @@ public final class InkPaintDistributor {
 
             double cellSize = 1.0 / InkFaceData.GRID_SIZE;
 
-            double stretchU = 0.0;
-            double stretchV = 0.0;
+            double velDirU = 0.0;
+            double velDirV = 0.0;
             double velMagnitude = 0.0;
 
             if (useDistortion) {
@@ -217,26 +226,21 @@ public final class InkPaintDistributor {
                     // project velocity direction into patch UV axes (Vec3i -> Vec3)
                     Vec3 uAxis = Vec3.atLowerCornerOf(basis.uAxis());
                     Vec3 vAxis = Vec3.atLowerCornerOf(basis.vAxis());
-                    stretchU = velDir.dot(uAxis) * velMagnitude * VELOCITY_STRETCH_SCALE;
-                    stretchV = velDir.dot(vAxis) * velMagnitude * VELOCITY_STRETCH_SCALE;
-
-                    double stretchMag = Math.sqrt(stretchU * stretchU + stretchV * stretchV);
-                    if (stretchMag > MAX_VELOCITY_STRETCH) {
-                        double scale = MAX_VELOCITY_STRETCH / stretchMag;
-                        stretchU *= scale;
-                        stretchV *= scale;
-                    }
+                    velDirU = velDir.dot(uAxis);
+                    velDirV = velDir.dot(vAxis);
                 }
             }
 
+            // セル走査範囲を streak の最大長で拡張
+            double scanExpand = useDistortion ? STREAK_MAX_LENGTH : 0.0;
             int cellUMin = Math.max(0,
-                    (int) Math.floor((pu - radiusPatch - Math.abs(stretchU)) / cellSize));
+                    (int) Math.floor((pu - radiusPatch - scanExpand) / cellSize));
             int cellUMax = Math.min(InkFaceData.GRID_SIZE - 1,
-                    (int) Math.floor((pu + radiusPatch + Math.abs(stretchU)) / cellSize));
+                    (int) Math.floor((pu + radiusPatch + scanExpand) / cellSize));
             int cellVMin = Math.max(0,
-                    (int) Math.floor((pv - radiusPatch - Math.abs(stretchV)) / cellSize));
+                    (int) Math.floor((pv - radiusPatch - scanExpand) / cellSize));
             int cellVMax = Math.min(InkFaceData.GRID_SIZE - 1,
-                    (int) Math.floor((pv + radiusPatch + Math.abs(stretchV)) / cellSize));
+                    (int) Math.floor((pv + radiusPatch + scanExpand) / cellSize));
 
             int changed = 0;
 
@@ -255,7 +259,7 @@ public final class InkPaintDistributor {
                         double dv = nearestV - pv;
 
                         double effectiveR = getDistortedRadius(
-                                du, dv, radiusPatch, stretchU, stretchV,
+                                du, dv, radiusPatch, velDirU, velDirV,
                                 velMagnitude, distortionSeed, cellU, cellV);
 
                         if (du * du + dv * dv <= effectiveR * effectiveR) {
@@ -308,16 +312,18 @@ public final class InkPaintDistributor {
     }
 
     /**
-     * 歪み半径を計算する。
+     * 歪み半径を計算する。streak ベースのスプラッターパターン。
      *
      * <p>以下の要素を合成:
-     * 1. 速度方向への楕円伸張（進行方向のみ、逆方向には伸びない）
+     * 1. 複数の太い streak（速度方向を中心に扇形に広がる）
+     *    - 各 streak は進行方向にランダムな長さ（8〜20セル）
+     *    - 根元は6セル幅、先端に向かって線形テーパーで細くなる
      * 2. 角度依存の輪郭ノイズ（ハッシュベース）
      * 3. 飛沫の追加判定（円周付近の小円）
      */
     private static double getDistortedRadius(
             double du, double dv, double baseRadius,
-            double stretchU, double stretchV,
+            double velDirU, double velDirV,
             double velMagnitude, long seed, int cellU, int cellV) {
 
         if (baseRadius <= 0) return 0;
@@ -328,30 +334,58 @@ public final class InkPaintDistributor {
         // 1. 方向の単位ベクトル
         double duNorm = du / distance;
         double dvNorm = dv / distance;
+        double cellAngle = Math.atan2(dvNorm, duNorm);
 
-        // 2. 速度方向伸張（楕円変形）- 進行方向のみに伸びる
-        double stretchOffset = 0.0;
-        if (velMagnitude > 0.001) {
-            double stretchMag = Math.sqrt(stretchU * stretchU + stretchV * stretchV);
-            if (stretchMag > 0.001) {
-                double suNorm = stretchU / stretchMag;
-                double svNorm = stretchV / stretchMag;
-                // セル方向と速度方向の内積（0=直交、1=平行、負=逆方向）
-                double align = duNorm * suNorm + dvNorm * svNorm;
-                // 速度の進行方向にのみ伸張（逆方向には伸びない）
-                // 加算方式: stretchMag は既に UV 単位の伸張量なので、
-                // baseRadius に乗算せず直接加算する
-                stretchOffset = Math.max(0.0, align) * stretchMag;
-            }
-        }
-
-        // 3. 輪郭ノイズ（角度依存）
-        double angle = Math.atan2(dvNorm, duNorm);
-        double noise = sampleEdgeNoise(angle, seed);
+        // 2. 輪郭ノイズ（角度依存）
+        double noise = sampleEdgeNoise(cellAngle, seed);
         double noiseFactor = 1.0 + noise * EDGE_NOISE_AMPLITUDE;
 
-        // 4. 基本有効半径（ノイズ変形 + 速度方向への加算伸張）
-        double effectiveRadius = baseRadius * noiseFactor + stretchOffset;
+        // 3. 基本有効半径（ノイズ変形のみ）
+        double effectiveRadius = baseRadius * noiseFactor;
+
+        // 4. streak 判定
+        if (velMagnitude > 0.001) {
+            // 速度方向成分（進行方向のみ、逆方向には伸びない）
+            double velAlign = duNorm * velDirU + dvNorm * velDirV;
+            if (velAlign > 0) {
+                double velAngle = Math.atan2(velDirV, velDirU);
+                long streakSeed = seed ^ 0x7A3F2E1DL;
+                int streakCount = STREAK_COUNT_MIN
+                        + (int)(InkFaceData.hashToDouble(streakSeed)
+                        * (STREAK_COUNT_MAX - STREAK_COUNT_MIN + 1));
+
+                for (int i = 0; i < streakCount; i++) {
+                    long sSeed = streakSeed ^ (i * 0x9E3779B9L);
+
+                    // 速度方向 ± STREAK_ANGLE_SPREAD 以内のランダムな角度
+                    double angleOffset = (InkFaceData.hashToDouble(sSeed) * 2.0 - 1.0)
+                            * STREAK_ANGLE_SPREAD;
+                    double streakAngle = velAngle + angleOffset;
+
+                    // ランダムな長さ
+                    double streakLength = STREAK_MIN_LENGTH
+                            + InkFaceData.hashToDouble(sSeed ^ 1)
+                            * (STREAK_MAX_LENGTH - STREAK_MIN_LENGTH);
+
+                    // streak 方向に沿った距離
+                    double alongDist = distance * Math.cos(cellAngle - streakAngle);
+                    if (alongDist <= 0 || alongDist > streakLength) continue;
+
+                    // streak 中心線からの垂直距離
+                    double perpDist = Math.abs(distance * Math.sin(cellAngle - streakAngle));
+
+                    // 先端に近いほど細くなる（線形テーパー）
+                    double taper = 1.0 - (alongDist / streakLength);
+                    double streakHalfWidth = (STREAK_BASE_HALF_WIDTH_CELLS / InkFaceData.GRID_SIZE) * taper;
+
+                    if (perpDist < streakHalfWidth) {
+                        // セルが streak 内 → このセルを塗る
+                        effectiveRadius = Math.max(effectiveRadius, distance + 1.0e-6);
+                        break;  // 1つの streak に入れば十分
+                    }
+                }
+            }
+        }
 
         // 5. 飛沫判定: 円周の外側に飛沫小円があるか
         double splatterBoost = checkSplatter(du, dv, baseRadius, seed, cellU, cellV);
