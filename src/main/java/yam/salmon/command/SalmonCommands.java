@@ -6,6 +6,7 @@ import com.mojang.brigadier.context.CommandContext;
 import net.minecraft.commands.CommandBuildContext;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
+import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -22,8 +23,10 @@ import yam.salmon.arena.InkArena;
 import yam.salmon.arena.InkArenaManager;
 import yam.salmon.ink.InkFaceData;
 import yam.salmon.ink.InkStorage;
+import yam.salmon.ink.InkTeam;
 import yam.salmon.network.ArenaDebugSync;
 import yam.salmon.network.InkSyncManager;
+import yam.salmon.team.TeamManager;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -113,7 +116,36 @@ public class SalmonCommands {
                                         )
                                 )
                         )
+                        .then(Commands.literal("team")
+                                .requires(source -> source.permissions().hasPermission(
+                                        new Permission.HasCommandLevel(PermissionLevel.GAMEMASTERS)))
+                                .then(Commands.literal("assign")
+                                        .then(Commands.argument("player", EntityArgument.player())
+                                                .then(Commands.literal("A")
+                                                        .executes(ctx -> assignTeam(ctx, InkTeam.TEAM_A))
+                                                )
+                                                .then(Commands.literal("B")
+                                                        .executes(ctx -> assignTeam(ctx, InkTeam.TEAM_B))
+                                                )
+                                        )
+                                )
+                        )
         );
+    }
+
+    private static int assignTeam(CommandContext<CommandSourceStack> ctx, byte team)
+            throws com.mojang.brigadier.exceptions.CommandSyntaxException {
+        CommandSourceStack source = ctx.getSource();
+        ServerPlayer target = EntityArgument.getPlayer(ctx, "player");
+
+        TeamManager.getInstance().assignTeam(target, team);
+
+        source.sendSuccess(() -> Component.literal(
+                "プレイヤー " + target.getName().getString()
+                        + " を " + InkTeam.toName(team) + " に割り当てました"), true);
+        Salmon.LOGGER.info("Command team assign: player={} -> {}",
+                target.getUUID(), InkTeam.toName(team));
+        return 1;
     }
 
     // -----------------------------------------------------------------------

@@ -1,6 +1,8 @@
 package yam.salmon.weapon;
 
 import net.minecraft.server.level.ServerPlayer;
+import yam.salmon.ink.InkTeam;
+import yam.salmon.team.TeamManager;
 
 /**
  * インク視覚表示の色解決。
@@ -26,8 +28,9 @@ public final class InkVisualColorResolver {
      * @return ARGB色
      */
     public static int resolveShotColor(ServerPlayer shooter) {
-        // 現段階: Shift押下でTeam B、それ以外はTeam A
-        // 将来はチーム所属に基づいて判定
-        return shooter.isShiftKeyDown() ? COLOR_TEAM_B : COLOR_TEAM_A;
+        // TEAM_B ならオレンジ、それ以外（TEAM_A / NONE）は青
+        return TeamManager.getInstance().getTeam(shooter) == InkTeam.TEAM_B
+                ? COLOR_TEAM_B
+                : COLOR_TEAM_A;
     }
 }

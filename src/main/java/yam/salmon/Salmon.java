@@ -33,6 +33,7 @@ import yam.salmon.network.InkSyncManager;
 import yam.salmon.network.InkTrailDropImpactPayload;
 import yam.salmon.network.InkTrailDropSpawnPayload;
 import yam.salmon.selection.PlayerMarkerSelectionManager;
+import yam.salmon.team.TeamManager;
 import yam.salmon.weapon.InkProjectileLifecycleManager;
 
 public class Salmon implements ModInitializer {
@@ -76,6 +77,7 @@ public class Salmon implements ModInitializer {
         // サーバー停止時にアリーナデータをセーブ
         ServerLifecycleEvents.SERVER_STOPPING.register(server -> {
             InkArenaManager.getInstance().onServerStopping();
+            TeamManager.getInstance().clear();
         });
 
         // プレイヤー切断時に選択を解除
@@ -90,6 +92,8 @@ public class Salmon implements ModInitializer {
             InkArenaManager.getInstance().onPlayerDisconnect(playerId);
             // シューターのクールダウン情報をクリーンアップ
             yam.salmon.item.InkShooterItem.cleanup(handler.getPlayer());
+            // チームマッピングをクリーンアップ
+            TeamManager.getInstance().removePlayer(playerId);
         });
 
         // プレイヤー初回参加時にインク全量同期（AFTER_RESPAWN は初回参加時には発火しないため）

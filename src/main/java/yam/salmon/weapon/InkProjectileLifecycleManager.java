@@ -29,6 +29,7 @@ import yam.salmon.network.InkShotImpactPayload;
 import yam.salmon.network.InkShotSpawnPayload;
 import yam.salmon.network.InkTrailDropImpactPayload;
 import yam.salmon.network.InkTrailDropSpawnPayload;
+import yam.salmon.team.TeamManager;
 
 import java.util.*;
 import java.util.function.Predicate;
@@ -275,10 +276,7 @@ public final class InkProjectileLifecycleManager {
             boolean surfaceExposed = InkPaintability.isSurfaceExposed(level, hitPos, hitFace);
 
             if (paintableBlock && surfaceExposed) {
-                ServerPlayer shooter = level.getServer().getPlayerList()
-                        .getPlayer(shot.shooterId());
-                byte team = (shooter != null && shooter.isShiftKeyDown())
-                        ? InkTeam.TEAM_B : InkTeam.TEAM_A;
+                byte team = TeamManager.getInstance().getTeam(shot.shooterId());
 
                 InkStorage inkStorage = InkArenaManager.getInstance().getInkStorage();
                 InkShotPaintTransaction transaction = new InkShotPaintTransaction();
@@ -471,10 +469,7 @@ public final class InkProjectileLifecycleManager {
             if (InkPaintability.isPaintableBlock(level, hitPos, targetState)
                     && InkPaintability.isSurfaceExposed(level, hitPos, hitFace)) {
 
-                ServerPlayer shooter = level.getServer().getPlayerList()
-                        .getPlayer(drop.shooterId());
-                byte team = (shooter != null && shooter.isShiftKeyDown())
-                        ? InkTeam.TEAM_B : InkTeam.TEAM_A;
+                byte team = TeamManager.getInstance().getTeam(drop.shooterId());
 
                 InkStorage inkStorage = InkArenaManager.getInstance().getInkStorage();
                 InkShotPaintTransaction transaction = new InkShotPaintTransaction();

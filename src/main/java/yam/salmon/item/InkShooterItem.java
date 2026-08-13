@@ -193,9 +193,7 @@ public class InkShooterItem extends Item {
                 footBlock.getY() + 1.0,
                 player.getZ());
 
-        byte team = player.isShiftKeyDown()
-                ? yam.salmon.ink.InkTeam.TEAM_B
-                : yam.salmon.ink.InkTeam.TEAM_A;
+        byte team = yam.salmon.team.TeamManager.getInstance().getTeam(player);
 
         yam.salmon.ink.InkStorage inkStorage =
                 yam.salmon.arena.InkArenaManager.getInstance().getInkStorage();

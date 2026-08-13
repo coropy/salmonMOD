@@ -20,6 +20,7 @@ import yam.salmon.arena.InkArena;
 import yam.salmon.arena.InkArenaManager;
 import yam.salmon.ink.*;
 import yam.salmon.network.InkSyncManager;
+import yam.salmon.team.TeamManager;
 
 /**
  * インクで塗装可能なブロック。
@@ -100,8 +101,7 @@ public class InkableBlock extends Block {
             return InteractionResult.CONSUME;
         }
 
-        // ShiftでTeam B、通常でTeam A
-        byte team = player.isShiftKeyDown() ? InkTeam.TEAM_B : InkTeam.TEAM_A;
+        byte team = TeamManager.getInstance().getTeam(serverPlayer);
 
         // Phase 4+5: 共通塗装サービスを使用（クリック塗装は歪みなし）
         InkStorage inkStorage = InkArenaManager.getInstance().getInkStorage();
