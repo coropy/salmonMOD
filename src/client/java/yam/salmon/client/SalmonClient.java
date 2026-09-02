@@ -11,6 +11,8 @@ import yam.salmon.Salmon;
 import yam.salmon.client.arena.ArenaDebugRenderer;
 import yam.salmon.client.ink.ClientInkCache;
 import yam.salmon.client.ink.InkRenderer;
+import yam.salmon.client.ink.ika.InkStretchRenderer;
+import yam.salmon.client.ink.ika.InkStretchTracker;
 import yam.salmon.client.shot.ClientInkShotManager;
 import yam.salmon.client.shot.InkShotRenderer;
 import yam.salmon.client.state.ClientPlayerInkState;
@@ -129,6 +131,7 @@ public class SalmonClient implements ClientModInitializer {
                 return;
             }
             ClientInkShotManager.getInstance().tick();
+            InkStretchTracker.getInstance().tick(client);
         });
 
         // --- 抽出フェーズ ---
@@ -153,6 +156,9 @@ public class SalmonClient implements ClientModInitializer {
             if (!drops.isEmpty()) {
                 InkShotRenderer.getInstance().renderDrops(drops, context, 1.0f);
             }
+
+            // インク伸び演出（クライアント視覚エフェクト）
+            InkStretchRenderer.getInstance().render(context);
 
             // 診断ログ
             var mc = net.minecraft.client.Minecraft.getInstance();
