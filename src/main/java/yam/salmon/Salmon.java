@@ -24,6 +24,7 @@ import yam.salmon.network.ArenaDebugPayload;
 import yam.salmon.network.ArenaDebugSync;
 import yam.salmon.network.InkArenaClearPayload;
 import yam.salmon.network.InkFaceUpdatePayload;
+import yam.salmon.network.InkPlayerStatePayload;
 import yam.salmon.network.InkShotImpactPayload;
 import yam.salmon.network.InkShotSpawnPayload;
 import yam.salmon.network.InkShotVisualPayload;
@@ -59,6 +60,7 @@ public class Salmon implements ModInitializer {
         // ネットワークペイロードタイプ登録（S2C: サーバー→クライアント）
         PayloadTypeRegistry.clientboundPlay().register(ArenaDebugPayload.TYPE, ArenaDebugPayload.STREAM_CODEC);
         PayloadTypeRegistry.clientboundPlay().register(InkFaceUpdatePayload.TYPE, InkFaceUpdatePayload.STREAM_CODEC);
+        PayloadTypeRegistry.clientboundPlay().register(InkPlayerStatePayload.TYPE, InkPlayerStatePayload.STREAM_CODEC);
         PayloadTypeRegistry.clientboundPlay().register(InkSyncBeginPayload.TYPE, InkSyncBeginPayload.STREAM_CODEC);
         PayloadTypeRegistry.clientboundPlay().register(InkSyncEndPayload.TYPE, InkSyncEndPayload.STREAM_CODEC);
         PayloadTypeRegistry.clientboundPlay().register(InkArenaClearPayload.TYPE, InkArenaClearPayload.STREAM_CODEC);
@@ -107,6 +109,7 @@ public class Salmon implements ModInitializer {
             server.execute(() -> {
                 // プレイヤーのネットワーク接続が確立した後に全量同期
                 InkSyncManager.getInstance().sendFullSync(player);
+                PlayerInkStateManager.getInstance().onPlayerJoin(player);
                 Salmon.LOGGER.info("Initial ink full sync on join: player={}, dim={}",
                         player.getUUID(), player.level().dimension().identifier());
             });
@@ -143,6 +146,7 @@ public class Salmon implements ModInitializer {
             }
             // インクデータの完全同期（デバッグに関わらず常時）
             InkSyncManager.getInstance().sendFullSync(newPlayer);
+            PlayerInkStateManager.getInstance().onPlayerRespawn(newPlayer);
         });
 
         LOGGER.info("Salmon MOD initialized successfully");

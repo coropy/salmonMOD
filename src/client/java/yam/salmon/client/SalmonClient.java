@@ -2,6 +2,7 @@ package yam.salmon.client;
 
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.rendering.v1.level.LevelExtractionEvents;
 import net.fabricmc.fabric.api.client.rendering.v1.level.LevelRenderEvents;
@@ -12,9 +13,11 @@ import yam.salmon.client.ink.ClientInkCache;
 import yam.salmon.client.ink.InkRenderer;
 import yam.salmon.client.shot.ClientInkShotManager;
 import yam.salmon.client.shot.InkShotRenderer;
+import yam.salmon.client.state.ClientPlayerInkState;
 import yam.salmon.network.ArenaDebugPayload;
 import yam.salmon.network.InkArenaClearPayload;
 import yam.salmon.network.InkFaceUpdatePayload;
+import yam.salmon.network.InkPlayerStatePayload;
 import yam.salmon.network.InkShotImpactPayload;
 import yam.salmon.network.InkShotSpawnPayload;
 import yam.salmon.network.InkShotVisualPayload;
@@ -78,6 +81,12 @@ public class SalmonClient implements ClientModInitializer {
             });
         });
 
+        ClientPlayNetworking.registerGlobalReceiver(InkPlayerStatePayload.TYPE, (payload, context) -> {
+            context.client().execute(() -> {
+                ClientPlayerInkState.getInstance().apply(payload.playerId(), payload.state());
+            });
+        });
+
         // --- 視覚弾道Payload受信（新旧両対応） ---
         ClientPlayNetworking.registerGlobalReceiver(InkShotVisualPayload.TYPE, (payload, context) -> {
             // 旧形式も互換性のために残す（無視）
@@ -108,6 +117,10 @@ public class SalmonClient implements ClientModInitializer {
         });
 
         Salmon.LOGGER.info("Ink networking initialized");
+
+        ClientPlayConnectionEvents.DISCONNECT.register((handler, client) -> {
+            ClientPlayerInkState.getInstance().clear();
+        });
 
         // --- tick更新: 視覚弾道 ---
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
