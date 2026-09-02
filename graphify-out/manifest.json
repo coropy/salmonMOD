@@ -80,8 +80,8 @@
     "semantic_hash": "03678becfe8306083615173762c1eef5"
   },
   "src/main/java/yam/salmon/Salmon.java": {
-    "mtime": 1785497793.3449993,
-    "ast_hash": "d4b0db97951d1ecae146044b662e32a0",
+    "mtime": 1786632379.671156,
+    "ast_hash": "50a69c74d68cdacc818034984d71ec0c",
     "semantic_hash": ""
   },
   "src/main/java/yam/salmon/arena/ArenaPermission.java": {
@@ -110,8 +110,8 @@
     "semantic_hash": "d6dca7c1cf531a893b965bcaec9f3d37"
   },
   "src/main/java/yam/salmon/block/InkableBlock.java": {
-    "mtime": 1786266649.989108,
-    "ast_hash": "d33dcfe7c4647c089b3db07b3d03de33",
+    "mtime": 1786604086.7489743,
+    "ast_hash": "6e3160e76eaed7eef646fb8f3cb8d68c",
     "semantic_hash": ""
   },
   "src/main/java/yam/salmon/block/ModBlockTags.java": {
@@ -130,9 +130,9 @@
     "semantic_hash": "6eb520f380e53a6549cc3e27e0152798"
   },
   "src/main/java/yam/salmon/command/SalmonCommands.java": {
-    "mtime": 1785034450.6497571,
-    "ast_hash": "bccf6f59932c020da41ceb88bb5933c3",
-    "semantic_hash": "bccf6f59932c020da41ceb88bb5933c3"
+    "mtime": 1786604273.8599007,
+    "ast_hash": "9efdf05da13f1de037882262e53a84a3",
+    "semantic_hash": ""
   },
   "src/main/java/yam/salmon/ink/FaceBasis.java": {
     "mtime": 1785136696.7849276,
@@ -255,8 +255,8 @@
     "semantic_hash": "4a430670548fa161cb08af699c945006"
   },
   "src/main/java/yam/salmon/item/InkShooterItem.java": {
-    "mtime": 1786270256.6333117,
-    "ast_hash": "3e4ff7d12226e7e9bd59187588279ef4",
+    "mtime": 1786604008.5908391,
+    "ast_hash": "0237a01f9126d59407e683aa895009c2",
     "semantic_hash": ""
   },
   "src/main/java/yam/salmon/item/InkShooterTickHandler.java": {
@@ -345,9 +345,9 @@
     "semantic_hash": "61452d2d82226b2b994aefc135b00280"
   },
   "src/main/java/yam/salmon/weapon/InkVisualColorResolver.java": {
-    "mtime": 1785060740.8632166,
-    "ast_hash": "d84f89e465693c0d255f517c0a564d44",
-    "semantic_hash": "d84f89e465693c0d255f517c0a564d44"
+    "mtime": 1786604106.5273013,
+    "ast_hash": "a75068c9ac5aedf809f61571545e83bb",
+    "semantic_hash": ""
   },
   "src/main/resources/assets/salmon/blockstates/ink_area_marker.json": {
     "mtime": 1784766064.7273586,
@@ -540,8 +540,8 @@
     "semantic_hash": ""
   },
   "src/main/java/yam/salmon/weapon/InkProjectileLifecycleManager.java": {
-    "mtime": 1786266770.1549873,
-    "ast_hash": "d4817c42ae2b319e5a843cc96ba82332",
+    "mtime": 1786604058.215474,
+    "ast_hash": "41a02b2c75949188fe1300196f730258",
     "semantic_hash": ""
   },
   "src/main/java/yam/salmon/weapon/ProjectileFinishReason.java": {
@@ -562,6 +562,26 @@
   "docs/salmon-project-reference.md": {
     "mtime": 1785513042.4241402,
     "ast_hash": "a7de68cf6fadd598df49e1119038347d",
+    "semantic_hash": ""
+  },
+  "src/main/java/yam/salmon/ink/InkStandingChecker.java": {
+    "mtime": 1786632310.5062237,
+    "ast_hash": "1e36517f550953e7c7a205b541d2f666",
+    "semantic_hash": ""
+  },
+  "src/main/java/yam/salmon/ink/PlayerInkState.java": {
+    "mtime": 1786632188.2781377,
+    "ast_hash": "6a582547b12a106eabe3a9b76e1b3b6c",
+    "semantic_hash": ""
+  },
+  "src/main/java/yam/salmon/state/PlayerInkStateManager.java": {
+    "mtime": 1786632352.80785,
+    "ast_hash": "40279c07d21b1d5e34cb6572fa17fe57",
+    "semantic_hash": ""
+  },
+  "src/main/java/yam/salmon/team/TeamManager.java": {
+    "mtime": 1786603980.9037957,
+    "ast_hash": "c5f6dae0576003dac9d0dce757bf5280",
     "semantic_hash": ""
   }
 }
