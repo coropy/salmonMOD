@@ -55,8 +55,7 @@ public class InkShooterItem extends Item {
     public InkShooterItem(InkWeaponConfig config) {
         super(new Properties()
                 .setId(ResourceKey.create(Registries.ITEM, Salmon.id("ink_shooter")))
-                .stacksTo(1)
-                .useBlockDescriptionPrefix());
+                .stacksTo(1));
         this.config = config;
     }
 
