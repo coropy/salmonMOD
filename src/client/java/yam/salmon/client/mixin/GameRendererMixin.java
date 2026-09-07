@@ -8,13 +8,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import net.minecraft.client.renderer.GameRenderer;
 
 import yam.salmon.client.arena.ArenaDebugRenderer;
-import yam.salmon.client.ink.ika.InkStretchRenderer;
 
 @Mixin(GameRenderer.class)
 public class GameRendererMixin {
     @Inject(method = "close", at = @At("RETURN"))
     private void onGameRendererClose(CallbackInfo ci) {
         ArenaDebugRenderer.close();
-        InkStretchRenderer.close();
     }
 }

@@ -111,6 +111,9 @@ public final class PlayerInkStateManager {
         PlayerInkState previous = states.getOrDefault(playerId, PlayerInkState.NORMAL);
         PlayerInkState current = computeState(player);
 
+        // リスポーン位置は前の足元位置と無関係なため、延長用の追跡状態を破棄する
+        SquidInkStretchService.getInstance().removePlayer(playerId);
+
         states.put(playerId, current);
         broadcastState(player.level().getServer(), playerId, current);
 
@@ -125,6 +128,7 @@ public final class PlayerInkStateManager {
      */
     public void removePlayer(UUID playerId) {
         states.remove(playerId);
+        SquidInkStretchService.getInstance().removePlayer(playerId);
     }
 
     /**
@@ -132,6 +136,7 @@ public final class PlayerInkStateManager {
      */
     public void clearAll() {
         states.clear();
+        SquidInkStretchService.getInstance().clearAll();
     }
 
     private void tickServer(MinecraftServer server) {
@@ -148,6 +153,9 @@ public final class PlayerInkStateManager {
         // イカ速度モディファイヤは状態変化の有無に関係なく毎tick冪等に付け外しする
         // （リスポーン・次元移動で属性がリセットされても次tickで自己修復される）
         SquidSpeedHandler.apply(player, current);
+
+        // イカが自チームインクの境界を越えたときに床インクを移動方向へ短く延長する
+        SquidInkStretchService.getInstance().tick(player, previous, current);
 
         if (current == previous) {
             return;

@@ -18,9 +18,9 @@
     "semantic_hash": "e5985615b3c74f4c608f2cd4b48ab6b4"
   },
   "src/client/java/yam/salmon/client/SalmonClient.java": {
-    "mtime": 1788356154.1220238,
-    "seen": 1788361701.132598,
-    "ast_hash": "969861fbc2cc4fb9b30cb954f7fd5b0e",
+    "mtime": 1788759816.6553528,
+    "seen": 1788759988.1834269,
+    "ast_hash": "57c0f826aac9a02ceb702e862208a332",
     "semantic_hash": ""
   },
   "src/client/java/yam/salmon/client/arena/ArenaDebugRenderer.java": {
@@ -66,9 +66,9 @@
     "semantic_hash": "e27f6a3974021f0a9a6088ee8d77300e"
   },
   "src/client/java/yam/salmon/client/mixin/GameRendererMixin.java": {
-    "mtime": 1788356156.0434394,
-    "seen": 1788361701.1326132,
-    "ast_hash": "79e75cf655168aa31c3c57bffc7a3aaf",
+    "mtime": 1788759818.5367255,
+    "seen": 1788759988.1834419,
+    "ast_hash": "c9b7a4dd1d170c99a1ae430eb9e2ac61",
     "semantic_hash": ""
   },
   "src/client/java/yam/salmon/client/shot/ClientInkShot.java": {
@@ -306,9 +306,9 @@
     "semantic_hash": "4a430670548fa161cb08af699c945006"
   },
   "src/main/java/yam/salmon/item/InkShooterItem.java": {
-    "mtime": 1786604008.5908391,
-    "seen": 1788361701.1326709,
-    "ast_hash": "0237a01f9126d59407e683aa895009c2",
+    "mtime": 1788758850.2175663,
+    "seen": 1788759988.1835043,
+    "ast_hash": "851de9416182a5c55f165168e522befc",
     "semantic_hash": ""
   },
   "src/main/java/yam/salmon/item/InkShooterTickHandler.java": {
@@ -438,10 +438,10 @@
     "semantic_hash": "366cb42a9e4eb1e073755964fbe0d860"
   },
   "src/main/resources/assets/salmon/items/ink_shooter.json": {
-    "mtime": 1785116006.3213603,
-    "seen": 1788361701.1327238,
-    "ast_hash": "d41d8cd98f00b204e9800998ecf8427e",
-    "semantic_hash": "d41d8cd98f00b204e9800998ecf8427e"
+    "mtime": 1788758338.996458,
+    "seen": 1788759988.1835618,
+    "ast_hash": "ad93b1d3a512b21476247f3cd9902368",
+    "semantic_hash": ""
   },
   "src/main/resources/assets/salmon/items/inkable_block.json": {
     "mtime": 1785116102.5560288,
@@ -690,9 +690,9 @@
     "semantic_hash": ""
   },
   "src/main/java/yam/salmon/state/PlayerInkStateManager.java": {
-    "mtime": 1788356183.9901817,
-    "seen": 1788361701.1326938,
-    "ast_hash": "739c75d6080721d5a16ce980e9afc117",
+    "mtime": 1788759855.3186846,
+    "seen": 1788759988.183528,
+    "ast_hash": "7cd8e4bdde14be531ac852bbe7d0f338",
     "semantic_hash": ""
   },
   "src/main/java/yam/salmon/team/TeamManager.java": {
@@ -702,9 +702,9 @@
     "semantic_hash": ""
   },
   "src/client/java/yam/salmon/client/ink/ika/InkSquidRenderer.java": {
-    "mtime": 1788346528.2520258,
-    "seen": 1788361701.132608,
-    "ast_hash": "a6ea54df55cd2f57f908f66bba46be22",
+    "mtime": 1788759952.1887078,
+    "seen": 1788759988.1834388,
+    "ast_hash": "3b5127f1ba14ca70a8fa72a6865f6afb",
     "semantic_hash": ""
   },
   "src/client/java/yam/salmon/client/mixin/LivingEntityRendererMixin.java": {
@@ -725,22 +725,28 @@
     "ast_hash": "8b8c3ca9926f2ce7626f8d610b9188bf",
     "semantic_hash": ""
   },
-  "src/client/java/yam/salmon/client/ink/ika/InkStretchRenderer.java": {
-    "mtime": 1788356125.5652702,
-    "seen": 1788361701.1326096,
-    "ast_hash": "811b2388d13cfd74329d6c3355a01bb5",
-    "semantic_hash": ""
-  },
-  "src/client/java/yam/salmon/client/ink/ika/InkStretchTracker.java": {
-    "mtime": 1788356086.6875205,
-    "seen": 1788361701.1326108,
-    "ast_hash": "cde21ab78c7153fc9995b95cdc0cff45",
-    "semantic_hash": ""
-  },
   "src/main/java/yam/salmon/state/SquidSpeedHandler.java": {
     "mtime": 1788356084.7469287,
     "seen": 1788361701.1326947,
     "ast_hash": "7e97b9734753da72052459a9391b9620",
+    "semantic_hash": ""
+  },
+  "src/main/java/yam/salmon/state/SquidInkStretchService.java": {
+    "mtime": 1788759909.1976998,
+    "seen": 1788759988.1835294,
+    "ast_hash": "b2f924345124466039f29593c11affb0",
+    "semantic_hash": ""
+  },
+  "src/main/resources/assets/salmon/models/item/ink_shooter.json": {
+    "mtime": 1788758327.3964021,
+    "seen": 1788759988.1835687,
+    "ast_hash": "ae67835c69cf1c03e24040c9b1099c2a",
+    "semantic_hash": ""
+  },
+  "src/main/resources/assets/salmon/textures/item/ink_shooter.png": {
+    "mtime": 1788758131.4879942,
+    "seen": 1788759988.1835885,
+    "ast_hash": "cecc3266e999b5e103c9ca9dae9ed1c4",
     "semantic_hash": ""
   }
 }
