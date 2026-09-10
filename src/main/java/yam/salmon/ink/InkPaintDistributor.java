@@ -64,6 +64,16 @@ public final class InkPaintDistributor {
     private static final double DROPLET_WING_FACTOR = 1.8;
     /** 液滴ウィング: ウィングが消えるまでの長さ（streak 全長に対する割合） */
     private static final double DROPLET_WING_FADE_RATIO = 0.35;
+    /** 壁面に上昇中に着弾した場合の streak 長の倍率（上向きの垂れは短めにする） */
+    private static final double STREAK_LENGTH_SCALE_RISING = 0.4;
+    /** 壁面で雫の垂れを発生させる最小鉛直速度（これ以下は円形 splat） */
+    private static final double WALL_DROOP_MIN_VERTICAL_SPEED = 0.05;
+    /** 鉛直速度が接線速度全体のこの割合に達すると雫が最大長になる */
+    private static final double WALL_DROOP_FULL_RATIO = 0.5;
+    /** 床面で streak を発生させる最小接線（水平）速度（これ以下は円形 splat） */
+    private static final double FLOOR_STREAK_MIN_SPEED = 0.05;
+    /** 床面で streak が最大長に達する接線（水平）速度（blocks/tick） */
+    private static final double FLOOR_STREAK_FULL_SPEED = 1.5;
 
     private InkPaintDistributor() {}
 
@@ -217,21 +227,63 @@ public final class InkPaintDistributor {
             double velDirU = 0.0;
             double velDirV = 0.0;
             double velMagnitude = 0.0;
+            double streakLengthScale = 1.0;
 
             if (useDistortion) {
-                // FaceBasis.normal() returns Vec3i; convert to Vec3
-                Vec3 normalVec = Vec3.atLowerCornerOf(basis.normal());
-                Vec3 tangentVel = impactVelocity.subtract(
-                        normalVec.scale(impactVelocity.dot(normalVec)));
-                velMagnitude = tangentVel.length();
+                if (basis.normal().getY() == 0) {
+                    // 壁面着弾: 壁に沿った横速度は使わず、鉛直速度のみで
+                    // 雫の向きと長さを決める。
+                    // 壁面の UV は v = 1.0 - localY（V がワールド下向きに増加）のため、
+                    // 落下中（vy < 0）は velDirV = +1（下向きに垂れる）、
+                    // 上昇中（vy > 0）は velDirV = -1（上向きに短く伸びる）。
+                    // 注意: 床のコードのような vAxis との内積投影は壁面では
+                    // 符号が反転するため、ここでは直接 vy から決める。
+                    double vy = impactVelocity.y;
+                    double avy = Math.abs(vy);
+                    if (avy > WALL_DROOP_MIN_VERTICAL_SPEED) {
+                        velMagnitude = avy;
+                        velDirU = 0.0;
+                        velDirV = vy > 0.0 ? -1.0 : 1.0;
 
-                if (velMagnitude > 0.001) {
-                    Vec3 velDir = tangentVel.normalize();
-                    // project velocity direction into patch UV axes (Vec3i -> Vec3)
-                    Vec3 uAxis = Vec3.atLowerCornerOf(basis.uAxis());
-                    Vec3 vAxis = Vec3.atLowerCornerOf(basis.vAxis());
-                    velDirU = velDir.dot(uAxis);
-                    velDirV = velDir.dot(vAxis);
+                        // 壁に垂直（水平速度が支配的）に当たった場合は
+                        // 雫をほぼ出さない。鉛直速度の割合が大きいほど
+                        // 長く垂れる（落下中のみ最大長に達する）。
+                        double horizSpeed = Math.sqrt(impactVelocity.x * impactVelocity.x
+                                + impactVelocity.z * impactVelocity.z);
+                        double fallRatio = avy / (avy + horizSpeed);
+                        double scale = Math.min(1.0, fallRatio / WALL_DROOP_FULL_RATIO);
+                        if (vy > 0.0) {
+                            scale *= STREAK_LENGTH_SCALE_RISING;
+                        }
+                        streakLengthScale = scale;
+                    }
+                } else {
+                    // 床・天井: 法線成分を除去した接線速度で進行方向に伸ばす。
+                    // streak の長さ・幅は接線速度の大きさに比例させ、
+                    // ほぼ垂直落下（速度 0）では streak なしの円形 splat にする。
+                    // FaceBasis.normal() returns Vec3i; convert to Vec3
+                    Vec3 normalVec = Vec3.atLowerCornerOf(basis.normal());
+                    Vec3 tangentVel = impactVelocity.subtract(
+                            normalVec.scale(impactVelocity.dot(normalVec)));
+                    velMagnitude = tangentVel.length();
+
+                    if (velMagnitude > 0.001) {
+                        Vec3 velDir = tangentVel.normalize();
+                        // project velocity direction into patch UV axes (Vec3i -> Vec3)
+                        Vec3 uAxis = Vec3.atLowerCornerOf(basis.uAxis());
+                        Vec3 vAxis = Vec3.atLowerCornerOf(basis.vAxis());
+                        velDirU = velDir.dot(uAxis);
+                        velDirV = velDir.dot(vAxis);
+
+                        double scale = (velMagnitude - FLOOR_STREAK_MIN_SPEED)
+                                / (FLOOR_STREAK_FULL_SPEED - FLOOR_STREAK_MIN_SPEED);
+                        if (scale <= 0.0) {
+                            // 雫が出ない速度 → streak 判定自体を無効化
+                            velMagnitude = 0.0;
+                        } else {
+                            streakLengthScale = Math.min(1.0, scale);
+                        }
+                    }
                 }
             }
 
@@ -264,7 +316,8 @@ public final class InkPaintDistributor {
 
                         double effectiveR = getDistortedRadius(
                                 du, dv, radiusPatch, velDirU, velDirV,
-                                velMagnitude, distortionSeed, cellU, cellV);
+                                velMagnitude, distortionSeed, cellU, cellV,
+                                streakLengthScale);
 
                         if (du * du + dv * dv <= effectiveR * effectiveR) {
                             int cellIndex = cellV * InkFaceData.GRID_SIZE + cellU;
@@ -324,11 +377,14 @@ public final class InkPaintDistributor {
      *    - 根元は6セル幅、先端に向かって線形テーパーで細くなる
      * 2. 角度依存の輪郭ノイズ（ハッシュベース）
      * 3. 飛沫の追加判定（円周付近の小円）
+     *
+     * @param streakLengthScale streak 長の倍率（壁面上昇着弾時は短くする）
      */
     private static double getDistortedRadius(
             double du, double dv, double baseRadius,
             double velDirU, double velDirV,
-            double velMagnitude, long seed, int cellU, int cellV) {
+            double velMagnitude, long seed, int cellU, int cellV,
+            double streakLengthScale) {
 
         if (baseRadius <= 0) return 0;
 
@@ -366,10 +422,11 @@ public final class InkPaintDistributor {
                             * STREAK_ANGLE_SPREAD;
                     double streakAngle = velAngle + angleOffset;
 
-                    // ランダムな長さ
-                    double streakLength = STREAK_MIN_LENGTH
+                    // ランダムな長さ（上昇着弾時は短縮）
+                    double streakLength = (STREAK_MIN_LENGTH
                             + InkFaceData.hashToDouble(sSeed ^ 1)
-                            * (STREAK_MAX_LENGTH - STREAK_MIN_LENGTH);
+                            * (STREAK_MAX_LENGTH - STREAK_MIN_LENGTH))
+                            * streakLengthScale;
 
                     // streak 方向に沿った距離
                     double alongDist = distance * Math.cos(cellAngle - streakAngle);
@@ -378,9 +435,11 @@ public final class InkPaintDistributor {
                     // streak 中心線からの垂直距離
                     double perpDist = Math.abs(distance * Math.sin(cellAngle - streakAngle));
 
-                    // 先端に近いほど細くなる（線形テーパー）
+                    // 先端に近いほど細くなる（線形テーパー）。
+                    // 幅も streak スケールに追従（遅い着弾ほど細い雫になる）。
                     double taper = 1.0 - (alongDist / streakLength);
-                    double streakHalfWidth = (STREAK_BASE_HALF_WIDTH_CELLS / InkFaceData.GRID_SIZE) * taper;
+                    double streakHalfWidth = (STREAK_BASE_HALF_WIDTH_CELLS / InkFaceData.GRID_SIZE)
+                            * taper * (0.5 + 0.5 * streakLengthScale);
 
                     // 液滴ウィング: 円の境界（alongDist == baseRadius）から
                     // streak の左右にインクを追加して雫型にする。

@@ -365,7 +365,7 @@
       "file_type": "code",
       "norm_label": "patchcandidate",
       "source_file": "src/main/java/yam/salmon/ink/InkPaintDistributor.java",
-      "source_location": "L521"
+      "source_location": "L580"
     },
     {
       "id": "src_main_java_yam_salmon_ink_inkpaintability_inkpaintability",
@@ -3555,7 +3555,7 @@
       "file_type": "code",
       "norm_label": ".checksplatter()",
       "source_file": "src/main/java/yam/salmon/ink/InkPaintDistributor.java",
-      "source_location": "L438"
+      "source_location": "L497"
     },
     {
       "id": "src_main_java_yam_salmon_ink_inkpaintdistributor_inkpaintdistributor_distributepaint",
@@ -3567,7 +3567,7 @@
       "file_type": "code",
       "norm_label": ".distributepaint()",
       "source_file": "src/main/java/yam/salmon/ink/InkPaintDistributor.java",
-      "source_location": "L70"
+      "source_location": "L80"
     },
     {
       "id": "src_main_java_yam_salmon_ink_inkpaintdistributor_inkpaintdistributor_getdistortedradius",
@@ -3579,7 +3579,7 @@
       "file_type": "code",
       "norm_label": ".getdistortedradius()",
       "source_file": "src/main/java/yam/salmon/ink/InkPaintDistributor.java",
-      "source_location": "L328"
+      "source_location": "L383"
     },
     {
       "id": "src_main_java_yam_salmon_ink_inkpaintdistributor_inkpaintdistributor_hasairexposure",
@@ -3591,7 +3591,7 @@
       "file_type": "code",
       "norm_label": ".hasairexposure()",
       "source_file": "src/main/java/yam/salmon/ink/InkPaintDistributor.java",
-      "source_location": "L491"
+      "source_location": "L550"
     },
     {
       "id": "src_main_java_yam_salmon_ink_inkpaintdistributor_inkpaintdistributor_inkpaintdistributor",
@@ -3603,7 +3603,7 @@
       "file_type": "code",
       "norm_label": ".inkpaintdistributor()",
       "source_file": "src/main/java/yam/salmon/ink/InkPaintDistributor.java",
-      "source_location": "L68"
+      "source_location": "L78"
     },
     {
       "id": "src_main_java_yam_salmon_ink_inkpaintdistributor_inkpaintdistributor_sampleedgenoise",
@@ -3615,7 +3615,7 @@
       "file_type": "code",
       "norm_label": ".sampleedgenoise()",
       "source_file": "src/main/java/yam/salmon/ink/InkPaintDistributor.java",
-      "source_location": "L418"
+      "source_location": "L477"
     },
     {
       "id": "src_main_java_yam_salmon_ink_inkpaintdistributor_inkpaintdistributor_sphereintersectsblockaabb",
@@ -3627,7 +3627,7 @@
       "file_type": "code",
       "norm_label": ".sphereintersectsblockaabb()",
       "source_file": "src/main/java/yam/salmon/ink/InkPaintDistributor.java",
-      "source_location": "L475"
+      "source_location": "L534"
     },
     {
       "id": "src_main_java_yam_salmon_ink_inkpaintingservice_inkpaintingservice_paint",
@@ -14644,7 +14644,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/main/java/yam/salmon/ink/InkPaintDistributor.java",
-      "source_location": "L444",
+      "source_location": "L503",
       "weight": 1.0
     },
     {
@@ -14656,7 +14656,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/main/java/yam/salmon/ink/InkPaintDistributor.java",
-      "source_location": "L116",
+      "source_location": "L126",
       "weight": 1.0
     },
     {
@@ -14668,7 +14668,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/main/java/yam/salmon/ink/InkPaintDistributor.java",
-      "source_location": "L123",
+      "source_location": "L133",
       "weight": 1.0
     },
     {
@@ -14680,7 +14680,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/main/java/yam/salmon/ink/InkPaintDistributor.java",
-      "source_location": "L125",
+      "source_location": "L135",
       "weight": 1.0
     },
     {
@@ -14692,7 +14692,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/main/java/yam/salmon/ink/InkPaintDistributor.java",
-      "source_location": "L132",
+      "source_location": "L142",
       "weight": 1.0
     },
     {
@@ -14704,7 +14704,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/main/java/yam/salmon/ink/InkPaintDistributor.java",
-      "source_location": "L137",
+      "source_location": "L147",
       "weight": 1.0
     },
     {
@@ -14716,7 +14716,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/main/java/yam/salmon/ink/InkPaintDistributor.java",
-      "source_location": "L154",
+      "source_location": "L164",
       "weight": 1.0
     },
     {
@@ -14728,7 +14728,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/main/java/yam/salmon/ink/InkPaintDistributor.java",
-      "source_location": "L163",
+      "source_location": "L173",
       "weight": 1.0
     },
     {
@@ -14740,7 +14740,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/main/java/yam/salmon/ink/InkPaintDistributor.java",
-      "source_location": "L201",
+      "source_location": "L211",
       "weight": 1.0
     },
     {
@@ -14752,7 +14752,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/main/java/yam/salmon/ink/InkPaintDistributor.java",
-      "source_location": "L258",
+      "source_location": "L310",
       "weight": 1.0
     },
     {
@@ -14764,7 +14764,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/main/java/yam/salmon/ink/InkPaintDistributor.java",
-      "source_location": "L265",
+      "source_location": "L317",
       "weight": 1.0
     },
     {
@@ -14776,7 +14776,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/main/java/yam/salmon/ink/InkPaintDistributor.java",
-      "source_location": "L314",
+      "source_location": "L367",
       "weight": 1.0
     },
     {
@@ -14788,7 +14788,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/main/java/yam/salmon/ink/InkPaintDistributor.java",
-      "source_location": "L81",
+      "source_location": "L91",
       "weight": 1.0
     },
     {
@@ -14800,7 +14800,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/main/java/yam/salmon/ink/InkPaintDistributor.java",
-      "source_location": "L82",
+      "source_location": "L92",
       "weight": 1.0
     },
     {
@@ -14812,7 +14812,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/main/java/yam/salmon/ink/InkPaintDistributor.java",
-      "source_location": "L344",
+      "source_location": "L400",
       "weight": 1.0
     },
     {
@@ -14824,7 +14824,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/main/java/yam/salmon/ink/InkPaintDistributor.java",
-      "source_location": "L358",
+      "source_location": "L414",
       "weight": 1.0
     },
     {
@@ -14836,7 +14836,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/main/java/yam/salmon/ink/InkPaintDistributor.java",
-      "source_location": "L406",
+      "source_location": "L465",
       "weight": 1.0
     },
     {
@@ -14848,7 +14848,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/main/java/yam/salmon/ink/InkPaintDistributor.java",
-      "source_location": "L499",
+      "source_location": "L558",
       "weight": 1.0
     },
     {
@@ -14860,7 +14860,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/main/java/yam/salmon/ink/InkPaintDistributor.java",
-      "source_location": "L421",
+      "source_location": "L480",
       "weight": 1.0
     },
     {
@@ -18736,7 +18736,7 @@
       "confidence_score": 1.0,
       "context": "field",
       "source_file": "src/main/java/yam/salmon/ink/InkPaintDistributor.java",
-      "source_location": "L521",
+      "source_location": "L580",
       "weight": 1.0
     },
     {
@@ -18748,7 +18748,7 @@
       "confidence_score": 1.0,
       "context": "field",
       "source_file": "src/main/java/yam/salmon/ink/InkPaintDistributor.java",
-      "source_location": "L521",
+      "source_location": "L580",
       "weight": 1.0
     },
     {
@@ -18760,7 +18760,7 @@
       "confidence_score": 1.0,
       "context": "field",
       "source_file": "src/main/java/yam/salmon/ink/InkPaintDistributor.java",
-      "source_location": "L521",
+      "source_location": "L580",
       "weight": 1.0
     },
     {
@@ -30112,7 +30112,7 @@
       "confidence_score": 1.0,
       "context": "parameter_type",
       "source_file": "src/main/java/yam/salmon/ink/InkPaintDistributor.java",
-      "source_location": "L508",
+      "source_location": "L567",
       "weight": 1.0
     },
     {
@@ -30124,7 +30124,7 @@
       "confidence_score": 1.0,
       "context": "parameter_type",
       "source_file": "src/main/java/yam/salmon/ink/InkPaintDistributor.java",
-      "source_location": "L508",
+      "source_location": "L567",
       "weight": 1.0
     },
     {
@@ -30136,7 +30136,7 @@
       "confidence_score": 1.0,
       "context": "parameter_type",
       "source_file": "src/main/java/yam/salmon/ink/InkPaintDistributor.java",
-      "source_location": "L508",
+      "source_location": "L567",
       "weight": 1.0
     },
     {
@@ -30148,7 +30148,7 @@
       "confidence_score": 1.0,
       "context": "parameter_type",
       "source_file": "src/main/java/yam/salmon/ink/InkPaintDistributor.java",
-      "source_location": "L508",
+      "source_location": "L567",
       "weight": 1.0
     },
     {
@@ -30160,7 +30160,7 @@
       "confidence_score": 1.0,
       "context": "parameter_type",
       "source_file": "src/main/java/yam/salmon/ink/InkPaintDistributor.java",
-      "source_location": "L508",
+      "source_location": "L567",
       "weight": 1.0
     },
     {
@@ -30172,7 +30172,7 @@
       "confidence_score": 1.0,
       "context": "parameter_type",
       "source_file": "src/main/java/yam/salmon/ink/InkPaintDistributor.java",
-      "source_location": "L508",
+      "source_location": "L567",
       "weight": 1.0
     },
     {
@@ -30184,7 +30184,7 @@
       "confidence_score": 1.0,
       "context": "parameter_type",
       "source_file": "src/main/java/yam/salmon/ink/InkPaintDistributor.java",
-      "source_location": "L491",
+      "source_location": "L550",
       "weight": 1.0
     },
     {
@@ -30196,7 +30196,7 @@
       "confidence_score": 1.0,
       "context": "parameter_type",
       "source_file": "src/main/java/yam/salmon/ink/InkPaintDistributor.java",
-      "source_location": "L491",
+      "source_location": "L550",
       "weight": 1.0
     },
     {
@@ -30208,7 +30208,7 @@
       "confidence_score": 1.0,
       "context": "parameter_type",
       "source_file": "src/main/java/yam/salmon/ink/InkPaintDistributor.java",
-      "source_location": "L491",
+      "source_location": "L550",
       "weight": 1.0
     },
     {
@@ -30220,7 +30220,7 @@
       "confidence_score": 1.0,
       "context": "parameter_type",
       "source_file": "src/main/java/yam/salmon/ink/InkPaintDistributor.java",
-      "source_location": "L475",
+      "source_location": "L534",
       "weight": 1.0
     },
     {
@@ -30232,7 +30232,7 @@
       "confidence_score": 1.0,
       "context": "parameter_type",
       "source_file": "src/main/java/yam/salmon/ink/InkPaintDistributor.java",
-      "source_location": "L475",
+      "source_location": "L534",
       "weight": 1.0
     },
     {
@@ -33964,7 +33964,7 @@
       "confidence_score": 1.0,
       "context": "return_type",
       "source_file": "src/main/java/yam/salmon/ink/InkPaintDistributor.java",
-      "source_location": "L508",
+      "source_location": "L567",
       "weight": 1.0
     },
     {
@@ -35832,7 +35832,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/main/java/yam/salmon/ink/InkPaintDistributor.java",
-      "source_location": "L521",
+      "source_location": "L580",
       "weight": 1.0
     },
     {
@@ -41629,7 +41629,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/main/java/yam/salmon/ink/InkPaintDistributor.java",
-      "source_location": "L328",
+      "source_location": "L383",
       "weight": 1.0
     },
     {
@@ -41640,7 +41640,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/main/java/yam/salmon/ink/InkPaintDistributor.java",
-      "source_location": "L418",
+      "source_location": "L477",
       "weight": 1.0
     },
     {
@@ -41651,7 +41651,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/main/java/yam/salmon/ink/InkPaintDistributor.java",
-      "source_location": "L438",
+      "source_location": "L497",
       "weight": 1.0
     },
     {
@@ -41662,7 +41662,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/main/java/yam/salmon/ink/InkPaintDistributor.java",
-      "source_location": "L475",
+      "source_location": "L534",
       "weight": 1.0
     },
     {
@@ -41673,7 +41673,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/main/java/yam/salmon/ink/InkPaintDistributor.java",
-      "source_location": "L491",
+      "source_location": "L550",
       "weight": 1.0
     },
     {
@@ -41684,7 +41684,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/main/java/yam/salmon/ink/InkPaintDistributor.java",
-      "source_location": "L508",
+      "source_location": "L567",
       "weight": 1.0
     },
     {
@@ -41695,7 +41695,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/main/java/yam/salmon/ink/InkPaintDistributor.java",
-      "source_location": "L68",
+      "source_location": "L78",
       "weight": 1.0
     },
     {
@@ -45806,7 +45806,7 @@
       "confidence_score": 0.8,
       "context": "call",
       "source_file": "src/main/java/yam/salmon/ink/InkPaintDistributor.java",
-      "source_location": "L119",
+      "source_location": "L129",
       "weight": 1.0
     },
     {
@@ -45818,7 +45818,7 @@
       "confidence_score": 0.8,
       "context": "call",
       "source_file": "src/main/java/yam/salmon/ink/InkPaintDistributor.java",
-      "source_location": "L149",
+      "source_location": "L159",
       "weight": 1.0
     },
     {
@@ -45830,7 +45830,7 @@
       "confidence_score": 0.8,
       "context": "call",
       "source_file": "src/main/java/yam/salmon/ink/InkPaintDistributor.java",
-      "source_location": "L158",
+      "source_location": "L168",
       "weight": 1.0
     },
     {
@@ -45842,7 +45842,7 @@
       "confidence_score": 0.8,
       "context": "call",
       "source_file": "src/main/java/yam/salmon/ink/InkPaintDistributor.java",
-      "source_location": "L197",
+      "source_location": "L207",
       "weight": 1.0
     },
     {
@@ -45854,7 +45854,7 @@
       "confidence_score": 0.8,
       "context": "call",
       "source_file": "src/main/java/yam/salmon/ink/InkPaintDistributor.java",
-      "source_location": "L199",
+      "source_location": "L209",
       "weight": 1.0
     },
     {
@@ -45866,7 +45866,7 @@
       "confidence_score": 0.8,
       "context": "call",
       "source_file": "src/main/java/yam/salmon/ink/InkPaintDistributor.java",
-      "source_location": "L210",
+      "source_location": "L220",
       "weight": 1.0
     },
     {
@@ -45878,7 +45878,7 @@
       "confidence_score": 0.8,
       "context": "call",
       "source_file": "src/main/java/yam/salmon/ink/InkPaintDistributor.java",
-      "source_location": "L271",
+      "source_location": "L324",
       "weight": 1.0
     },
     {
@@ -45890,7 +45890,7 @@
       "confidence_score": 0.8,
       "context": "call",
       "source_file": "src/main/java/yam/salmon/ink/InkPaintDistributor.java",
-      "source_location": "L272",
+      "source_location": "L325",
       "weight": 1.0
     },
     {
@@ -45902,7 +45902,7 @@
       "confidence_score": 0.8,
       "context": "call",
       "source_file": "src/main/java/yam/salmon/ink/InkPaintDistributor.java",
-      "source_location": "L297",
+      "source_location": "L350",
       "weight": 1.0
     },
     {
@@ -45914,7 +45914,7 @@
       "confidence_score": 0.8,
       "context": "call",
       "source_file": "src/main/java/yam/salmon/ink/InkPaintDistributor.java",
-      "source_location": "L307",
+      "source_location": "L360",
       "weight": 1.0
     },
     {
@@ -48365,5 +48365,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "9674d8cc69af7a616f8b52a737e5d4e288f59f8a"
+  "built_at_commit": "008bc9e6bf508201aab7a40845bf79141feb006f"
 }
