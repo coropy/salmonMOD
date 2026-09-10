@@ -39,7 +39,7 @@ public class LivingEntityRendererMixin {
         if (!(state instanceof AvatarRenderState avatarState)) {
             return;
         }
-        if (InkSquidRenderer.getInstance().tryRender(avatarState, poseStack, collector)) {
+        if (InkSquidRenderer.getInstance().shouldHide(avatarState)) {
             ci.cancel();
         }
     }

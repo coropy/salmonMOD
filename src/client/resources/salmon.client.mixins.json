@@ -5,7 +5,8 @@
 	"client": [
 		"ExampleClientMixin",
 		"GameRendererMixin",
-		"LivingEntityRendererMixin"
+		"LivingEntityRendererMixin",
+		"AbstractClientPlayerMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

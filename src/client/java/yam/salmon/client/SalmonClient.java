@@ -11,6 +11,7 @@ import yam.salmon.Salmon;
 import yam.salmon.client.arena.ArenaDebugRenderer;
 import yam.salmon.client.ink.ClientInkCache;
 import yam.salmon.client.ink.InkRenderer;
+import yam.salmon.client.ink.ika.SquidInkMarkRenderer;
 import yam.salmon.client.shot.ClientInkShotManager;
 import yam.salmon.client.shot.InkShotRenderer;
 import yam.salmon.client.state.ClientPlayerInkState;
@@ -135,12 +136,14 @@ public class SalmonClient implements ClientModInitializer {
         LevelExtractionEvents.END_EXTRACTION.register(context -> {
             ArenaDebugRenderer.getInstance().extractDebugState(context);
             InkRenderer.getInstance().extractInkState(context);
+            SquidInkMarkRenderer.getInstance().extractMarkState(context);
         });
 
         // --- 描画フェーズ ---
         LevelRenderEvents.AFTER_TRANSLUCENT_TERRAIN.register(context -> {
             ArenaDebugRenderer.getInstance().renderAndDrawDebugState(context);
             InkRenderer.getInstance().renderAndDrawInkState(context);
+            SquidInkMarkRenderer.getInstance().renderAndDrawMarkState(context);
 
             // 視覚弾道描画
             var shots = ClientInkShotManager.getInstance().getActiveShots();

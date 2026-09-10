@@ -18,9 +18,9 @@
     "semantic_hash": "e5985615b3c74f4c608f2cd4b48ab6b4"
   },
   "src/client/java/yam/salmon/client/SalmonClient.java": {
-    "mtime": 1788759816.6553528,
-    "seen": 1788759988.1834269,
-    "ast_hash": "57c0f826aac9a02ceb702e862208a332",
+    "mtime": 1789036339.0350125,
+    "seen": 1789036455.4405568,
+    "ast_hash": "e9f3ebd6a29a3f9f40f9cdb3d49abdd7",
     "semantic_hash": ""
   },
   "src/client/java/yam/salmon/client/arena/ArenaDebugRenderer.java": {
@@ -66,9 +66,9 @@
     "semantic_hash": "e27f6a3974021f0a9a6088ee8d77300e"
   },
   "src/client/java/yam/salmon/client/mixin/GameRendererMixin.java": {
-    "mtime": 1788759818.5367255,
-    "seen": 1788759988.1834419,
-    "ast_hash": "c9b7a4dd1d170c99a1ae430eb9e2ac61",
+    "mtime": 1789036344.3628755,
+    "seen": 1789036455.440574,
+    "ast_hash": "790cd9172f883c0253e6c4777163a473",
     "semantic_hash": ""
   },
   "src/client/java/yam/salmon/client/shot/ClientInkShot.java": {
@@ -90,9 +90,9 @@
     "semantic_hash": ""
   },
   "src/client/resources/salmon.client.mixins.json": {
-    "mtime": 1788346528.2713223,
-    "seen": 1788361701.1326225,
-    "ast_hash": "dc2a5114eacd95d2dfdce1f0c1ada04e",
+    "mtime": 1789036310.3459704,
+    "seen": 1789036455.4405837,
+    "ast_hash": "df4d42f3564d6a7559e74a8843c1ec08",
     "semantic_hash": ""
   },
   "src/main/java/yam/salmon/Salmon.java": {
@@ -702,15 +702,15 @@
     "semantic_hash": ""
   },
   "src/client/java/yam/salmon/client/ink/ika/InkSquidRenderer.java": {
-    "mtime": 1788759952.1887078,
-    "seen": 1788759988.1834388,
-    "ast_hash": "3b5127f1ba14ca70a8fa72a6865f6afb",
+    "mtime": 1789036287.3669229,
+    "seen": 1789036455.4405682,
+    "ast_hash": "f5fb6ac9c5538079189e9cefda04a52b",
     "semantic_hash": ""
   },
   "src/client/java/yam/salmon/client/mixin/LivingEntityRendererMixin.java": {
-    "mtime": 1788346528.2861373,
-    "seen": 1788361701.1326144,
-    "ast_hash": "3bfab58a56941f7b0c052762ae5fbed8",
+    "mtime": 1789036356.0573325,
+    "seen": 1789036455.440575,
+    "ast_hash": "193e655a0ff9e0589179e923ba0515b5",
     "semantic_hash": ""
   },
   "src/client/java/yam/salmon/client/state/ClientPlayerInkState.java": {
@@ -747,6 +747,18 @@
     "mtime": 1788758131.4879942,
     "seen": 1788759988.1835885,
     "ast_hash": "cecc3266e999b5e103c9ca9dae9ed1c4",
+    "semantic_hash": ""
+  },
+  "src/client/java/yam/salmon/client/ink/ika/SquidInkMarkRenderer.java": {
+    "mtime": 1789036399.8689115,
+    "seen": 1789036455.4405696,
+    "ast_hash": "e1ecaf4bfd8d68124aca25863cc23b6c",
+    "semantic_hash": ""
+  },
+  "src/client/java/yam/salmon/client/mixin/AbstractClientPlayerMixin.java": {
+    "mtime": 1789036306.8560376,
+    "seen": 1789036455.4405708,
+    "ast_hash": "b851849efeb6c0b99908c176f9107fbb",
     "semantic_hash": ""
   }
 }
